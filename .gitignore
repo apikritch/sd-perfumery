@@ -1,0 +1,8 @@
+docker-compose.yml
+
+client/dist
+client/node_modules
+client/Dockerfile
+
+server/.env
+server/Dockerfile
