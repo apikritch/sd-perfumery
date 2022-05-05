@@ -36,7 +36,7 @@
                     <h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">Forget Password</h1>
                     <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Please click link below to reset your password within 10 munites before the link expires.</p><br>
                     {{-- <p>{{$details['token']}}</p> --}}
-                    <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="http://3.24.204.164:8082/reset_password/{{$details['token']}}" style="color:#ee4c50;text-decoration:underline;">Reset Password</a></p>
+                    <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="http://www.apikritch.com:8081/reset_password/{{$details['token']}}" style="color:#ee4c50;text-decoration:underline;">Reset Password</a></p>
                   </td>
                 </tr>
                 

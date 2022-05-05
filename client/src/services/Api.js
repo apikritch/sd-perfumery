@@ -2,6 +2,6 @@ import axios from "axios";
 
 export default () => {
   return axios.create({
-    baseURL: "http://3.24.204.164:8002/",
+    baseURL: "http://www.apikritch.com:8002/",
   });
 };
