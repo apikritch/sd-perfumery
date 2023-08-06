@@ -53,9 +53,10 @@ export default new VueRouter({
     {
       path: "/",
       component: Customer,
+      props: true,
       children: [
         { path: "/", name: "Home", component: Home },
-        { path: "/contactus", component: ContactUs },
+        { path: "/contactus", name: "Contact", component: ContactUs },
         { path: "/cart", name: "Cart", component: Cart },
         { path: "/login", component: Login },
         { path: "/checkout", component: Checkout },
@@ -126,6 +127,7 @@ export default new VueRouter({
           children: [
             {
               path: "/myaccount",
+              name: "Account",
               components: {
                 default: SideBar,
                 my_account_content: MyAccount,
@@ -133,6 +135,7 @@ export default new VueRouter({
             },
             {
               path: "/myaccount/order",
+              name: "Order",
               components: {
                 default: SideBar,
                 my_account_content: MyOrder,

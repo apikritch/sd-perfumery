@@ -18,8 +18,7 @@
       :showSignIn="showSignIn"
       :showSignUp="showSignUp"
       :showForgotPassword="showForgotPassword"
-      class="sticky-nav"
-    ></Navbar>
+      class="sticky-nav"></Navbar>
     <router-view
       :cart="cart"
       :cartQty="cartQty"
@@ -40,8 +39,7 @@
       :changeValueBrand="changeValueBrand"
       :valueBrand="valueBrand"
       :clearCart="clearCart"
-      :showSignIn="showSignIn"
-    />
+      :showSignIn="showSignIn" />
     <Footer></Footer>
     <CookieMessage></CookieMessage>
   </div>
@@ -54,6 +52,7 @@ import CookieMessage from "./CookiesMessage.vue";
 
 export default {
   name: "MyCustomer",
+  components: { Navbar, Footer, CookieMessage },
   props: [
     "cart",
     "cartQty",
@@ -79,7 +78,6 @@ export default {
     "display_cart_redirect",
     "clearCart",
   ],
-  components: { Navbar, Footer, CookieMessage },
   data() {
     return {
       display_sign_in: false,

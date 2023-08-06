@@ -5,16 +5,20 @@
         UI Component
       </div>
       <div class="d-flex align-items-end">
-        <router-link class="admin-product-add" to="/admin/uicomponent/add">
-          <font-awesome-icon icon="plus" class="me-1" /> Add File
+        <router-link
+          class="admin-product-add"
+          to="/admin/uicomponent/add">
+          <font-awesome-icon
+            icon="plus"
+            class="me-1" />
+          Add File
         </router-link>
       </div>
     </div>
 
     <div
       v-if="loading"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
 
@@ -22,15 +26,20 @@
       <div class="carousel-sample">Carousel Section</div>
       <div
         v-if="loading"
-        class="d-flex justify-content-center align-items-center loading-height"
-      ></div>
+        class="d-flex justify-content-center align-items-center loading-height"></div>
       <div v-if="!loading">
         <!--Sample Carousel-->
         <div class="d-flex justify-content-center">
           <div class="carousel-sample-width">
-            <VueSlickCarousel v-bind="settings" v-if="carousels.length > 0"
-              ><div v-for="(carousel, index) in sort" :key="index">
-                <img :src="carousel.link_address" width="100%" /></div
+            <VueSlickCarousel
+              v-if="carousels.length > 0"
+              v-bind="settings"
+              ><div
+                v-for="(carousel, index) in sort"
+                :key="index">
+                <img
+                  :src="carousel.link_address"
+                  width="100%" /></div
             ></VueSlickCarousel>
           </div>
         </div>
@@ -49,48 +58,46 @@
 
         <!--Table-->
         <div
-          class="d-flex admin-product-detail component-mini-action"
           v-for="(carousel, index) in sort"
           :key="index"
-        >
+          class="d-flex admin-product-detail component-mini-action">
           <div
-            class="border-right-product-table detail-1 d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table detail-1 d-flex align-items-center justify-content-center">
             {{ carousel.sequence }}
           </div>
           <div
-            class="border-right-product-table detail-2 d-flex align-items-center justify-content-center"
-          >
-            <img :src="carousel.link_address" width="100%" />
+            class="border-right-product-table detail-2 d-flex align-items-center justify-content-center">
+            <img
+              :src="carousel.link_address"
+              width="100%" />
           </div>
           <div
-            class="border-right-product-table detail-3 d-flex align-items-center"
-          >
+            class="border-right-product-table detail-3 d-flex align-items-center">
             {{ carousel.link_address }}
           </div>
           <div
-            class="detail-4 d-flex align-items-center justify-content-center"
-          >
+            class="detail-4 d-flex align-items-center justify-content-center">
             <div
               class="after_action d-flex align-items-center justify-content-center"
-              @click="showAction(index)"
               :class="
                 carousel.display_action == 1 ? 'after_action_click' : null
               "
-            >
+              @click="showAction(index)">
               <font-awesome-icon icon="ellipsis-h" />
             </div>
             <!--Mini Menu-->
-            <div class="action" v-if="carousel.display_action == 1">
-              <div class="modal-overelay" @click="hideAction(index)"></div>
+            <div
+              v-if="carousel.display_action == 1"
+              class="action">
+              <div
+                class="modal-overelay"
+                @click="hideAction(index)"></div>
               <div class="modal-content">
                 <div
-                  class="d-flex flex-column justify-content-end align-items-center h-100 text-start"
-                >
+                  class="d-flex flex-column justify-content-end align-items-center h-100 text-start">
                   <router-link
                     class="w-100 action-options border-action ps-2"
-                    :to="'/admin/uicomponent/' + carousel.id + '/edit'"
-                  >
+                    :to="'/admin/uicomponent/' + carousel.id + '/edit'">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -102,8 +109,7 @@
                   </router-link>
                   <button
                     class="w-100 action-delete-options border-action ps-2"
-                    @click="deleteItem(index, carousel.id)"
-                  >
+                    @click="deleteItem(index, carousel.id)">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -192,6 +198,14 @@ export default {
       this.all_pages = Math.ceil(val.length / this.per_page);
     },
   },
+  async mounted() {
+    this.carousels = (await getCarousels()).data;
+    this.per_page_options = await getPerPageOptions();
+    for (let i = 0; i < this.carousels.length; i++) {
+      this.$set(this.carousels[i], "display_action", 0);
+    }
+    this.loading = false;
+  },
   methods: {
     nextPage() {
       if (this.current_page >= this.all_pages) {
@@ -242,14 +256,6 @@ export default {
         return 0;
       });
     },
-  },
-  async mounted() {
-    this.carousels = (await getCarousels()).data;
-    this.per_page_options = await getPerPageOptions();
-    for (let i = 0; i < this.carousels.length; i++) {
-      this.$set(this.carousels[i], "display_action", 0);
-    }
-    this.loading = false;
   },
 };
 </script>
@@ -380,7 +386,6 @@ export default {
   font-size: 0.85rem;
   color: #384648;
   border: 1px solid #384648;
-  margin-right: 0.5rem;
 }
 
 .product-page-input:focus-visible {

@@ -6,7 +6,7 @@ import { sync } from "vuex-router-sync";
 import { BootstrapVue } from "bootstrap-vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.js";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
@@ -15,6 +15,7 @@ import VueSlider from "vue-slider-component";
 import Vuelidate from "vuelidate";
 import "vue-slider-component/theme/default.css";
 import VueCookies from "vue-cookies";
+import "@fortawesome/fontawesome-free/css/all.css";
 
 import {
   faShoppingCart,
@@ -99,7 +100,7 @@ library.add(
   faCheckCircle,
   faFingerprint,
   faCheck,
-  faSearch
+  faSearch,
 );
 
 sync(store, router);
@@ -108,7 +109,7 @@ Vue.use(VueCookies);
 Vue.use(BootstrapVue);
 Vue.use(Vuelidate);
 Vue.component("VueSlider", VueSlider);
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+Vue.component("FontAwesomeIcon", FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 new Vue({

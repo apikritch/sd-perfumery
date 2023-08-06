@@ -1,114 +1,106 @@
 <template>
   <div class="contact-us-page">
-    <div class="container-lg">
+    <div class="container">
       <div class="row padding-contact-us-page">
-        <div class="col-6 px-5">
-          <div class="d-flex align-items-center h-100">
-            <div class="w-100">
+        <div
+          class="col-12 col-lg-6 padding-contact info-css order-1 order-lg-0">
+          <div class="d-flex align-items-center h-100 justify-content-center">
+            <div>
               <div class="contact-info-title">Contact Info</div>
-              <div class="row pb-2">
-                <div class="col-1 text-center">
-                  <div class="contact-icon-circle-envelope">
-                    <font-awesome-icon
-                      :icon="['far', 'envelope']"
-                      class="contact-icon-envelope"
-                    />
-                  </div>
+              <div class="d-flex pb-0">
+                <div class="contact-icon-circle-envelope">
+                  <font-awesome-icon
+                    :icon="['far', 'envelope']"
+                    class="contact-icon-envelope" />
                 </div>
 
-                <div class="col-11 ps-4 contact-detail align-self-center">
+                <div class="ps-3 contact-detail align-self-center">
                   info@sdperfumery.lk
                 </div>
               </div>
-              <div class="row">
-                <div class="col-1 text-center">
-                  <div class="contact-icon-circle-map">
-                    <font-awesome-icon
-                      icon="map-marker-alt"
-                      class="contact-icon-map"
-                    />
-                  </div>
+              <div class="d-flex">
+                <div
+                  class="contact-icon-circle-map d-flex align-items-center justify-content-center">
+                  <font-awesome-icon
+                    icon="map-marker-alt"
+                    class="contact-icon-map" />
                 </div>
-                <div class="col-11 ps-4 contact-detail align-self-center">
+                <div class="ps-3 contact-detail align-self-center">
                   Sri Lanka
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-6 px-5">
+        <div class="col-12 col-lg-6 padding-contact order-0 order-lg-1">
           <div class="contact-form-box">
             <div class="position-relative">
               <div class="contact-form-header">Contact Us</div>
               <div class="between_input">
                 <input
+                  v-model.trim="$v.name.$model"
                   type="text"
                   class="contact-form-small"
-                  v-model.trim="$v.name.$model"
                   placeholder="Name"
                   :class="[
                     $v.name.$error ? 'border-fail' : null,
                     $v.name.required ? 'border-success' : null,
-                  ]"
-                />
+                  ]" />
               </div>
               <div class="between_input">
                 <input
+                  v-model.trim="$v.email.$model"
                   type="text"
                   class="contact-form-small"
-                  v-model.trim="$v.email.$model"
                   placeholder="Email"
                   :class="[
                     $v.email.$error ? 'border-fail' : null,
                     $v.email.required && $v.email.email
                       ? 'border-success'
                       : null,
-                  ]"
-                />
+                  ]" />
               </div>
               <div class="between_input position-relative cover_big">
                 <textarea
-                  class="contact-form-big"
                   v-model.trim="$v.message.$model"
+                  class="contact-form-big"
                   placeholder="Enter Your Message Here..."
                   :class="[
                     $v.message.$error ? 'border-fail' : null,
                     $v.message.required ? 'border-success' : null,
-                  ]"
-                />
+                  ]" />
               </div>
               <div class="position-relative text-white">
                 <div v-if="$v.message.$dirty">
                   <div
-                    class="error_2"
                     v-if="
                       !$v.message.required &&
-                        $v.name.required &&
-                        $v.email.required &&
-                        $v.email.email
+                      $v.name.required &&
+                      $v.email.required &&
+                      $v.email.email
                     "
-                  >
+                    class="error_2">
                     Please enter your message.
                   </div>
                 </div>
                 <div v-if="$v.email.$dirty">
                   <div
-                    class="error_2"
                     v-if="!$v.email.required && $v.name.required"
-                  >
+                    class="error_2">
                     Email is required.
                   </div>
                   <div
-                    class="error_2"
                     v-if="
                       !$v.email.email && $v.name.required && $v.email.required
                     "
-                  >
+                    class="error_2">
                     Invalid email format.
                   </div>
                 </div>
                 <div v-if="$v.name.$dirty">
-                  <div class="error_2" v-if="!$v.name.required">
+                  <div
+                    v-if="!$v.name.required"
+                    class="error_2">
                     Please enter your name.
                   </div>
                 </div>
@@ -117,19 +109,19 @@
               <div class="position-relative">
                 <div
                   class="sent_box position-absolute d-flex justify-content-center"
-                  :class="success ? 'visible' : 'hidden'"
-                >
+                  :class="success ? 'visible' : 'hidden'">
                   <div>Your message has been sent.</div>
                 </div>
                 <div :class="send_loading ? 'no_click' : null"></div>
-                <div class="send-message-button" @click="sendMessage">
+                <div
+                  class="send-message-button"
+                  @click="sendMessage">
                   <div v-if="!send_loading">SEND MESSAGE</div>
                   <BeatLoader
-                    class="text-center "
+                    class="text-center"
                     :loading="send_loading"
                     color="#fff"
-                    size="0.5rem"
-                  ></BeatLoader>
+                    size="0.5rem"></BeatLoader>
                 </div>
               </div>
             </div>
@@ -149,6 +141,7 @@ import BeatLoader from "vue-spinner/src/BeatLoader.vue";
 export default {
   name: "ContactUs",
   components: { BeatLoader },
+  mixins: [validationMixin],
   data() {
     return {
       name: "",
@@ -158,7 +151,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     email: {
       required,
@@ -243,30 +235,19 @@ export default {
   height: 100%;
 }
 
-.contact-us-page .container-lg {
+.contact-us-page .container {
   position: relative;
 }
 
-.padding-contact-us-page {
-  padding-top: 5rem;
-  padding-bottom: 5rem;
-}
-
-.contact-us-page .contact-info-title {
-  font-weight: 700;
-  font-size: 1.6rem;
-  padding-bottom: 1.2rem;
-}
-
 .contact-us-page .contact-detail {
-  font-size: 1.4rem;
+  font-size: 1rem;
 }
 
 .contact-us-page .contact-icon-circle-envelope {
-  width: 2.5rem;
-  border-radius: 50%;
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #384648;
+  width: 2.5rem;
+  text-align: center;
 }
 
 .contact-us-page .contact-icon-circle-map {
@@ -274,24 +255,9 @@ export default {
   height: 2.5rem;
   background-color: #384648;
   border-radius: 50%;
-  font-size: 1.65rem;
+  font-size: 1.5rem;
   color: #fff;
   padding-top: 0.15rem;
-}
-
-.contact-form-box {
-  background-color: #384648;
-  border-radius: 0.5rem;
-  padding: 3rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-.contact-form-header {
-  color: #fff;
-  font-size: 1.8rem;
-  font-weight: 400;
-  padding-bottom: 2rem;
-  letter-spacing: 0.5px;
 }
 
 .contact-form-small {
@@ -324,10 +290,6 @@ export default {
   overflow: auto;
   resize: none;
   position: relative;
-}
-
-.cover_big {
-  height: 10rem;
 }
 
 .send-message-button {
@@ -386,7 +348,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .border-fail {
@@ -432,5 +396,135 @@ export default {
   width: 100%;
   text-align: center;
   margin-bottom: 0.75rem;
+}
+.cover_big {
+  height: 5rem;
+}
+
+.contact-form-box {
+  background-color: #384648;
+  border-radius: 0.5rem;
+  padding: 1.75rem;
+  padding-top: 1rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.contact-form-header {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 400;
+  padding-bottom: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.padding-contact-us-page {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.info-css {
+  margin-top: 3rem;
+}
+
+.contact-us-page .contact-info-title {
+  font-weight: 700;
+  font-size: 1.6rem;
+  padding-bottom: 0.25rem;
+}
+
+.container {
+  max-width: 320px;
+}
+
+@media (min-width: 375px) {
+  .container {
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+
+  .padding-contact {
+    padding-left: 4.25rem;
+    padding-right: 4.25rem;
+  }
+  .cover_big {
+    height: 8rem;
+  }
+  .padding-contact-us-page {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  .info-css {
+    margin-top: 4rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+
+  .cover_big {
+    height: 10rem;
+  }
+
+  .padding-contact {
+    padding-left: 8.5rem;
+    padding-right: 8.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+
+  .cover_big {
+    height: 9rem;
+  }
+
+  .padding-contact {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .info-css {
+    margin-top: 0rem;
+  }
+
+  .padding-contact-us-page {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+
+  .cover_big {
+    height: 10rem;
+  }
+
+  .padding-contact {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+  .padding-contact {
+    padding-left: 6.25rem;
+    padding-right: 6.25rem;
+  }
 }
 </style>

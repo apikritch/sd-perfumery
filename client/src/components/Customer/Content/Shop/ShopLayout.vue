@@ -1,30 +1,31 @@
 <template>
   <div>
     <div class="search-bar-section">
-      <div class="container-lg h-100">
-        <div class="row h-100 align-items-center">
-          <div class="col-3">
-            <router-link to="/" class="d-flex align-items-center">
+      <div class="container h-100">
+        <div class="row h-100 align-items-center justify-content-center">
+          <div class="col-3 d-none d-md-block">
+            <router-link
+              to="/"
+              class="d-flex align-items-center">
               <div class="logo-circle me-3"></div>
               Sd Perfumery</router-link
             >
           </div>
-          <div class="col-9">
+          <div class="col-12 col-sm-11 col-md-9">
             <input
+              v-model="search"
               type="text"
               class="form-control search-bar-form-nav"
-              placeholder="Search"
-              v-model="search"
-            />
+              placeholder="Search" />
           </div>
         </div>
       </div>
     </div>
-    <div class="container-lg shop-layout">
+    <div class="container shop-layout">
       <div class="shop-breadcrum d-flex">
         <div>Home</div>
         <div class="mx-3">/</div>
-        <div>{{ $route.name }}</div>
+        <div>{{ camelCasedRoute }}</div>
       </div>
       <div class="row">
         <router-view
@@ -32,8 +33,7 @@
           :changeValueSize="changeValueSize"
           :changeValueGender="changeValueGender"
           :changeValueType="changeValueType"
-          :changeValueBrand="changeValueBrand"
-        ></router-view>
+          :changeValueBrand="changeValueBrand"></router-view>
         <router-view
           name="shop_content"
           :products="products"
@@ -43,14 +43,15 @@
           :valueGender="valueGender"
           :valueType="valueType"
           :valueBrand="valueBrand"
-          :changeValueGender="changeValueGender"
-        ></router-view>
+          :changeValueGender="changeValueGender"></router-view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import camelCase from "camelcase";
+
 export default {
   name: "ShopLayout",
   props: [
@@ -71,6 +72,11 @@ export default {
     return {
       search: "",
     };
+  },
+  computed: {
+    camelCasedRoute() {
+      return camelCase(this.$route.name, { pascalCase: true });
+    },
   },
   watch: {
     search() {
@@ -120,5 +126,46 @@ export default {
 .search-bar-form-nav {
   border-radius: 1.5rem;
   border: 1px solid #384648;
+}
+
+.container {
+  max-width: 100%;
+}
+
+@media (min-width: 375px) {
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+
+  .shop-shop .page {
+    width: 55%;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
 }
 </style>

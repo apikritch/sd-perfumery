@@ -2,116 +2,133 @@
   <div>
     <!--Sign In Modal-->
     <div
-      class="modal-container-sign-in d-flex justify-content-center align-items-center"
       v-if="display_sign_in"
-    >
-      <div class="modal-overelay" @click="hide"></div>
+      class="modal-container-sign-in d-flex justify-content-center align-items-center">
+      <div
+        class="modal-overelay"
+        @click="hide"></div>
       <div class="modal-content">
         <div class="row h-100 no-margin">
-          <div class="col-8">
+          <div class="big-side">
+            <div
+              class="close-icon"
+              @click="hide">
+              <font-awesome-icon icon="times" />
+            </div>
             <div class="d-flex justify-content-center align-items-center h-100">
               <div>
                 <div class="d-flex justify-content-center">
                   <div class="registration-head">Sign In</div>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <div class="input-width">
-                    <div class="form-group position-relative">
+                <form @submit="signIn">
+                  <div class="d-flex justify-content-center">
+                    <div class="input-width">
+                      <div class="form-group position-relative">
+                        <input
+                          ref="emailSignIn"
+                          v-model.trim="$v.sign_in_email.$model"
+                          type="email"
+                          placeholder="Email"
+                          autocomplete="username"
+                          :class="[
+                            $v.sign_in_email.$error ||
+                            !$v.sign_in_password.isUnique
+                              ? 'border_fail_2'
+                              : null,
+                            $v.sign_in_email.required &&
+                            $v.sign_in_email.email &&
+                            $v.sign_in_password.isUnique
+                              ? 'border-success'
+                              : null,
+                          ]" />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <div class="input-width position-relative">
                       <input
-                        type="text"
-                        placeholder="Email"
-                        v-model.trim="$v.sign_in_email.$model"
+                        v-model.trim="$v.sign_in_password.$model"
+                        type="password"
+                        placeholder="Password"
+                        autocomplete="current-password"
                         :class="[
-                          $v.sign_in_email.$error ||
-                          !$v.sign_in_password.isUnique
-                            ? 'border_fail_2'
-                            : null,
-                          $v.sign_in_email.required &&
-                          $v.sign_in_email.email &&
+                          $v.sign_in_password.$error ? 'border_fail_2' : null,
+                          $v.sign_in_password.required &&
                           $v.sign_in_password.isUnique
                             ? 'border-success'
                             : null,
-                        ]"
-                      />
+                        ]" />
+                      <div
+                        v-if="$v.sign_in_password.$dirty"
+                        class="w-100"
+                        :class="
+                          $v.sign_in_email.required && $v.sign_in_email.email
+                            ? 'position-relative'
+                            : 'position-absolute'
+                        ">
+                        <div
+                          v-if="!$v.sign_in_password.required"
+                          class="error_2">
+                          Please Enter Your Password.
+                        </div>
+                        <div
+                          v-if="!$v.sign_in_password.isUnique"
+                          class="error_2">
+                          Incorrect Email or Password.
+                        </div>
+                      </div>
+                      <div
+                        v-if="$v.sign_in_email.$dirty"
+                        class="position-relative w-100">
+                        <div
+                          v-if="!$v.sign_in_email.required"
+                          class="error_2">
+                          Please Enter Your Email.
+                        </div>
+                        <div
+                          v-if="!$v.sign_in_email.email"
+                          class="error_2">
+                          Invalid Email Format.
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="input-width position-relative">
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      v-model.trim="$v.sign_in_password.$model"
-                      :class="[
-                        $v.sign_in_password.$error ? 'border_fail_2' : null,
-                        $v.sign_in_password.required &&
-                        $v.sign_in_password.isUnique
-                          ? 'border-success'
-                          : null,
-                      ]"
-                    />
+                  <div class="d-flex justify-content-end">
                     <div
-                      v-if="$v.sign_in_password.$dirty"
-                      class="w-100"
-                      :class="
-                        $v.sign_in_email.required && $v.sign_in_email.email
-                          ? 'position-relative'
-                          : 'position-absolute'
-                      "
-                    >
-                      <div class="error_2" v-if="!$v.sign_in_password.required">
-                        Please Enter Your Password.
-                      </div>
-                      <div class="error_2" v-if="!$v.sign_in_password.isUnique">
-                        Incorrect Email or Password.
-                      </div>
-                    </div>
-                    <div
-                      v-if="$v.sign_in_email.$dirty"
-                      class="position-relative w-100"
-                    >
-                      <div class="error_2" v-if="!$v.sign_in_email.required">
-                        Please Enter Your Email.
-                      </div>
-                      <div class="error_2" v-if="!$v.sign_in_email.email">
-                        Invalid Email Format.
-                      </div>
+                      class="forgot-text"
+                      @click="showForgotPassword_2">
+                      Forgot password?
                     </div>
                   </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                  <div class="forgot-text" @click="showForgotPassword_2">
-                    Forgot password?
+                  <div class="d-flex justify-content-center">
+                    <button
+                      class="modal-red-button border-0 shadow-sm"
+                      type="submit">
+                      <div v-if="!sign_in_loading">Sign In</div>
+                      <BeatLoader
+                        class="text-center"
+                        :loading="sign_in_loading"
+                        color="#fff"
+                        size="0.5rem"></BeatLoader>
+                    </button>
                   </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="modal-red-button" @click="signIn">
-                    <div v-if="!sign_in_loading">Sign In</div>
-                    <BeatLoader
-                      class="text-center"
-                      :loading="sign_in_loading"
-                      color="#fff"
-                      size="0.5rem"
-                    ></BeatLoader>
-                  </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
           <div
-            class="col-4 bg-small-side justify-content-center align-items-center"
-          >
+            class="col-4 bg-small-side justify-content-center align-items-center">
             <div
               class="close-icon d-flex justify-content-center align-items-center"
-              @click="hide"
-            >
+              @click="hide">
               <font-awesome-icon icon="times" />
             </div>
             <div
-              class="d-flex flex-column justify-content-center align-items-center h-100 font-small-side"
-            >
+              class="d-flex flex-column justify-content-center align-items-center h-100 font-small-side">
               <div class="text-center mb-2">Don't have an account?</div>
-              <div class="small-side-button mt-2" @click="showSignUp_2">
+              <div
+                class="small-side-button mt-2"
+                @click="showSignUp_2">
                 Sign Up
               </div>
             </div>
@@ -123,156 +140,171 @@
 
     <!--Sign Up Modal-->
     <div
-      class="modal-container-sign-in d-flex justify-content-center align-items-center"
       v-if="display_sign_up"
-    >
-      <div class="modal-overelay" @click="hide"></div>
+      class="modal-container-sign-in d-flex justify-content-center align-items-center">
+      <div
+        class="modal-overelay"
+        @click="hide"></div>
       <div class="modal-content">
         <div class="row h-100 no-margin">
           <div
-            class="col-4 bg-small-side justify-content-center align-items-center"
-          >
+            class="col-4 bg-small-side justify-content-center align-items-center">
             <div
               class="close-icon-dark d-flex justify-content-center align-items-center"
-              @click="hide"
-            >
+              @click="hide">
               <font-awesome-icon icon="times" />
             </div>
             <div
-              class="d-flex flex-column justify-content-center align-items-center h-100 font-small-side"
-            >
+              class="d-flex flex-column justify-content-center align-items-center h-100 font-small-side">
               <div class="text-center mb-2">Already have an account?</div>
-              <div class="small-side-button mt-2" @click="showSignIn_2">
+              <div
+                class="small-side-button mt-2"
+                @click="showSignIn_2">
                 Sign In
               </div>
             </div>
           </div>
-          <div class="col-8">
+          <div class="big-side">
+            <div
+              class="close-icon"
+              @click="hide">
+              <font-awesome-icon icon="times" />
+            </div>
             <div class="d-flex justify-content-center align-items-center h-100">
               <div>
                 <div class="d-flex justify-content-center">
                   <div class="registration-head">Create Account</div>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <div class="input-width">
-                    <input
-                      type="text"
-                      placeholder="Email"
-                      v-model.trim="$v.email.$model"
-                      :class="[
-                        $v.email.$error ? 'border_fail_2' : null,
-                        $v.email.required && $v.email.email && $v.email.isUnique
-                          ? 'border-success'
-                          : null,
-                      ]"
-                    />
-                  </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="input-width position-relative">
-                    <input
-                      type="password"
-                      placeholder="Password"
-                      v-model.trim="$v.password.$model"
-                      :class="[
-                        $v.password.$error || !$v.email.isUnique
-                          ? 'border_fail_2'
-                          : null,
-                        $v.password.required &&
-                        $v.password.minLength &&
-                        $v.email.isUnique
-                          ? 'border-success'
-                          : null,
-                      ]"
-                    />
-                  </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="input-width position-relative">
-                    <input
-                      type="password"
-                      placeholder="Confirm Password"
-                      v-model.trim="$v.confirm_password.$model"
-                      :class="[
-                        $v.confirm_password.$error || !$v.email.isUnique
-                          ? 'border_fail_2'
-                          : null,
-                        $v.confirm_password.sameAsPassword &&
-                        $v.confirm_password.required &&
-                        $v.email.isUnique
-                          ? 'border-success'
-                          : null,
-                      ]"
-                    />
-                    <div v-if="$v.confirm_password.$dirty">
-                      <div
-                        class="error_2"
-                        v-if="
-                          !$v.confirm_password.required &&
+                <form @submit="signUp">
+                  <div class="d-flex justify-content-center">
+                    <div class="input-width">
+                      <input
+                        ref="emailSignUp"
+                        v-model.trim="$v.email.$model"
+                        type="email"
+                        placeholder="Email"
+                        autocomplete="username"
+                        :class="[
+                          $v.email.$error ? 'border_fail_2' : null,
                           $v.email.required &&
                           $v.email.email &&
+                          $v.email.isUnique
+                            ? 'border-success'
+                            : null,
+                        ]" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <div class="input-width position-relative">
+                      <input
+                        v-model.trim="$v.password.$model"
+                        autocomplete="new-password"
+                        type="password"
+                        placeholder="Password"
+                        :class="[
+                          $v.password.$error || !$v.email.isUnique
+                            ? 'border_fail_2'
+                            : null,
                           $v.password.required &&
-                          $v.password.minLength
-                        "
-                      >
-                        Confirm Password is required.
-                      </div>
-                      <div
-                        class="error_2"
-                        v-if="
-                          !$v.confirm_password.sameAsPassword &&
                           $v.password.minLength &&
+                          $v.email.isUnique
+                            ? 'border-success'
+                            : null,
+                        ]" />
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <div class="input-width position-relative">
+                      <input
+                        v-model.trim="$v.confirm_password.$model"
+                        autocomplete="new-password"
+                        type="password"
+                        placeholder="Confirm Password"
+                        :class="[
+                          $v.confirm_password.$error || !$v.email.isUnique
+                            ? 'border_fail_2'
+                            : null,
+                          $v.confirm_password.sameAsPassword &&
                           $v.confirm_password.required &&
-                          $v.email.required &&
-                          $v.email.email &&
-                          $v.password.required
-                        "
-                      >
-                        Passwords must be identical.
+                          $v.email.isUnique
+                            ? 'border-success'
+                            : null,
+                        ]" />
+                      <div v-if="$v.confirm_password.$dirty">
+                        <div
+                          v-if="
+                            !$v.confirm_password.required &&
+                            $v.email.required &&
+                            $v.email.email &&
+                            $v.password.required &&
+                            $v.password.minLength
+                          "
+                          class="error_2">
+                          Confirm Password is required.
+                        </div>
+                        <div
+                          v-if="
+                            !$v.confirm_password.sameAsPassword &&
+                            $v.password.minLength &&
+                            $v.confirm_password.required &&
+                            $v.email.required &&
+                            $v.email.email &&
+                            $v.password.required
+                          "
+                          class="error_2">
+                          Passwords must be identical.
+                        </div>
                       </div>
-                    </div>
-                    <div v-if="$v.password.$dirty">
+                      <div v-if="$v.password.$dirty">
+                        <div
+                          v-if="
+                            !$v.password.required &&
+                            $v.email.required &&
+                            $v.email.email
+                          "
+                          class="error_2">
+                          Password is required.
+                        </div>
+                        <div
+                          v-if="!$v.password.minLength && $v.email.required"
+                          class="error_2">
+                          Password must have at least 6 letters.
+                        </div>
+                      </div>
                       <div
-                        class="error_2"
-                        v-if="
-                          !$v.password.required &&
-                          $v.email.required &&
-                          $v.email.email
-                        "
-                      >
-                        Password is required.
-                      </div>
-                      <div
-                        class="error_2"
-                        v-if="!$v.password.minLength && $v.email.required"
-                      >
-                        Password must have at least 6 letters.
-                      </div>
-                    </div>
-                    <div v-if="$v.email.$dirty" class="position-relative">
-                      <div class="error_2" v-if="!$v.email.required">
-                        Email is required.
-                      </div>
-                      <div class="error_2" v-if="!$v.email.email">
-                        Invalid email format.
-                      </div>
-                      <div class="error_2" v-if="!$v.email.isUnique">
-                        Email already exists.
+                        v-if="$v.email.$dirty"
+                        class="position-relative">
+                        <div
+                          v-if="!$v.email.required"
+                          class="error_2">
+                          Email is required.
+                        </div>
+                        <div
+                          v-if="!$v.email.email"
+                          class="error_2">
+                          Invalid email format.
+                        </div>
+                        <div
+                          v-if="!$v.email.isUnique"
+                          class="error_2">
+                          Email already exists.
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="d-flex justify-content-center">
-                  <div class="modal-red-button" @click="signUp">
-                    <div v-if="!sign_up_loading">Sign Up</div>
-                    <BeatLoader
-                      class="text-center"
-                      :loading="sign_up_loading"
-                      color="#fff"
-                      size="0.5rem"
-                    ></BeatLoader>
+                  <div class="d-flex justify-content-center">
+                    <button
+                      class="modal-red-button border-0 shadow-sm"
+                      type="submit">
+                      <div v-if="!sign_up_loading">Sign Up</div>
+                      <BeatLoader
+                        class="text-center"
+                        :loading="sign_up_loading"
+                        color="#fff"
+                        size="0.5rem"></BeatLoader>
+                    </button>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </div>
@@ -283,49 +315,50 @@
 
     <!--Forgot Password Modal-->
     <div
-      class="modal-container-sign-in d-flex justify-content-center align-items-center"
       v-if="display_forgot_password"
-    >
-      <div class="modal-overelay" @click="hide"></div>
+      class="modal-container-sign-in d-flex justify-content-center align-items-center">
+      <div
+        class="modal-overelay"
+        @click="hide"></div>
       <div class="modal-content">
         <div
-          class="d-flex flex-column justify-content-end align-items-center h-50 no-margin modal-bg-half-top forgot-padding"
-          :class="after_sent ? 'pb-5' : null"
-        >
+          class="d-flex flex-column align-items-center h-50 no-margin modal-bg-half-top forgot-padding"
+          :class="after_sent ? 'pb-5' : null">
           <div
             class="close-icon d-flex justify-content-center align-items-center"
-            @click="hide"
-          >
+            @click="hide">
             <font-awesome-icon icon="times" />
           </div>
-          <div class="registration-head">Forgot Password</div>
-          <div class="forgot-details" v-if="!after_sent">
+          <div class="forgot-head">Forgot Password</div>
+          <div
+            v-if="!after_sent"
+            class="forgot-details">
             Enter the email address associated with your account and we’ll send
             you a link to reset your password.
           </div>
         </div>
         <div
-          class="d-flex flex-column h-50 justify-content-center align-items-center no-margin forgot-padding"
           v-if="after_sent"
-        >
+          class="d-flex flex-column h-50 justify-content-center align-items-center no-margin forgot-padding">
           <div class="text-center">
             Password reset link has been sent to your email account, Please
             check your email.
           </div>
 
-          <div class="w-100 text-center modal-red-button_2" @click="hide">
+          <div
+            class="w-100 text-center modal-red-button_2 shadow-sm"
+            @click="hide">
             <div>Close</div>
           </div>
         </div>
         <div
-          class="d-flex flex-column h-50 justify-content-center align-items-center no-margin forgot-padding"
           v-if="!after_sent"
-        >
-          <div class="w-100 pt-4 position-relative">
+          class="d-flex flex-column h-50 justify-content-center align-items-center no-margin forgot-padding">
+          <div class="w-100 position-relative forgot-email">
             <input
+              v-model.trim="$v.forgot_password.$model"
               type="text"
               placeholder="Email"
-              v-model.trim="$v.forgot_password.$model"
               :class="[
                 $v.forgot_password.$error ? 'border_fail_2' : null,
                 $v.forgot_password.required &&
@@ -333,20 +366,27 @@
                 $v.forgot_password.isUnique
                   ? 'border-success'
                   : null,
-              ]"
-            />
+              ]" />
             <div v-if="$v.forgot_password.$dirty">
-              <div class="error_2" v-if="!$v.forgot_password.required">
+              <div
+                v-if="!$v.forgot_password.required"
+                class="error_2">
                 Email is required.
               </div>
-              <div class="error_2" v-if="!$v.forgot_password.email">
+              <div
+                v-if="!$v.forgot_password.email"
+                class="error_2">
                 Invalid email format.
               </div>
-              <div class="error_2" v-if="!$v.forgot_password.isUnique">
+              <div
+                v-if="!$v.forgot_password.isUnique"
+                class="error_2">
                 No account found with that email address.
               </div>
             </div>
-            <div class="success" v-if="success">
+            <div
+              v-if="success"
+              class="success">
               We have e-mailed your password reset link!
             </div>
           </div>
@@ -357,19 +397,22 @@
             </div>
           </div>-->
 
-          <div class="w-100 text-center modal-red-button_2" @click="forgot">
+          <div
+            class="w-100 text-center modal-red-button_2 shadow-sm"
+            @click="forgot">
             <div v-if="!forgot_loading">Send</div>
             <BeatLoader
               class="text-center"
               :loading="forgot_loading"
               color="#fff"
-              size="0.5rem"
-            ></BeatLoader>
+              size="0.5rem"></BeatLoader>
           </div>
 
-          <div class="mt-auto w-100 text-center text-end-size">
+          <div class="mt-auto w-100 text-center text-end-size dont-have">
             Don’t have an account?
-            <div class="d-inline sign-up-color" @click="showSignUp_2">
+            <div
+              class="d-inline sign-up-color"
+              @click="showSignUp_2">
               Sign up
             </div>
           </div>
@@ -378,35 +421,55 @@
     </div>
     <!--Forgot Password Modal-->
 
-    <div class="navbar-section">
+    <div class="navbar-section shadow-sm">
       <div
-        class="container-lg d-flex align-items-center justify-content-between h-100"
-      >
-        <div>Call us 0012804227</div>
+        class="container d-flex align-items-center justify-content-between h-100 navbar-light">
+        <button
+          class="navbar-toggler d-block d-lg-none shadow-sm"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="d-none d-lg-block">Call us 0012804227</div>
         <div class="d-flex nav-text-color">
-          <div class="d-flex align-items-center nav-text-color_2">
+          <div class="d-none d-lg-flex align-items-center nav-text-color_2">
             <router-link to="/">Home</router-link>
-            <router-link to="/shop" class="ms-4">Shop</router-link>
-            <router-link to="/contactus" class="ms-4">Contact Us</router-link>
+            <router-link
+              to="/shop"
+              class="ms-4"
+              >Shop</router-link
+            >
+            <router-link
+              to="/contactus"
+              class="ms-4"
+              >Contact Us</router-link
+            >
           </div>
           <div
-            class="d-flex align-items-center ms-4 border-on-nav"
             v-if="!$store.state.isCustomerLoggedIn"
-          >
-            <button @click="showSignIn_2" class="ms-4 registration-button">
+            class="d-none d-lg-flex align-items-center ms-4 border-on-nav">
+            <button
+              class="ms-4 registration-button"
+              @click="showSignIn_2">
               Sign In
             </button>
-            <button @click="showSignUp" class="ms-4 navbar-signup-button">
+            <button
+              class="ms-4 navbar-signup-button shadow-sm"
+              @click="showSignUp">
               Sign Up
             </button>
           </div>
 
           <!--User Icon-->
           <div
-            class="d-flex align-items-center ms-4 border-on-nav"
             v-if="$store.state.isCustomerLoggedIn"
-          >
-            <router-link to="/myaccount" class="ms-4">
+            class="align-items-center ms-4 border-on-nav d-none d-lg-flex">
+            <router-link
+              to="/myaccount"
+              class="ms-4">
               <div class="d-flex align-items-center">
                 <div class="admin-circle">
                   {{ $store.state.customer.email.toUpperCase().charAt(0) }}
@@ -417,7 +480,9 @@
               </div>
             </router-link>
 
-            <button @click="signOut" class="ms-4 navbar-signout-button">
+            <button
+              class="ms-4 navbar-signout-button"
+              @click="signOut">
               Sign Out
             </button>
           </div>
@@ -427,12 +492,10 @@
           <div class="ms-4 position-relative cart-icon-button">
             <div
               class="d-flex align-items-center h-100 cart-button"
-              @click="showCart"
-            >
+              @click="showCart">
               <font-awesome-icon
                 icon="shopping-cart"
-                class="nav-shopping-cart"
-              />
+                class="nav-shopping-cart" />
               <div class="nav-cart-qty">
                 {{ cartQty }}
               </div>
@@ -440,49 +503,158 @@
           </div>
           <!--Shopping Cart-->
         </div>
+
+        <div
+          id="offcanvasNavbar"
+          class="offcanvas offcanvas-start"
+          tabindex="-1"
+          aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header">
+            <h5
+              id="offcanvasNavbarLabel"
+              class="offcanvas-title">
+              SD Perfumery
+            </h5>
+            <button
+              type="button"
+              class="btn-close text-reset"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="navbar-nav justify-content-end">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  :class="$route.name === 'Home' && 'active'"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="$router.push({ name: 'Home' })"
+                  >Home
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  :class="$route.name === 'SHOP' && 'active'"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="$router.push({ name: 'SHOP' })"
+                  >Shop</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  :class="$route.name === 'Contact' && 'active'"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="$router.push({ name: 'Contact' })"
+                  >Contact Us</a
+                >
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li v-if="$store.state.isCustomerLoggedIn">
+                <a
+                  class="nav-link"
+                  :class="$route.name === 'Account' && 'active'"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="$router.push({ name: 'Account' })"
+                  >My Account</a
+                >
+              </li>
+              <li v-if="$store.state.isCustomerLoggedIn">
+                <a
+                  class="nav-link"
+                  :class="$route.name === 'Order' && 'active'"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="$router.push({ name: 'Order' })"
+                  >My Orders</a
+                >
+              </li>
+              <li v-if="$store.state.isCustomerLoggedIn">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="signOut"
+                  >Sign Out</a
+                >
+              </li>
+              <li
+                v-if="!$store.state.isCustomerLoggedIn"
+                class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="showSignIn_2">
+                  Sign In</a
+                >
+              </li>
+              <li
+                v-if="!$store.state.isCustomerLoggedIn"
+                class="nav-item">
+                <a
+                  class="nav-link"
+                  aria-current="page"
+                  data-bs-dismiss="offcanvas"
+                  @click="showSignUp">
+                  Sign Up</a
+                >
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li class="nav-item">
+                <a class="nav-link">Call us 0012804227</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     <!--Cart Overlay-->
     <div
-      class="modal-overelay-cart"
-      @click="hideCart"
       v-if="display_cart"
-    ></div>
+      class="modal-overelay-cart"
+      @click="hideCart"></div>
     <div class="container position-relative">
       <div
         class="modal-content-cart"
-        :class="display_cart ? 'slide-cart-1' : 'slide-cart'"
-      >
+        :class="display_cart ? 'slide-cart-1' : 'slide-cart'">
         <div class="d-flex justify-content-between">
           <div class="cart-header">Cart</div>
           <div
-            class="close_header d-flex justify-content-center align-items-center"
-          >
+            class="close_header d-flex justify-content-center align-items-center">
             <font-awesome-icon
               icon="times"
               class="big_close_cart"
-              @click="hideCart"
-            />
+              @click="hideCart" />
           </div>
         </div>
 
         <div class="cover-max-height">
           <div class="max-height-mini-cart">
-            <div v-if="!cart.length" class="d-flex justify-content-center">
+            <div
+              v-if="!cart.length"
+              class="d-flex justify-content-center">
               Your shopping cart is empty
             </div>
             <div v-if="cart.length">
               <div
-                class="row item-in-mini-cart align-items-center"
                 v-for="(item, index) in cart"
                 :key="index"
-              >
+                class="row item-in-mini-cart align-items-center">
                 <div class="col-2 mini-image-padding">
                   <img
                     :src="item.product.image"
                     width="100%"
-                    class="mini-cart-image"
-                  />
+                    class="mini-cart-image" />
                 </div>
                 <div class="col-10">
                   <div class="row">
@@ -493,28 +665,25 @@
                     </div>
                     <div class="col-1 mini-close">
                       <div
-                        class="new_mini_close d-flex- justify-content-center align-items-center"
-                      >
+                        class="new_mini_close d-flex- justify-content-center align-items-center">
                         <font-awesome-icon
                           icon="times"
                           class="mini-close-size"
-                          @click="removeItemInCart(index)"
-                        />
+                          @click="removeItemInCart(index)" />
                       </div>
                     </div>
                   </div>
                   <div
-                    class="row pt-1 justify-content-between align-items-center"
-                  >
+                    class="row pt-1 justify-content-between align-items-center">
                     <div class="col-4 mini-qty">
                       <div
-                        class="d-flex justify-content-between align-items-center h-100"
-                      >
+                        class="d-flex justify-content-between align-items-center h-100">
                         <div
                           class="circle-minus d-flex justify-content-between align-items-center"
-                          @click="deleteItemInCart(index)"
-                        >
-                          <font-awesome-icon icon="minus" class="w-100" />
+                          @click="deleteItemInCart(index)">
+                          <font-awesome-icon
+                            icon="minus"
+                            class="w-100" />
                         </div>
                         <div class="px-2 qty-text">
                           {{ item.qty }}
@@ -522,16 +691,16 @@
 
                         <div
                           class="circle-plus d-flex justify-content-between align-items-center"
-                          @click="addItemToCart(item.product, 1)"
-                        >
-                          <font-awesome-icon icon="plus" class="w-100" />
+                          @click="addItemToCart(item.product, 1)">
+                          <font-awesome-icon
+                            icon="plus"
+                            class="w-100" />
                         </div>
                       </div>
                     </div>
                     <div
-                      class="col-3 mini-discount-total"
                       v-if="item.product.discount"
-                    >
+                      class="col-3 mini-discount-total">
                       Rs.
                       {{
                         (item.qty * item.product.price).toLocaleString(
@@ -539,7 +708,7 @@
                           {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
-                          }
+                          },
                         )
                       }}
                     </div>
@@ -547,8 +716,7 @@
                       <div
                         :class="
                           item.product.discount ? 'discount-text-mini' : null
-                        "
-                      >
+                        ">
                         Rs.
                         {{
                           (item.qty * item.product.final_price).toLocaleString(
@@ -556,7 +724,7 @@
                             {
                               minimumFractionDigits: 2,
                               maximumFractionDigits: 2,
-                            }
+                            },
                           )
                         }}
                       </div>
@@ -583,10 +751,9 @@
         </div>
 
         <div
-          class="mt-2 mini-check-button"
           v-if="cart.length"
-          @click="display_cart_redirect"
-        >
+          class="mt-2 mini-check-button"
+          @click="display_cart_redirect">
           CHECKOUT NOW
         </div>
       </div>
@@ -604,6 +771,8 @@ import BeatLoader from "vue-spinner/src/BeatLoader.vue";
 
 export default {
   name: "MyNavbar",
+  components: { BeatLoader },
+  mixins: [validationMixin],
   props: {
     cart: Array,
     cartQty: Number,
@@ -623,7 +792,6 @@ export default {
     hideAll: Function,
     showForgotPassword: Function,
   },
-  components: { BeatLoader },
   data() {
     return {
       email: "",
@@ -643,7 +811,6 @@ export default {
       after_sent: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     email: {
       required,
@@ -721,9 +888,24 @@ export default {
       this.no_email = false;
       this.$v.forgot_password.$reset();
     },
+    display_sign_in(value) {
+      if (value) {
+        setTimeout(() => {
+          this.$refs.emailSignIn.focus();
+        }, 400);
+      }
+    },
+    display_sign_up(value) {
+      if (value) {
+        setTimeout(() => {
+          this.$refs.emailSignUp.focus();
+        }, 400);
+      }
+    },
   },
   methods: {
-    async signUp() {
+    async signUp(event) {
+      event.preventDefault();
       this.sign_up_loading = true;
 
       this.$v.email.$touch();
@@ -755,7 +937,8 @@ export default {
         this.sign_up_loading = false;
       }
     },
-    async signIn() {
+    async signIn(event) {
+      event.preventDefault();
       this.sign_in_loading = true;
 
       this.$v.sign_in_email.$touch();
@@ -856,14 +1039,9 @@ export default {
 .navbar-section {
   height: 50px;
   background: #b7dde3;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   font-weight: 500;
   font-size: 1rem;
   padding: unset;
-}
-
-.navbar-section .border-on-nav {
-  border-left: 2px solid #384648 !important;
 }
 
 .navbar-signup-button {
@@ -995,7 +1173,7 @@ export default {
 .modal-content .close-icon {
   position: absolute;
   right: 0.75rem;
-  top: 0.4rem;
+  top: 0.75rem;
   font-size: 0.9rem;
   cursor: pointer;
   color: #fff;
@@ -1098,7 +1276,7 @@ export default {
 .modal-content .close-icon-dark {
   position: absolute;
   right: 0.75rem;
-  top: 0.4rem;
+  top: 0.75rem;
   font-size: 0.9rem;
   cursor: pointer;
   color: #384648;
@@ -1116,14 +1294,10 @@ export default {
   color: #fff;
 }
 
-.forgot-padding {
-  padding-left: 7rem;
-  padding-right: 7rem;
-}
-
 .forgot-details {
   font-size: 0.8rem;
   padding-bottom: 2rem;
+  display: none;
 }
 
 .sign-up-color {
@@ -1156,12 +1330,13 @@ export default {
   position: fixed;
   top: 0;
   height: 100vh;
-  width: 25%;
+  width: 425px;
   overflow: hidden;
   box-sizing: border-box;
   background-color: white;
   padding: 0.75rem 1rem 1rem 1rem;
   transition: all 0.3s ease-in-out;
+  z-index: 6000;
 }
 
 .slide-cart-1 {
@@ -1170,7 +1345,7 @@ export default {
 }
 
 .slide-cart {
-  right: -25%;
+  right: -425px;
 }
 
 .cart-header {
@@ -1423,6 +1598,153 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
+}
+
+.offcanvas {
+  z-index: 6000;
+}
+
+.offcanvas-start {
+  width: 300px;
+  height: 100vh;
+}
+
+.navbar-toggler {
+  background-color: #ffffff;
+  border: unset;
+}
+.navbar-toggler:focus {
+  box-shadow: unset;
+}
+
+.forgot-padding {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+.forgot-details {
+  font-size: 0.8rem;
+  padding-bottom: 2rem;
+}
+
+.dont-have {
+  display: none;
+}
+
+.modal-bg-half-top {
+  justify-content: center;
+}
+
+.forgot-head {
+  font-size: 1.4rem;
+  padding-bottom: unset;
+}
+
+@media (min-width: 0) and (max-width: 639px) {
+  .big-side .close-icon {
+    color: #384648;
+  }
+
+  .modal-content-cart {
+    width: 300px;
+  }
+
+  .slide-cart {
+    right: -300px;
+  }
+}
+
+@media (min-width: 0) and (max-width: 374px) {
+  .modal-content {
+    width: 300px;
+    height: 230px;
+  }
+
+  .bg-small-side {
+    display: none;
+  }
+
+  .big-side {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 375px) and (max-width: 639px) {
+  .modal-content {
+    width: 355px;
+    height: 250px;
+  }
+
+  .bg-small-side {
+    display: none;
+  }
+
+  .big-side {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+@media (min-width: 640px) {
+  .big-side {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+  }
+
+  .big-side .close-icon {
+    display: none;
+  }
+
+  .modal-content-cart {
+    width: 350px;
+  }
+
+  .slide-cart {
+    right: -350px;
+  }
+
+  .forgot-padding {
+    padding-left: 7rem;
+    padding-right: 7rem;
+  }
+
+  .forgot-details {
+    display: block;
+  }
+
+  .dont-have {
+    display: block;
+  }
+
+  .forgot-email {
+    margin-top: 1.5rem;
+  }
+
+  .modal-bg-half-top {
+    justify-content: end;
+  }
+
+  .forgot-head {
+    font-size: 1.4rem;
+    padding-bottom: 0.75rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-section .border-on-nav {
+    border-left: 2px solid #384648 !important;
+  }
+
+  .modal-content-cart {
+    width: 425px;
+  }
+
+  .slide-cart {
+    right: -425px;
+  }
 }
 </style>

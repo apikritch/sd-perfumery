@@ -1,7 +1,7 @@
 <template>
   <div class="admin-login-bg">
     <div class="d-flex justify-content-center align-items-center h-100">
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column notfound-width">
         <div class="d-flex justify-content-center reset-logo">
           <font-awesome-icon icon="question-circle" />
         </div>
@@ -12,7 +12,11 @@
           </div>
         </div>
 
-        <div class="login-button" @click="getBack">GO BACK</div>
+        <div
+          class="login-button"
+          @click="getBack">
+          GO BACK
+        </div>
       </div>
     </div>
   </div>
@@ -60,16 +64,6 @@ export default {
   outline: inherit;
 }
 
-.admin-login-bg .login-button {
-  background-color: #985855;
-  color: #fff;
-  padding: 0.4rem 1.25rem 0.4rem 1.25rem;
-  cursor: pointer;
-  user-select: none;
-  text-align: center;
-  margin-top: 0.5rem;
-}
-
 .forgot-admin {
   text-align: right;
   color: #fff;
@@ -86,5 +80,40 @@ export default {
 .unau_text {
   font-size: 1rem;
   font-weight: 300;
+}
+
+.admin-login-bg .login-button {
+  background-color: #985855;
+  color: #fff;
+  padding: 0.4rem 1.25rem 0.4rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.notfound-width {
+  width: 16.25rem;
+}
+
+@media (min-width: 375px) {
+  .notfound-width {
+    width: auto;
+  }
+}
+
+@media (min-width: 576px) {
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }
 </style>

@@ -10,9 +10,8 @@
           <div class="admin-notification">
             <div
               class="d-flex justify-content-center align-items-center cursor_notification"
-              @click="showNotification"
               :class="notification_display ? 'active_notification' : null"
-            >
+              @click="showNotification">
               <div class="admin-bell"><font-awesome-icon icon="bell" /></div>
               <div class="admin-notification-number">
                 {{ unReadOrder.length }}
@@ -20,25 +19,28 @@
             </div>
 
             <!--Notification-->
-            <div class="notification_action" v-if="notification_display">
-              <div class="notification_overlay" @click="hideNotification"></div>
+            <div
+              v-if="notification_display"
+              class="notification_action">
+              <div
+                class="notification_overlay"
+                @click="hideNotification"></div>
               <div class="notification_content">
                 <div class="notification_header">Notifications</div>
                 <div
                   v-if="unReadOrder.length == 0"
-                  class="d-flex flex-column align-items-center justify-content-center border_empty_noti"
-                >
+                  class="d-flex flex-column align-items-center justify-content-center border_empty_noti">
                   <font-awesome-icon
                     icon="envelope-open"
-                    class="noti_empty_icon"
-                  />
+                    class="noti_empty_icon" />
                   <div class="noti_empty_text">No Current Notifications</div>
                 </div>
-                <div v-for="(notification, index) in unReadOrder" :key="index">
+                <div
+                  v-for="(notification, index) in unReadOrder"
+                  :key="index">
                   <div
                     class="d-flex align-items-center noti_order"
-                    @click="goToDetail(notification.id)"
-                  >
+                    @click="goToDetail(notification.id)">
                     <div class="noti_right_pad">
                       <div class="notification_circle">
                         {{ notification.email.toUpperCase().charAt(0) }}
@@ -67,8 +69,7 @@
                 class="d-flex align-items-center hover_email"
                 :class="
                   $route.path == '/admin/myaccount' ? 'selected_email' : null
-                "
-              >
+                ">
                 <div class="admin-circle">
                   <div class="position_letter">
                     {{ $store.state.user.email.toUpperCase().charAt(0) }}
@@ -81,7 +82,9 @@
               </div>
             </router-link>
 
-            <button @click="signOut" class="ms-4 navbar-signout-button">
+            <button
+              class="ms-4 navbar-signout-button"
+              @click="signOut">
               Log Out
             </button>
           </div>

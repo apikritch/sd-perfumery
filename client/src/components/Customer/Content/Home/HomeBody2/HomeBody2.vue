@@ -4,30 +4,21 @@
       <div class="col-3">
         <div class="sha_cate">
           <router-link to="/shop/women">
-            <img
-              src="https://d3r2zleywq7959.cloudfront.net/media/catalog/product/cache/1/image/675x/9df78eab33525d08d6e5fb8d27136e95/6/4/64818_xlarge.jpg"
-            />
-            <div class="text-under-category">WOMEN'S</div>
+            <div class="text-under-category rounded shadow-sm">WOMEN'S</div>
           </router-link>
         </div>
       </div>
       <div class="col-3">
         <div class="sha_cate">
           <router-link to="/shop/men">
-            <img
-              src="https://d3r2zleywq7959.cloudfront.net/media/catalog/product/cache/1/image/675x/9df78eab33525d08d6e5fb8d27136e95/6/4/64816_xlarge.jpg"
-            />
-            <div class="text-under-category">MEN'S</div>
+            <div class="text-under-category rounded shadow-sm">MEN'S</div>
           </router-link>
         </div>
       </div>
       <div class="col-3">
         <div class="sha_cate">
           <router-link to="/shop/unisex">
-            <img
-              src="https://d3r2zleywq7959.cloudfront.net/media/catalog/product/cache/1/image/675x/9df78eab33525d08d6e5fb8d27136e95/1/6/16728_xlarge.jpg"
-            />
-            <div class="text-under-category">UNISEX</div>
+            <div class="text-under-category rounded shadow-sm">UNISEX</div>
           </router-link>
         </div>
       </div>
@@ -45,8 +36,8 @@ export default {
 .body-2-section .row {
   padding-top: 8rem;
   padding-bottom: 4rem;
-  padding-left: 5rem;
-  padding-right: 5rem;
+  padding-left: 0rem;
+  padding-right: 0rem;
 }
 
 .body-2-section .col-3 {
@@ -71,5 +62,24 @@ export default {
 
 .sha_cate:hover {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.body-2-section {
+  display: none;
+}
+
+@media (min-width: 992px) {
+  .body-2-section {
+    display: block;
+  }
+}
+
+@media (min-width: 1200px) {
+  .body-2-section .row {
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
 }
 </style>

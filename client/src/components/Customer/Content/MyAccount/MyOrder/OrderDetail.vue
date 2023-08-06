@@ -1,176 +1,116 @@
 <template>
-  <div class="col-9 d-flex justify-content-center order-detail-content">
-    <div
-      v-if="loading"
-      class="d-flex align-items-center justify-content-center cover_loader "
-    >
-      <MoonLoader color="#985855" />
-    </div>
+  <div
+    class="col-12 col-lg-9 d-flex justify-content-center order-detail-content">
+    <div class="container">
+      <div
+        v-if="loading"
+        class="d-flex align-items-center justify-content-center cover_loader">
+        <MoonLoader color="#985855" />
+      </div>
 
-    <div v-if="!loading">
-      <div class="order-detail-width">
-        <div class="order-detail-header">
-          <div class="d-inline pe-3">Order Number:</div>
-          <div class="d-inline order-detail-header-number">{{ order.id }}</div>
-        </div>
-
-        <div class="row order-detail-box">
-          <div
-            class="col-4 d-flex order-detail-padding flex-column text-center"
-          >
-            <div>Order Date:</div>
-            <div class="order-date">{{ order.order_date }}</div>
-          </div>
-          <div
-            class="col-4 d-flex order-detail-padding flex-column text-center"
-          >
-            <div>Shipment Status:</div>
-            <div class="order-ship-status">{{ order.shippment_status }}</div>
-          </div>
-          <div
-            class="col-4 d-flex order-detail-padding flex-column text-center"
-          >
-            <div>Order Status:</div>
-            <div class="order-ship-status">{{ order.order_status }}</div>
+      <div v-if="!loading">
+        <div class="order-detail-width">
+          <div class="order-detail-header">
+            <div class="d-inline pe-3">Order Number:</div>
+            <div class="d-inline order-detail-header-number">
+              {{ order.id }}
+            </div>
           </div>
 
-          <div class="col-12 text-center order-detail-padding">
-            <div class="pe-2">Tracking Number:</div>
-            <div class="order-tracking-number">{{ order.tracking_number }}</div>
-          </div>
-        </div>
-        <div class="order-detail-section">
-          <div class="d-flex justify-content-between label-row">
-            <div class="text-center item-col">
-              Item
+          <div class="row flex-column flex-sm-row order-detail-box">
+            <div
+              class="col-12 col-sm-4 d-flex order-detail-padding flex-column text-center">
+              <div>Order Date:</div>
+              <div class="order-date">{{ order.order_date }}</div>
             </div>
-            <div class="text-center order-price">Price</div>
-            <div class="text-center qty-area">Quantity</div>
-            <div class="text-center order-total">Total</div>
-          </div>
-          <div
-            class="d-flex justify-content-between align-items-center padding-item-detail"
-            v-for="(product, index) in ordered_product"
-            :key="index"
-          >
-            <div class="item-col">
-              <div class="d-flex align-items-center">
-                <div class="order-image-col">
-                  <img :src="product.image" />
-                </div>
-                <div class="order-title-col">
-                  {{ product.title }} | {{ product.type }} |
-                  {{ product.gender }} - {{ product.size }} by
-                  {{ product.brand }}
-                </div>
-              </div>
+            <div
+              class="col-12 col-sm-4 d-flex order-detail-padding flex-column text-center">
+              <div>Shipment Status:</div>
+              <div class="order-ship-status">{{ order.shippment_status }}</div>
             </div>
-            <div class="text-center order-price-list ">
-              <div v-if="product.discount" class="small-full-price ">
-                Rs.
-                {{
-                  product.price.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-                }}
-              </div>
-              <div :class="product.discount ? 'red-text' : null">
-                Rs.
-                {{
-                  product.final_price.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-                }}
-              </div>
+            <div
+              class="col-12 col-sm-4 d-flex order-detail-padding flex-column text-center">
+              <div>Order Status:</div>
+              <div class="order-ship-status">{{ order.order_status }}</div>
             </div>
-            <div class="text-center qty-area-list ">{{ product.quantity }}</div>
-            <div class="text-center order-total-list ">
-              <div v-if="product.discount" class="big-full-price">
-                Rs.
-                {{
-                  (product.quantity * product.price).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-                }}
-              </div>
-              <div :class="product.discount ? 'red-text' : null">
-                Rs.
-                {{
-                  product.total.toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })
-                }}
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="row order-summary-box">
-          <div class="col-6 order-summary-padding order-summary-padding-left">
-            <div class="summary-header">Shipping Method</div>
-            <div>{{ order.shipping_method }}</div>
-            <div class="border-method">
-              <div class="summary-header">Payment Method</div>
-              <div class="d-flex">
-                <div class="thin-method">
-                  Bank:
-                </div>
-                <div class="ms-2">{{ order.payment_bank }}</div>
-              </div>
-              <div class="d-flex">
-                <div class="thin-method">
-                  Account Name:
-                </div>
-                <div class="ms-2">{{ order.payment_account_name }}</div>
-              </div>
-              <div class="d-flex">
-                <div class="thin-method">
-                  Account Details:
-                </div>
-                <div class="ms-2">{{ order.payment_account_detail }}</div>
+            <div class="col-12 text-center order-detail-padding">
+              <div class="pe-2">Tracking Number:</div>
+              <div class="order-tracking-number">
+                {{ order.tracking_number }}
               </div>
             </div>
           </div>
-          <div
-            class="col-6 order-summary-padding-2 order-summary-padding-right"
-          >
-            <div class="h-100 d-flex align-content-between flex-wrap">
-              <div class="w-100">
-                <div class="summary-header">Order Total</div>
-                <div class="d-flex justify-content-between">
-                  <div class="summary-small-label">Subtotal:</div>
-                  <div>
+          <div class="order-detail-section">
+            <div
+              class="d-flex justify-content-between label-row d-none d-sm-flex">
+              <div class="text-center item-col">Item</div>
+              <div class="text-center order-price">Price</div>
+              <div class="text-center qty-area">Quantity</div>
+              <div class="text-center order-total">Total</div>
+            </div>
+            <div
+              v-for="(product, index) in ordered_product"
+              :key="index"
+              class="d-flex flex-column flex-sm-row justify-content-between align-items-center padding-item-detail">
+              <div class="item-col">
+                <div class="d-flex flex-column flex-md-row align-items-center">
+                  <div class="order-image-col text-center mb-3 mb-md-0">
+                    <img :src="product.image" />
+                  </div>
+                  <div class="order-title-col">
+                    {{ product.title }} | {{ product.type }} |
+                    {{ product.gender }} - {{ product.size }} by
+                    {{ product.brand }}
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex d-sm-none justify-content-between w-100 mt-3 mt-sm-0">
+                <div class="text-center sub-order-price-list">
+                  <div
+                    v-if="product.discount"
+                    class="small-full-price">
                     Rs.
                     {{
-                      order.subtotal.toLocaleString(undefined, {
+                      product.price.toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      })
+                    }}
+                  </div>
+                  <div :class="product.discount ? 'red-text' : null">
+                    Rs.
+                    {{
+                      product.final_price.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })
                     }}
                   </div>
                 </div>
-                <div class="d-flex justify-content-between">
-                  <div class="summary-small-label">Total Savings:</div>
-                  <div :class="order.total_saving > 0 ? 'red-text' : null">
+                <div class="text-center sub-qty-area-list">
+                  {{ product.quantity }}
+                </div>
+                <div class="text-center sub-order-total-list">
+                  <div
+                    v-if="product.discount"
+                    class="big-full-price">
                     Rs.
                     {{
-                      order.total_saving.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })
+                      (product.quantity * product.price).toLocaleString(
+                        undefined,
+                        {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        },
+                      )
                     }}
                   </div>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <div class="summary-small-label">Shipping:</div>
-                  <div>
+                  <div :class="product.discount ? 'red-text' : null">
                     Rs.
                     {{
-                      order.shipping_fee.toLocaleString(undefined, {
+                      product.total.toLocaleString(undefined, {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
                       })
@@ -178,62 +118,183 @@
                   </div>
                 </div>
               </div>
-              <div class="w-100">
-                <div class="d-flex justify-content-between summary-total">
-                  <div>Total:</div>
-                  <div class="summary-total-color">
-                    Rs.
-                    {{
-                      order.order_total.toLocaleString(undefined, {
+              <div class="d-none d-sm-block text-center order-price-list">
+                <div
+                  v-if="product.discount"
+                  class="small-full-price">
+                  Rs.
+                  {{
+                    product.price.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  }}
+                </div>
+                <div :class="product.discount ? 'red-text' : null">
+                  Rs.
+                  {{
+                    product.final_price.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  }}
+                </div>
+              </div>
+              <div class="d-none d-sm-block text-center qty-area-list">
+                {{ product.quantity }}
+              </div>
+              <div class="d-none d-sm-block text-center order-total-list">
+                <div
+                  v-if="product.discount"
+                  class="big-full-price">
+                  Rs.
+                  {{
+                    (product.quantity * product.price).toLocaleString(
+                      undefined,
+                      {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      })
-                    }}
+                      },
+                    )
+                  }}
+                </div>
+                <div :class="product.discount ? 'red-text' : null">
+                  Rs.
+                  {{
+                    product.total.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })
+                  }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row flex-column flex-sm-row order-summary-box">
+            <div
+              class="col-12 col-sm-6 order-summary-padding order-summary-padding-left order-1 order-sm-0">
+              <div class="summary-header">Shipping Method</div>
+              <div>{{ order.shipping_method }}</div>
+              <div class="border-method">
+                <div class="summary-header">Payment Method</div>
+                <div class="d-flex flex-column flex-md-row mb-1 mb-md-0">
+                  <div class="thin-method">Bank:</div>
+                  <div class="ms-0 ms-md-2">{{ order.payment_bank }}</div>
+                </div>
+                <div class="d-flex flex-column flex-md-row mb-1 mb-md-0">
+                  <div class="thin-method">Account Name:</div>
+                  <div class="ms-0 ms-md-2">
+                    {{ order.payment_account_name }}
+                  </div>
+                </div>
+                <div class="d-flex flex-column flex-md-row mb-1 mb-md-0">
+                  <div class="thin-method">Account Details:</div>
+                  <div class="ms-0 ms-md-2">
+                    {{ order.payment_account_detail }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-12 col-sm-6 order-summary-padding-2 order-summary-padding-right order-0 order-sm-1">
+              <div class="h-100 d-flex align-content-between flex-wrap">
+                <div class="w-100">
+                  <div class="summary-header">Order Total</div>
+                  <div class="d-flex justify-content-between">
+                    <div class="summary-small-label">Subtotal:</div>
+                    <div>
+                      Rs.
+                      {{
+                        order.subtotal.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      }}
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <div class="summary-small-label">Total Savings:</div>
+                    <div :class="order.total_saving > 0 ? 'red-text' : null">
+                      Rs.
+                      {{
+                        order.total_saving.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      }}
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <div class="summary-small-label">Shipping:</div>
+                    <div>
+                      Rs.
+                      {{
+                        order.shipping_fee.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      }}
+                    </div>
+                  </div>
+                </div>
+                <div class="w-100">
+                  <div class="d-flex justify-content-between summary-total">
+                    <div>Total:</div>
+                    <div class="summary-total-color">
+                      Rs.
+                      {{
+                        order.order_total.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })
+                      }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div class="row flex-column flex-sm-row order-summary-box">
+            <div
+              class="col-12 col-sm-6 order-summary-padding order-summary-padding-left-2">
+              <div class="summary-header">Delivery Address</div>
+              <div>
+                {{ shipping_address.first_name }}
+                {{ shipping_address.last_name }}
+              </div>
+              <div>{{ shipping_address.phone }}</div>
+              <div>
+                {{ shipping_address.address_1 }},
+                {{ shipping_address.address_2 }}
+              </div>
+              <div>
+                {{ shipping_address.city }}, {{ shipping_address.state }}
+                {{ shipping_address.postcode }}
+              </div>
+              <div>{{ shipping_address.country }}</div>
+            </div>
+            <div
+              class="col-12 col-sm-6 order-summary-padding-2 order-summary-padding-right-2">
+              <div class="summary-header">Billing Address</div>
+              <div>
+                {{ billing_address.first_name }} {{ billing_address.last_name }}
+              </div>
+              <div>{{ billing_address.phone }}</div>
+              <div>
+                {{ billing_address.address_1 }}, {{ billing_address.address_2 }}
+              </div>
+              <div>
+                {{ billing_address.city }}, {{ billing_address.state }}
+                {{ billing_address.postcode }}
+              </div>
+              <div>{{ billing_address.country }}</div>
+            </div>
+          </div>
+          <router-link to="/myaccount/order">
+            <div class="back-to-order-button">BACK TO MY ORDERS</div>
+          </router-link>
         </div>
-        <div class="row order-summary-box">
-          <div class="col-6 order-summary-padding order-summary-padding-left">
-            <div class="summary-header">Delivery Address</div>
-            <div>
-              {{ shipping_address.first_name }} {{ shipping_address.last_name }}
-            </div>
-            <div>{{ shipping_address.phone }}</div>
-            <div>
-              {{ shipping_address.address_1 }}, {{ shipping_address.address_2 }}
-            </div>
-            <div>
-              {{ shipping_address.city }}, {{ shipping_address.state }}
-              {{ shipping_address.postcode }}
-            </div>
-            <div>{{ shipping_address.country }}</div>
-          </div>
-          <div
-            class="col-6 order-summary-padding-2 order-summary-padding-right"
-          >
-            <div class="summary-header">Billing Address</div>
-            <div>
-              {{ billing_address.first_name }} {{ billing_address.last_name }}
-            </div>
-            <div>{{ billing_address.phone }}</div>
-            <div>
-              {{ billing_address.address_1 }}, {{ billing_address.address_2 }}
-            </div>
-            <div>
-              {{ billing_address.city }}, {{ billing_address.state }}
-              {{ billing_address.postcode }}
-            </div>
-            <div>{{ billing_address.country }}</div>
-          </div>
-        </div>
-        <router-link to="/myaccount/order">
-          <div class="back-to-order-button">
-            BACK TO MY ORDERS
-          </div>
-        </router-link>
       </div>
     </div>
   </div>
@@ -314,7 +375,6 @@ export default {
 .order-detail-content {
   padding-top: 3rem;
   padding-bottom: 3rem;
-  width: 80%;
 }
 
 /*.order-detail-width {
@@ -371,10 +431,6 @@ export default {
   font-weight: 500;
 }
 
-.item-col {
-  width: 42.5%;
-}
-
 .order-total {
   width: 22.5%;
 }
@@ -407,33 +463,6 @@ export default {
   padding-top: 1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid #dee2e6;
-}
-
-.order-image-col {
-  width: 30%;
-}
-
-.order-image-col img {
-  object-fit: cover;
-  height: 4.5rem;
-}
-
-.order-title-col {
-  padding-left: 0.5rem;
-  width: 70%;
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.order-summary-padding-right {
-  padding-right: unset;
-  padding-left: calc(var(--bs-gutter-x) * 0.75);
-}
-
-.order-summary-padding-left {
-  padding-left: unset;
-  border-right: 1px solid #384648;
-  padding-right: calc(var(--bs-gutter-x) * 0.75);
 }
 
 .order-summary-box {
@@ -517,5 +546,133 @@ export default {
 
 .cover_loader {
   height: 100%;
+}
+
+.container {
+  max-width: 295px;
+}
+
+.order-title-col {
+  padding-left: unset;
+  width: 100%;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.order-image-col {
+  width: 100%;
+}
+
+.order-image-col img {
+  object-fit: cover;
+  height: 4.5rem;
+}
+
+.item-col {
+  width: 100%;
+}
+
+.sub-order-price-list {
+  font-size: 0.8rem;
+}
+.sub-qty-area-list {
+  font-size: 0.9rem;
+}
+.sub-order-total-list {
+  font-size: 0.9rem;
+}
+
+.order-summary-padding-right {
+  padding-right: unset;
+  padding-left: unset;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.order-summary-padding-right-2 {
+  padding-right: unset;
+  padding-left: unset;
+}
+
+.order-summary-padding-left {
+  padding-left: unset;
+  border-right: unset;
+  padding-right: unset;
+}
+
+.order-summary-padding-left-2 {
+  padding-left: unset;
+  padding-right: unset;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 375px) {
+  .container {
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+
+  .item-col {
+    width: 42.5%;
+  }
+
+  .order-summary-padding-right {
+    padding-left: calc(var(--bs-gutter-x) * 0.75);
+    border-bottom: unset;
+    padding-bottom: unset;
+    margin-bottom: unset;
+  }
+
+  .order-summary-padding-right-2 {
+    padding-left: calc(var(--bs-gutter-x) * 0.75);
+  }
+
+  .order-summary-padding-left {
+    border-right: 1px solid #384648;
+    padding-right: calc(var(--bs-gutter-x) * 0.75);
+  }
+
+  .order-summary-padding-left-2 {
+    border-right: 1px solid #384648;
+    padding-right: calc(var(--bs-gutter-x) * 0.75);
+    border-bottom: unset;
+    padding-bottom: unset;
+    margin-bottom: unset;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 700px;
+  }
+
+  .order-title-col {
+    width: 70%;
+    padding-left: 0.5rem;
+  }
+
+  .order-image-col {
+    width: 30%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 700px;
+  }
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }
 </style>

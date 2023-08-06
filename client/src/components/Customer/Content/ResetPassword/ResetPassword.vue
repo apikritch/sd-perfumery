@@ -1,83 +1,90 @@
 <template>
   <div class="admin-login-bg">
     <div class="d-flex justify-content-center align-items-center h-100">
-      <div class="d-flex flex-column">
+      <div class="d-flex flex-column reset-page">
         <div class="d-flex justify-content-center reset-logo">
           <font-awesome-icon icon="lock" />
         </div>
-        <div class="admin-forgot-head">
-          Reset Password
-        </div>
-        <div class="pb_reset">
-          <input
-            type="password"
-            v-model.trim="$v.password.$model"
-            placeholder="New Password"
-            :class="[
-              $v.password.$error ? 'border-fail' : null,
-              $v.password.required && $v.password.minLength
-                ? 'border-success'
-                : null,
-            ]"
-          />
-        </div>
-        <div class="pb_reset">
-          <input
-            type="password"
-            v-model.trim="$v.confirm_password.$model"
-            placeholder="Confirm New Password"
-            :class="[
-              $v.confirm_password.$error ? 'border-fail' : null,
-              $v.confirm_password.sameAsPassword && $v.password.required
-                ? 'border-success'
-                : null,
-            ]"
-          />
-        </div>
-        <div class="position-relative d-flex flex-column">
-          <div v-if="$v.confirm_password.$dirty">
-            <div
-              class="error"
-              v-if="
-                !$v.confirm_password.sameAsPassword &&
+        <div class="admin-forgot-head">Reset Password</div>
+        <form @submit="reset">
+          <div class="pb_reset">
+            <input
+              v-model.trim="$v.password.$model"
+              type="password"
+              placeholder="New Password"
+              :class="[
+                'w-100',
+                $v.password.$error ? 'border-fail' : null,
+                $v.password.required && $v.password.minLength
+                  ? 'border-success'
+                  : null,
+              ]" />
+          </div>
+          <div class="pb_reset">
+            <input
+              v-model.trim="$v.confirm_password.$model"
+              type="password"
+              placeholder="Confirm New Password"
+              :class="[
+                'w-100',
+                $v.confirm_password.$error ? 'border-fail' : null,
+                $v.confirm_password.sameAsPassword && $v.password.required
+                  ? 'border-success'
+                  : null,
+              ]" />
+          </div>
+          <div class="position-relative d-flex flex-column">
+            <div v-if="$v.confirm_password.$dirty">
+              <div
+                v-if="
+                  !$v.confirm_password.sameAsPassword &&
                   $v.password.minLength &&
                   $v.password.required
-              "
-            >
-              Passwords must be identical.
+                "
+                class="error">
+                Passwords must be identical.
+              </div>
+            </div>
+            <div v-if="$v.password.$dirty">
+              <div
+                v-if="!$v.password.required"
+                class="error">
+                Please enter your new password.
+              </div>
+              <div
+                v-if="!$v.password.minLength"
+                class="error">
+                Password must have at least 6 letters.
+              </div>
+            </div>
+            <div v-if="success">
+              <div class="success">Your password successfully changed!</div>
+            </div>
+            <div v-if="expire_link">
+              <div class="expire">
+                Sorry, your reset password link expired or has already been
+                used.
+              </div>
             </div>
           </div>
-          <div v-if="$v.password.$dirty">
-            <div class="error" v-if="!$v.password.required">
-              Please enter your new password.
+          <div>
+            <div
+              class="login-button"
+              type="submit">
+              <div v-if="!reset_loading">Reset Password</div>
+              <BeatLoader
+                :loading="reset_loading"
+                color="#fff"
+                size="0.5rem"
+                class="text-center"></BeatLoader>
             </div>
-            <div class="error" v-if="!$v.password.minLength">
-              Password must have at least 6 letters.
+            <div
+              class="login-button_2"
+              @click="goHome">
+              Home
             </div>
           </div>
-          <div v-if="success">
-            <div class="success">
-              Your password successfully changed!
-            </div>
-          </div>
-          <div v-if="expire_link">
-            <div class="expire">
-              Sorry, your reset password link expired or has already been used.
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="login-button" @click="reset">
-            <div v-if="!reset_loading">Reset Password</div>
-            <BeatLoader
-              :loading="reset_loading"
-              color="#fff"
-              size="0.5rem"
-              class="text-center "
-            ></BeatLoader>
-          </div>
-          <div class="login-button_2" @click="goHome">Home</div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -92,6 +99,7 @@ import BeatLoader from "vue-spinner/src/BeatLoader.vue";
 export default {
   name: "ResetPassword",
   components: { BeatLoader },
+  mixins: [validationMixin],
   data() {
     return {
       password: null,
@@ -102,7 +110,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     password: {
       required,
@@ -122,6 +129,9 @@ export default {
       this.$v.password.$reset();
       this.$v.confirm_password.$reset();
     },
+  },
+  async mounted() {
+    this.token = await this.$store.state.route.params.token;
   },
   methods: {
     async reset() {
@@ -159,9 +169,6 @@ export default {
       });
     },
   },
-  async mounted() {
-    this.token = await this.$store.state.route.params.token;
-  },
 };
 </script>
 
@@ -184,7 +191,6 @@ export default {
 .admin-login-bg input {
   border: 1px solid #384648;
   padding: 0.25rem 1rem;
-  width: 400px;
 }
 
 .admin-login-bg input:focus-visible {
@@ -252,7 +258,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .error {
@@ -305,5 +313,33 @@ export default {
 
 .admin-login-bg .login-button_2:hover {
   text-decoration: underline;
+}
+
+.reset-page {
+  width: 300px;
+}
+
+@media (min-width: 375px) {
+  .reset-page {
+    width: 335px;
+  }
+}
+
+@media (min-width: 576px) {
+  .reset-page {
+    width: 450px;
+  }
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }
 </style>

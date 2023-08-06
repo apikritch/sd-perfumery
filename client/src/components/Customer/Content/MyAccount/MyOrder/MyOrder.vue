@@ -1,45 +1,40 @@
-<template
-  ><div class="col-9 d-flex justify-content-center orders-content">
-    <div class="orders-width">
-      <div class="row head-search-orders">
-        <div class="col-6 orders-header">My Orders</div>
-        <div class="col-6 align-self-end orders-search-box">
+<template>
+  <div class="col-12 col-lg-9 d-flex justify-content-center orders-content">
+    <div class="container">
+      <div class="row flex-column flex-sm-row head-search-orders">
+        <div class="col-12 col-sm-6 orders-header">My Orders</div>
+        <div class="col-12 col-sm-6 align-self-end orders-search-box">
           <input
             type="text"
             class="orders-search"
-            placeholder="Search your orders"
-          />
+            placeholder="Search your orders" />
         </div>
       </div>
 
       <div
         v-if="loading"
-        class="d-flex align-items-center justify-content-center cover_loader "
-      >
+        class="d-flex align-items-center justify-content-center mt-5">
         <MoonLoader color="#985855" />
       </div>
 
       <div v-if="!loading">
         <div
-          class="padding-orders-section"
           v-for="(order, index) in orders"
           :key="index"
-        >
+          class="padding-orders-section">
           <div class="orders-box">
             <div class="orders-box-title">
               <div class="d-inline pe-2">Order Number:</div>
               <div class="d-inline orders-box-number">{{ order.id }}</div>
             </div>
-            <div class="row orders-detail-box">
+            <div class="row flex-column flex-sm-row orders-detail-box">
               <div
-                class="col-4 d-flex orders-detail-padding flex-column text-center"
-              >
+                class="col-12 col-sm-4 d-flex orders-detail-padding flex-column text-center">
                 <div>Order Date:</div>
                 <div class="orders-date-and-total">{{ order.order_date }}</div>
               </div>
               <div
-                class="col-4 d-flex orders-detail-padding flex-column text-center"
-              >
+                class="col-12 col-sm-4 d-flex orders-detail-padding flex-column text-center">
                 <div>Order Total:</div>
                 <div class="orders-date-and-total">
                   Rs.
@@ -52,15 +47,13 @@
                 </div>
               </div>
               <div
-                class="col-4 d-flex orders-detail-padding flex-column text-center"
-              >
+                class="col-12 col-sm-4 d-flex orders-detail-padding flex-column text-center">
                 <div>Order Status:</div>
                 <div class="orders-status">{{ order.order_status }}</div>
               </div>
 
               <div
-                class="col-12 d-flex justify-content-center orders-detail-padding"
-              >
+                class="col-12 d-flex flex-column flex-sm-row justify-content-center orders-detail-padding text-center">
                 <div class="pe-2">Tracking Number:</div>
                 <div class="orders-tracking-number">
                   {{ order.tracking_number }}
@@ -69,9 +62,7 @@
             </div>
           </div>
           <router-link :to="'/myaccount/order/' + order.id">
-            <div class="orders-view-button">
-              VIEW ORDER DETAILS
-            </div>
+            <div class="orders-view-button">VIEW ORDER DETAILS</div>
           </router-link>
         </div>
       </div>
@@ -103,7 +94,6 @@ export default {
 .orders-content {
   padding-top: 3rem;
   padding-bottom: 3rem;
-  width: 80%;
 }
 
 .orders-header {
@@ -134,7 +124,7 @@ export default {
 .orders-search {
   border-radius: 2.5rem;
   border: 1px solid #384648;
-  width: 80%;
+  width: 100%;
   padding: 0.2rem 1.25rem;
   font-size: 0.95rem;
 }
@@ -205,5 +195,49 @@ export default {
 
 .cover_loader {
   height: 100%;
+}
+
+.container {
+  max-width: 295px;
+}
+
+@media (min-width: 375px) {
+  .container {
+    max-width: 350px;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+
+  .orders-search {
+    width: 80%;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 650px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 700px;
+  }
 }
 </style>

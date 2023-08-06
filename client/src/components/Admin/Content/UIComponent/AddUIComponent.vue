@@ -11,18 +11,21 @@
             </div>
             <div class="col-9 information-input textarea-height">
               <textarea
+                v-model.trim="$v.link_address.$model"
                 type="text"
                 class="carousel-input"
-                v-model.trim="$v.link_address.$model"
                 :class="[
                   $v.link_address.$error ? 'border-fail' : 'input_border',
                   $v.link_address.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.link_address.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.link_address.required">
+              <div
+                v-if="$v.link_address.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.link_address.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -34,28 +37,37 @@
               :src="link_address"
               width="100%"
               class="preview-img"
-              :class="link_address !== '' ? 'preview-frame' : null"
-            />
+              :class="link_address !== '' ? 'preview-frame' : null" />
           </div>
         </div>
 
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="clearForm" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="clearForm">
                 Clear
               </button>
             </div>
             <div class="col-6">
-              <button type="submit" class="button-save">Save</button>
+              <button
+                type="submit"
+                class="button-save">
+                Save
+              </button>
             </div>
           </div>
         </div>
       </form>
     </div>
-    <div class="sent_box" :class="success ? 'visible' : 'hidden'">
-      <font-awesome-icon icon="check" class="me-2" />Carousel successfully
-      added!
+    <div
+      class="sent_box"
+      :class="success ? 'visible' : 'hidden'">
+      <font-awesome-icon
+        icon="check"
+        class="me-2" />Carousel successfully added!
     </div>
   </div>
 </template>
@@ -67,6 +79,7 @@ import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "AddUIComponent",
+  mixins: [validationMixin],
   data() {
     return {
       carousels: [],
@@ -75,7 +88,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     link_address: { required },
   },
@@ -83,6 +95,13 @@ export default {
     link_address() {
       this.$v.link_address.$reset();
     },
+  },
+  async mounted() {
+    try {
+      this.carousels = (await getCarousels()).data;
+    } catch (error) {
+      console.log(error);
+    }
   },
   methods: {
     async addItem() {
@@ -114,13 +133,6 @@ export default {
       this.link_address = "";
       this.sequence = "";
     },
-  },
-  async mounted() {
-    try {
-      this.carousels = (await getCarousels()).data;
-    } catch (error) {
-      console.log(error);
-    }
   },
 };
 </script>
@@ -313,7 +325,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .border-fail {

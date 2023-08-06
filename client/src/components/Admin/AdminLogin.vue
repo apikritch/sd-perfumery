@@ -2,72 +2,75 @@
   <div class="admin-login-bg">
     <div class="d-flex justify-content-center align-items-center h-100">
       <div class="d-flex flex-column">
-        <div class="admin-forgot-head">
-          Admin Login
-        </div>
+        <div class="admin-forgot-head">Admin Login</div>
 
         <input
+          v-model.trim="$v.email.$model"
           type="text"
           placeholder="Email"
-          v-model.trim="$v.email.$model"
           :class="[
             $v.email.$error || !$v.password.isUnique ? 'border_fail_2' : null,
             $v.email.required && $v.email.email && $v.password.isUnique
               ? 'border-success'
               : null,
-          ]"
-        />
+          ]" />
 
         <input
-          type="password"
           v-model="password"
-          placeholder="Password"
           v-model.trim="$v.password.$model"
+          type="password"
+          placeholder="Password"
           :class="[
             $v.password.$error ? 'border_fail_2' : null,
             $v.password.required && $v.password.isUnique
               ? 'border-success'
               : null,
-          ]"
-        />
+          ]" />
         <div class="position-relative d-flex flex-column">
           <div
             v-if="$v.password.$dirty"
-            class=" w-100"
+            class="w-100"
             :class="
               $v.email.required && $v.email.email
                 ? 'position-relative'
                 : 'position-absolute'
-            "
-          >
-            <div class="error_2" v-if="!$v.password.required">
+            ">
+            <div
+              v-if="!$v.password.required"
+              class="error_2">
               Please Enter Your Password.
             </div>
-            <div class="error_2" v-if="!$v.password.isUnique">
+            <div
+              v-if="!$v.password.isUnique"
+              class="error_2">
               Incorrect Email or Password.
             </div>
           </div>
-          <div v-if="$v.email.$dirty" class="position-relative w-100">
-            <div class="error_2" v-if="!$v.email.required">
+          <div
+            v-if="$v.email.$dirty"
+            class="position-relative w-100">
+            <div
+              v-if="!$v.email.required"
+              class="error_2">
               Please Enter Your Email.
             </div>
-            <div class="error_2" v-if="!$v.email.email">
+            <div
+              v-if="!$v.email.email"
+              class="error_2">
               Invalid Email Format.
             </div>
           </div>
         </div>
         <div
-          class="d-flex justify-content-center align-irems-center login-button "
-          @click="signIn"
-        >
+          class="d-flex justify-content-center align-irems-center login-button"
+          @click="signIn">
           <div v-if="!sign_in_loading">Log in</div>
           <div>
             <BeatLoader
-              class="text-center "
+              class="text-center"
               :loading="sign_in_loading"
               color="#fff"
-              size="0.5rem"
-            ></BeatLoader>
+              size="0.5rem"></BeatLoader>
           </div>
         </div>
         <div class="d-flex justify-content-end forgot-admin-padding">
@@ -90,6 +93,7 @@ import CryptoJS from "crypto-js";
 export default {
   name: "AdminLogin",
   components: { BeatLoader },
+  mixins: [validationMixin],
   data() {
     return {
       sign_in_loading: false,
@@ -99,7 +103,6 @@ export default {
       incorrect_sign_in_password: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     email: { required, email },
     password: {
@@ -148,7 +151,7 @@ export default {
 
         const encryptedEM = CryptoJS.AES.encrypt(
           response.data.email,
-          "secret_1234"
+          "secret_1234",
         ).toString();
 
         this.$cookies.set("EM", encryptedEM, "1m", null, null, true);

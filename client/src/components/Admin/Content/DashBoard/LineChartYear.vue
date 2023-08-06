@@ -16,16 +16,6 @@ export default {
       },
     };
   },
-  methods: {
-    getRandom() {
-      var letters = "0123456789ABCDEF";
-      var color = "#";
-      for (var i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    },
-  },
   mounted() {
     for (let i = 0; i < this.dashboard_year.length; i++) {
       var whichYear;
@@ -76,8 +66,18 @@ export default {
       {
         responsive: true,
         maintainAspectRatio: false,
-      }
+      },
     );
+  },
+  methods: {
+    getRandom() {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    },
   },
 };
 </script>

@@ -1,15 +1,13 @@
 <template>
   <div class="padding-under-pagination h-100">
     <div
-      class="d-flex justify-content-between align-items-center admin-Order-head"
-    >
+      class="d-flex justify-content-between align-items-center admin-Order-head">
       Orders
     </div>
 
     <div
       v-if="loading || loading_2"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
     <div v-if="!loading && !loading_2">
@@ -19,20 +17,18 @@
           <div class="row product-label-small-row">
             <div class="col-6">
               <input
+                v-model="order_total[0]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Min"
-                v-model="order_total[0]"
-              />
+                placeholder="Min" />
             </div>
 
             <div class="col-6">
               <input
+                v-model="order_total[1]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Max"
-                v-model="order_total[1]"
-              />
+                placeholder="Max" />
             </div>
           </div>
         </div>
@@ -41,51 +37,46 @@
           <b-form-select
             v-model="order_status"
             :options="order_status_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
         <div class="col-medium-select">
           <div>Shipment Status:</div>
           <b-form-select
             v-model="shipment_status"
             :options="shipment_status_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
 
         <div class="col-medium-select">
           <div>Order Date:</div>
           <input
-            type="date"
-            class="w-100 product-small-input marrgin-025"
             v-model="order_date"
-          />
+            type="date"
+            class="w-100 product-small-input marrgin-025" />
         </div>
       </div>
 
-      <div class="row align-items-center product-padding-search-bar">
+      <div class="d-flex align-items-center product-padding-search-bar">
         <!--Search-->
         <div class="col-4">
           <input
+            v-model="search"
             type="text"
             class="form-control admin-product-search-bar"
-            placeholder="Search by keyword"
-            v-model="search"
-          />
+            placeholder="Search by keyword" />
         </div>
         <div class="col-4">{{ found_order }} ORDERS FOUND</div>
         <!--Search-->
 
         <!--Pagination-->
-        <div class="col-4 ms-auto">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -93,22 +84,19 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page-button d-flex align-items-center justify-content-center"
-                  @click="previousPage"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page-button d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -121,38 +109,37 @@
       <!--Label-->
       <div class="d-flex admin-product-label">
         <div
-          class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2">
           <div>ID</div>
-          <div class="caret-cover" @click="sortId">
+          <div
+            class="caret-cover"
+            @click="sortId">
             <div
               class="caret-up"
               :class="
                 sortBy == 'id' && sortDirection == 'asc' ? 'sort-white' : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
               :class="
                 sortBy == 'id' && sortDirection == 'desc' ? 'sort-white' : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
           <div>First Name</div>
-          <div class="caret-cover" @click="sortFirstName">
+          <div
+            class="caret-cover"
+            @click="sortFirstName">
             <div
               class="caret-up"
               :class="
                 sortBy == 'first_name' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -160,23 +147,22 @@
                 sortBy == 'first_name' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
           <div>Last Name</div>
-          <div class="caret-cover" @click="sortLastName">
+          <div
+            class="caret-cover"
+            @click="sortLastName">
             <div
               class="caret-up"
               :class="
                 sortBy == 'last_name' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -184,23 +170,22 @@
                 sortBy == 'last_name' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2">
           <div>Order Total</div>
-          <div class="caret-cover" @click="sortOrdetTotal">
+          <div
+            class="caret-cover"
+            @click="sortOrdetTotal">
             <div
               class="caret-up"
               :class="
                 sortBy == 'order_total' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -208,38 +193,34 @@
                 sortBy == 'order_total' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-4 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table-label label-4 d-flex align-items-center justify-content-center">
           Order Status
         </div>
         <div
-          class="border-right-product-table-label label-5 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table-label label-5 d-flex align-items-center justify-content-center">
           Shipment Status
         </div>
         <div
-          class="border-right-product-table-label label-6 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table-label label-6 d-flex align-items-center justify-content-center">
           Tracking Number
         </div>
         <div
-          class="border-right-product-table-label label-7 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-7 d-flex align-items-center justify-content-between px-2">
           <div>Order Date</div>
-          <div class="caret-cover" @click="sortOrdetDate">
+          <div
+            class="caret-cover"
+            @click="sortOrdetDate">
             <div
               class="caret-up"
               :class="
                 sortBy == 'reform_date' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -247,24 +228,23 @@
                 sortBy == 'reform_date' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
 
         <div
-          class="border-right-product-table-label label-8 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-8 d-flex align-items-center justify-content-between px-2">
           <div>Order Time</div>
-          <div class="caret-cover" @click="sortOrdetTime">
+          <div
+            class="caret-cover"
+            @click="sortOrdetTime">
             <div
               class="caret-up"
               :class="
                 sortBy == 'reform_time' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -272,8 +252,7 @@
                 sortBy == 'reform_time' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
 
@@ -283,34 +262,28 @@
 
       <!--Table-->
       <div
-        class="d-flex admin-product-detail"
         v-for="(order, index) in pageAndFilter"
         :key="index"
-      >
+        class="d-flex admin-product-detail">
         <div
-          class="border-right-product-table detail-1 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-1 d-flex align-items-center justify-content-center">
           <div class="d-flex flex-column align-items-center">
             <div
-              :class="order.notification == 'Unread' ? 'unread-order' : null"
-            >
+              :class="order.notification == 'Unread' ? 'unread-order' : null">
               {{ order.id }}
             </div>
           </div>
         </div>
         <div
-          class="border-right-product-table detail-2 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-2 d-flex align-items-center">
           {{ order.first_name }}
         </div>
         <div
-          class="border-right-product-table detail-2 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-2 d-flex align-items-center">
           {{ order.last_name }}
         </div>
         <div
-          class="border-right-product-table detail-3 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-3 d-flex align-items-center">
           Rs.
           {{
             order.order_total.toLocaleString(undefined, {
@@ -320,36 +293,30 @@
           }}
         </div>
         <div
-          class="border-right-product-table detail-4 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-4 d-flex align-items-center justify-content-center">
           {{ order.order_status }}
         </div>
         <div
-          class="border-right-product-table detail-5 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-5 d-flex align-items-center justify-content-center">
           {{ order.shippment_status }}
         </div>
         <div
-          class="border-right-product-table detail-6 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-6 d-flex align-items-center justify-content-center">
           {{ order.tracking_number }}
         </div>
         <div
-          class="border-right-product-table detail-7 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-7 d-flex align-items-center justify-content-center">
           {{ order.order_date }}
         </div>
         <div
-          class="border-right-product-table detail-8 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-8 d-flex align-items-center justify-content-center">
           {{ order.order_time }}
         </div>
 
         <div class="detail-9 d-flex align-items-center justify-content-center">
           <router-link :to="'/admin/order/' + order.id">
             <div
-              class="after_action d-flex align-items-center justify-content-center"
-            >
+              class="after_action d-flex align-items-center justify-content-center">
               <font-awesome-icon icon="search" />
             </div>
           </router-link>
@@ -357,16 +324,15 @@
       </div>
       <!--Table-->
 
-      <div class="row align-items-center product-padding-search-bar">
-        <div class="col-4 ms-auto">
+      <div class="d-flex align-items-center product-padding-search-bar">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -374,22 +340,19 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page-button d-flex align-items-center justify-content-center"
-                  @click="previousPage"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page-button d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -449,10 +412,10 @@ export default {
         this.sortOrders(
           this.filterOrderStatus(
             this.filterShipmentStatus(
-              this.filterOrderTotal(this.filterOrderDate(this.orders))
-            )
-          )
-        )
+              this.filterOrderTotal(this.filterOrderDate(this.orders)),
+            ),
+          ),
+        ),
       );
     },
   },
@@ -496,20 +459,22 @@ export default {
             this.orders[i],
             "reform_date",
             Number(
-              moment(this.orders[i].order_date, "DD/MM/YYYY").format("YYYYMMDD")
-            )
+              moment(this.orders[i].order_date, "DD/MM/YYYY").format(
+                "YYYYMMDD",
+              ),
+            ),
           );
           this.$set(
             this.orders[i],
             "reform_time",
             Number(
-              moment(this.orders[i].order_time, "HH:mm:ss A").format("HHmmss")
-            )
+              moment(this.orders[i].order_time, "HH:mm:ss A").format("HHmmss"),
+            ),
           );
         }
         this.order_total_max = await Math.max.apply(
           Math,
-          this.orders.map((order) => order.order_total)
+          this.orders.map((order) => order.order_total),
         );
 
         this.checkAll();
@@ -528,6 +493,12 @@ export default {
     order_total() {
       this.checkAll();
     },
+  },
+  async mounted() {
+    this.per_page_options = await getPerPageOptions();
+    this.order_status_options = await getOrderStatusOptions();
+    this.shipment_status_options = await getShipmentStatusOptions();
+    this.loading = false;
   },
   methods: {
     nextPage() {
@@ -548,7 +519,7 @@ export default {
     pageOrders(orders) {
       return orders.slice(
         this.page * this.per_page,
-        this.page * this.per_page + this.per_page
+        this.page * this.per_page + this.per_page,
       );
     },
     filterOrderStatus(orders) {
@@ -556,7 +527,7 @@ export default {
         return orders;
       } else {
         return orders.filter(
-          (order) => order.order_status == this.order_status
+          (order) => order.order_status == this.order_status,
         );
       }
     },
@@ -565,7 +536,7 @@ export default {
         return orders;
       } else {
         return orders.filter(
-          (order) => order.shippment_status == this.shipment_status
+          (order) => order.shippment_status == this.shipment_status,
         );
       }
     },
@@ -574,31 +545,31 @@ export default {
         return orders.filter(
           (shipment) =>
             shipment.order_total >= 0 &&
-            shipment.order_total <= this.order_total_max
+            shipment.order_total <= this.order_total_max,
         );
       } else if (this.order_total[0] == "" && this.order_total[1] !== "") {
         return orders.filter(
           (shipment) =>
             shipment.order_total >= 0 &&
-            shipment.order_total <= this.order_total[1]
+            shipment.order_total <= this.order_total[1],
         );
       } else if (this.order_total[0] !== "" && this.order_total[1] == "") {
         return orders.filter(
           (shipment) =>
             shipment.order_total >= this.order_total[0] &&
-            shipment.order_total <= this.order_total_max
+            shipment.order_total <= this.order_total_max,
         );
       } else {
         return orders.filter(
           (shipment) =>
             shipment.order_total >= this.order_total[0] &&
-            shipment.order_total <= this.order_total[1]
+            shipment.order_total <= this.order_total[1],
         );
       }
     },
     filterOrderDate(orders) {
       var new_date = Number(
-        moment(this.order_date, "YYYY-MM-DD").format("YYYYMMDD")
+        moment(this.order_date, "YYYY-MM-DD").format("YYYYMMDD"),
       );
       if (this.order_date == null) {
         return orders;
@@ -682,8 +653,8 @@ export default {
     checkAll() {
       const item_length = this.filterOrderStatus(
         this.filterShipmentStatus(
-          this.filterOrderTotal(this.filterOrderDate(this.orders))
-        )
+          this.filterOrderTotal(this.filterOrderDate(this.orders)),
+        ),
       ).length;
 
       this.found_order = item_length;
@@ -696,12 +667,6 @@ export default {
         this.current_page = this.all_pages;
       }
     },
-  },
-  async mounted() {
-    this.per_page_options = await getPerPageOptions();
-    this.order_status_options = await getOrderStatusOptions();
-    this.shipment_status_options = await getShipmentStatusOptions();
-    this.loading = false;
   },
 };
 </script>
@@ -836,7 +801,6 @@ export default {
   font-size: 0.85rem;
   color: #384648;
   border: 1px solid #384648;
-  margin-right: 0.5rem;
 }
 
 .product-page-input:focus-visible {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg product-layout pb-4 mb-2">
+  <div class="container product-layout pb-4 mb-2">
     <div class="product-breadcrum d-flex">
       <div>Home</div>
       <div class="mx-2">/</div>
@@ -10,22 +10,19 @@
 
     <div
       v-if="loading"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
 
     <div v-if="!loading">
       <router-link
         :to="'/admin/product/' + product.id + '/edit'"
-        class="edit_product_admin"
-      >
+        class="edit_product_admin">
         <div
           v-if="
             $store.state.isUserLoggedIn &&
             $store.state.user.user_status == 'Active'
-          "
-        >
+          ">
           <div class="edit-text">
             <div class="edit-button">
               <font-awesome-icon icon="pen" />
@@ -34,14 +31,17 @@
           </div>
         </div>
       </router-link>
-      <div class="row justify-content-center">
-        <div class="col-5">
-          <div class="d-flex justify-content-end align-items-center">
-            <img :src="product.image" class="product-image" />
+      <div
+        class="d-flex flex-column flex-lg-row justify-content-center align-items-center">
+        <div class="col-12 col-sm-6">
+          <div class="d-flex justify-content-center align-items-center">
+            <img
+              :src="product.image"
+              class="product-image" />
           </div>
         </div>
-        <div class="col-5">
-          <div class="product-title">{{ product.title }}</div>
+        <div class="col-lg-6">
+          <div class="product-title mt-4 mb-3">{{ product.title }}</div>
           <div class="pb-2">
             <div class="product-type-topic d-inline">Type:</div>
             <div class="product-type d-inline">{{ product.type }}</div>
@@ -59,27 +59,29 @@
             <div class="product-brand d-inline">{{ product.brand }}</div>
           </div>
           <div class="d-flex align-items-center pt-2 pb-4">
-            <div class="product-price d-inline">Rs. {{ price_string }}</div>
+            <div class="product-price">Rs. {{ price_string }}</div>
             <div
-              class="d-inline ms-5 product-stock"
+              class="ms-auto product-stock"
               :class="{
                 'product-sold-out': sold_out,
                 'product-last-one': last_one,
                 'product-remain': remain,
                 'product-instock': instock,
-              }"
-            >
+              }">
               {{ stock_status }}
             </div>
           </div>
 
-          <div class="d-flex justify-content-start align-items-center pb-4">
-            <div class="d-flex align-items-center h-100 me-5" v-if="button_on">
+          <div class="d-flex align-items-center pb-4">
+            <div
+              v-if="button_on"
+              class="d-flex align-items-center h-100">
               <div
                 class="circle-minus d-flex justify-content-between align-items-center"
-                @click="decreaseQty(product.quantity)"
-              >
-                <font-awesome-icon icon="minus" class="w-100" />
+                @click="decreaseQty(product.quantity)">
+                <font-awesome-icon
+                  icon="minus"
+                  class="w-100" />
               </div>
               <div class="px-3 qty-text">
                 <div class="product-input-qty">
@@ -88,25 +90,31 @@
               </div>
               <div
                 class="circle-plus d-flex justify-content-between align-items-center"
-                @click="increaseQty(product.quantity)"
-              >
-                <font-awesome-icon icon="plus" class="w-100" />
+                @click="increaseQty(product.quantity)">
+                <font-awesome-icon
+                  icon="plus"
+                  class="w-100" />
               </div>
             </div>
             <div
-              class="product-add-button"
               v-if="button_on"
-              @click="addItemToCart(product, product.quantity)"
-            >
-              <font-awesome-icon icon="shopping-cart" class="d-inline" />
+              class="product-add-button ms-auto"
+              @click="addItemToCart(product, product.quantity)">
+              <font-awesome-icon
+                icon="shopping-cart"
+                class="d-inline" />
               <div class="d-inline ms-2">ADD TO CART</div>
             </div>
-            <div class="disable-product-add-button" v-if="button_off">
+            <div
+              v-if="button_off"
+              class="disable-product-add-button">
               <div>Out of Stock</div>
             </div>
           </div>
 
-          <div>
+          <hr class="mt-2" />
+
+          <div class="mt-4">
             <div class="product-description-topic">Product Description:</div>
             <div class="product-description">{{ product.description }}</div>
           </div>
@@ -122,8 +130,8 @@ import { getProductById } from "@/services/ProductService";
 
 export default {
   name: "MyProduct",
-  props: { addItemToCart: Function },
   components: { MoonLoader },
+  props: { addItemToCart: Function },
   data() {
     return {
       product: {
@@ -148,22 +156,6 @@ export default {
       price_string: "",
       loading: true,
     };
-  },
-  methods: {
-    decreaseQty(quantity) {
-      if (quantity <= 1) {
-        this.product.quantity = 1;
-      } else {
-        this.product.quantity -= 1;
-      }
-    },
-    increaseQty(quantity) {
-      if (quantity >= this.product.stock) {
-        this.product.quantity = this.product.stock;
-      } else {
-        this.product.quantity += 1;
-      }
-    },
   },
   async mounted() {
     const productId = this.$store.state.route.params.productId;
@@ -199,30 +191,30 @@ export default {
     }
     this.loading = false;
   },
+  methods: {
+    decreaseQty(quantity) {
+      if (quantity <= 1) {
+        this.product.quantity = 1;
+      } else {
+        this.product.quantity -= 1;
+      }
+    },
+    increaseQty(quantity) {
+      if (quantity >= this.product.stock) {
+        this.product.quantity = this.product.stock;
+      } else {
+        this.product.quantity += 1;
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.product-layout .product-breadcrum {
-  padding-top: 1.25rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid #384648 !important;
-  font-weight: 500;
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-}
-
-.product-layout .product-image {
-  width: 27.5rem;
-  height: 27.5rem;
-  object-fit: cover;
-}
-
 .product-layout .product-title {
   color: #985855;
   font-size: 1.75rem;
   font-weight: 500;
-  padding-bottom: 2rem;
 }
 
 .product-layout .product-type-topic,
@@ -245,7 +237,7 @@ export default {
 
 .product-layout .product-price {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.74rem;
 }
 
 .product-layout .product-stock {
@@ -261,10 +253,11 @@ export default {
 
 .product-layout .product-description {
   text-align: justify;
-  word-spacing: -0.5px;
+  word-spacing: -2px;
   font-weight: 300;
   font-size: 1rem;
   padding-top: 0.5rem;
+  hyphens: auto;
 }
 
 .product-layout .product-add-button {
@@ -384,5 +377,50 @@ export default {
 
 .cover_loader {
   height: 50vh;
+}
+
+.product-layout .product-image {
+  width: 100%;
+  height: 90vw;
+  object-fit: cover;
+}
+
+.product-layout .product-breadcrum {
+  padding-top: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #384648 !important;
+  font-weight: 500;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 375px) {
+  .product-layout .product-image {
+    width: 15rem;
+    height: 15rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .product-layout .product-image {
+    height: 17.5rem;
+    width: 17.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-layout .product-image {
+    height: 22.5rem;
+    width: 22.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }
 </style>

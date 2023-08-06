@@ -3,16 +3,20 @@
     <div class="d-flex justify-content-between admin-product-padding">
       <div class="d-flex align-items-center admin-product-header">Shipment</div>
       <div class="d-flex align-items-end">
-        <router-link class="admin-product-add" to="/admin/shipment/add">
-          <font-awesome-icon icon="plus" class="me-1" /> Add Shipment
+        <router-link
+          class="admin-product-add"
+          to="/admin/shipment/add">
+          <font-awesome-icon
+            icon="plus"
+            class="me-1" />
+          Add Shipment
         </router-link>
       </div>
     </div>
 
     <div
       v-if="loading || loading_2"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
 
@@ -23,46 +27,42 @@
           <div class="row product-label-small-row">
             <div class="col-6">
               <input
+                v-model="shipping_fee[0]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Min"
-                v-model="shipping_fee[0]"
-              />
+                placeholder="Min" />
             </div>
             <div class="col-6">
               <input
+                v-model="shipping_fee[1]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Max"
-                v-model="shipping_fee[1]"
-              />
+                placeholder="Max" />
             </div>
           </div>
         </div>
       </div>
-      <div class="row align-items-center product-padding-search-bar">
+      <div class="d-flex align-items-center product-padding-search-bar">
         <!--Search-->
         <div class="col-4">
           <input
+            v-model="search"
             type="text"
             class="form-control admin-product-search-bar"
-            placeholder="Search by keyword"
-            v-model="search"
-          />
+            placeholder="Search by keyword" />
         </div>
         <div class="col-4">{{ found_shipment }} SHIPMENTS FOUND</div>
         <!--Search-->
 
         <!--Pagination-->
-        <div class="col-4 ms-auto">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -70,22 +70,19 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page-button d-flex align-items-center justify-content-center"
-                  @click="previousPage"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page-button d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -96,23 +93,22 @@
       </div>
       <div
         v-if="loading"
-        class="d-flex justify-content-center align-items-center loading-height"
-      ></div>
+        class="d-flex justify-content-center align-items-center loading-height"></div>
 
       <div v-if="!loading">
         <!--Label-->
         <div class="d-flex admin-product-label">
           <div
-            class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2">
             <div>ID</div>
-            <div class="caret-cover" @click="sortId">
+            <div
+              class="caret-cover"
+              @click="sortId">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'id' && sortDirection == 'asc' ? 'sort-white' : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -120,23 +116,22 @@
                   sortBy == 'id' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
             <div>Shipping Method</div>
-            <div class="caret-cover" @click="sortShippingMethod">
+            <div
+              class="caret-cover"
+              @click="sortShippingMethod">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'shipping_method' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -144,23 +139,22 @@
                   sortBy == 'shipping_method' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2">
             <div>Shipping Fee</div>
-            <div class="caret-cover" @click="sortShippingFee">
+            <div
+              class="caret-cover"
+              @click="sortShippingFee">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'shipping_fee' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -168,8 +162,7 @@
                   sortBy == 'shipping_fee' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div class="last-product-table-label label-4"></div>
@@ -178,23 +171,19 @@
 
         <!--Table-->
         <div
-          class="d-flex admin-product-detail"
           v-for="(shipment, index) in pageAndFilter"
           :key="index"
-        >
+          class="d-flex admin-product-detail">
           <div
-            class="border-right-product-table detail-1 d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table detail-1 d-flex align-items-center justify-content-center">
             {{ shipment.id }}
           </div>
           <div
-            class="border-right-product-table detail-2 d-flex align-items-center"
-          >
+            class="border-right-product-table detail-2 d-flex align-items-center">
             {{ shipment.shipping_method }}
           </div>
           <div
-            class="border-right-product-table detail-2 d-flex align-items-center"
-          >
+            class="border-right-product-table detail-2 d-flex align-items-center">
             {{
               shipment.shipping_fee.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -203,28 +192,28 @@
             }}
           </div>
           <div
-            class="detail-3 d-flex align-items-center justify-content-center"
-          >
+            class="detail-3 d-flex align-items-center justify-content-center">
             <div
               class="after_action d-flex align-items-center justify-content-center"
-              @click="showAction(index)"
               :class="
                 shipment.display_action == 1 ? 'after_action_click' : null
               "
-            >
+              @click="showAction(index)">
               <font-awesome-icon icon="ellipsis-h" />
             </div>
             <!--Mini Menu-->
-            <div class="action" v-if="shipment.display_action == 1">
-              <div class="modal-overelay" @click="hideAction(index)"></div>
+            <div
+              v-if="shipment.display_action == 1"
+              class="action">
+              <div
+                class="modal-overelay"
+                @click="hideAction(index)"></div>
               <div class="modal-content">
                 <div
-                  class="d-flex flex-column justify-content-end align-items-center h-100 text-start"
-                >
+                  class="d-flex flex-column justify-content-end align-items-center h-100 text-start">
                   <router-link
                     class="w-100 action-options border-action ps-2"
-                    :to="'/admin/shipment/' + shipment.id + '/edit'"
-                  >
+                    :to="'/admin/shipment/' + shipment.id + '/edit'">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -236,8 +225,7 @@
                   </router-link>
                   <button
                     class="w-100 action-delete-options border-action ps-2"
-                    @click="deleteItem(index, shipment.id)"
-                  >
+                    @click="deleteItem(index, shipment.id)">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -257,16 +245,15 @@
         <!--Table-->
 
         <!--Pagination-->
-        <div class="row align-items-center product-padding-search-bar">
-          <div class="col-4 ms-auto">
+        <div class="d-flex align-items-center product-padding-search-bar">
+          <div class="col-4">
             <div class="row align-items-center">
               <div class="col-5 per-page">
                 <div class="d-flex justify-content-between align-items-center">
                   <b-form-select
                     v-model="per_page"
                     :options="per_page_options"
-                    class="product-select-form-per-page"
-                  ></b-form-select>
+                    class="product-select-form-per-page"></b-form-select>
                   per page
                 </div>
               </div>
@@ -274,24 +261,20 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div
                     class="page-button d-flex align-items-center justify-content-center"
-                    @click="previousPage"
-                  >
+                    @click="previousPage">
                     <font-awesome-icon icon="chevron-left" />
                   </div>
                   <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
+                    class="d-flex justify-content-between align-items-center">
                     <input
-                      type="number"
-                      class="product-page-input"
                       v-model="current_page"
-                    />
+                      type="number"
+                      class="product-page-input" />
                     <div>of {{ all_pages }}</div>
                   </div>
                   <div
                     class="page-button d-flex align-items-center justify-content-center next-page"
-                    @click="nextPage"
-                  >
+                    @click="nextPage">
                     <font-awesome-icon icon="chevron-right" />
                   </div>
                 </div>
@@ -336,7 +319,7 @@ export default {
   computed: {
     pageAndFilter() {
       return this.pageShipments(
-        this.sortProducts(this.filterShipmentFee(this.shipments))
+        this.sortProducts(this.filterShipmentFee(this.shipments)),
       );
     },
   },
@@ -381,7 +364,7 @@ export default {
 
         this.shipping_fee_max = await Math.max.apply(
           Math,
-          this.shipments.map((shipment) => shipment.shipping_fee)
+          this.shipments.map((shipment) => shipment.shipping_fee),
         );
 
         this.checkAll();
@@ -391,6 +374,10 @@ export default {
     shipping_fee() {
       this.checkAll();
     },
+  },
+  async mounted() {
+    this.per_page_options = await getPerPageOptions();
+    this.loading = false;
   },
   methods: {
     nextPage() {
@@ -438,7 +425,7 @@ export default {
     pageShipments(shipments) {
       return shipments.slice(
         this.page * this.per_page,
-        this.page * this.per_page + this.per_page
+        this.page * this.per_page + this.per_page,
       );
     },
     filterShipmentFee(shipments) {
@@ -446,25 +433,25 @@ export default {
         return shipments.filter(
           (shipment) =>
             shipment.shipping_fee >= 0 &&
-            shipment.shipping_fee <= this.shipping_fee_max
+            shipment.shipping_fee <= this.shipping_fee_max,
         );
       } else if (this.shipping_fee[0] == "" && this.shipping_fee[1] !== "") {
         return shipments.filter(
           (shipment) =>
             shipment.shipping_fee >= 0 &&
-            shipment.shipping_fee <= this.shipping_fee[1]
+            shipment.shipping_fee <= this.shipping_fee[1],
         );
       } else if (this.shipping_fee[0] !== "" && this.shipping_fee[1] == "") {
         return shipments.filter(
           (shipment) =>
             shipment.shipping_fee >= this.shipping_fee[0] &&
-            shipment.shipping_fee <= this.shipping_fee_max
+            shipment.shipping_fee <= this.shipping_fee_max,
         );
       } else {
         return shipments.filter(
           (shipment) =>
             shipment.shipping_fee >= this.shipping_fee[0] &&
-            shipment.shipping_fee <= this.shipping_fee[1]
+            shipment.shipping_fee <= this.shipping_fee[1],
         );
       }
     },
@@ -526,10 +513,6 @@ export default {
         this.current_page = this.all_pages;
       }
     },
-  },
-  async mounted() {
-    this.per_page_options = await getPerPageOptions();
-    this.loading = false;
   },
 };
 </script>
@@ -660,7 +643,6 @@ export default {
   font-size: 0.85rem;
   color: #384648;
   border: 1px solid #384648;
-  margin-right: 0.5rem;
 }
 
 .user-list-page .product-page-input:focus-visible {

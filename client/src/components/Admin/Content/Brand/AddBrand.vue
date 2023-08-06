@@ -11,17 +11,20 @@
             </div>
             <div class="col-9 information-input">
               <input
-                type="text"
                 v-model.trim="$v.brand_name.$model"
+                type="text"
                 :class="[
                   $v.brand_name.$error ? 'border-fail' : 'input_border',
                   $v.brand_name.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.brand_name.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.brand_name.required">
+              <div
+                v-if="$v.brand_name.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.brand_name.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -32,19 +35,30 @@
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="clearForm" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="clearForm">
                 Clear
               </button>
             </div>
             <div class="col-6">
-              <button type="submit" class="button-save">Save</button>
+              <button
+                type="submit"
+                class="button-save">
+                Save
+              </button>
             </div>
           </div>
         </div>
       </form>
     </div>
-    <div class="sent_box" :class="success ? 'visible' : 'hidden'">
-      <font-awesome-icon icon="check" class="me-2" />Brand successfully added!
+    <div
+      class="sent_box"
+      :class="success ? 'visible' : 'hidden'">
+      <font-awesome-icon
+        icon="check"
+        class="me-2" />Brand successfully added!
     </div>
   </div>
 </template>
@@ -56,13 +70,13 @@ import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "AddBrand",
+  mixins: [validationMixin],
   data() {
     return {
       brand_name: "",
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     brand_name: { required },
   },
@@ -202,7 +216,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .border-fail {

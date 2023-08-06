@@ -1,6 +1,6 @@
 <template>
   <div class="admin-login-bg d-flex justify-content-center align-items-center">
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column thank_you_page">
       <div class="admin-forgot-head">
         <div>Thank You!</div>
         <div class="unau_text">Your order was completed successfully.</div>
@@ -15,7 +15,9 @@
           order.
         </div>
       </div>
-      <div class="login-button" @click="goToHome">
+      <div
+        class="login-button"
+        @click="goToHome">
         GO TO HOME PAGE
       </div>
     </div>
@@ -44,14 +46,6 @@ export default {
   padding-bottom: 5rem;
   height: 100%;
   width: 100%;
-}
-
-.admin-forgot-head {
-  text-align: center;
-  color: #384648;
-  font-size: 4rem;
-  padding-bottom: 3rem;
-  font-weight: 700;
 }
 
 .admin-login-bg input {
@@ -83,14 +77,57 @@ export default {
   margin-top: 1rem;
 }
 
+.thank_you_detail {
+  padding-bottom: 3rem;
+  text-align: justify;
+}
+
+.thank_you_page {
+  width: 300px;
+}
+
+.admin-forgot-head {
+  text-align: center;
+  color: #384648;
+  font-size: 3.7rem;
+  padding-bottom: 3rem;
+  font-weight: 700;
+}
+
 .unau_text {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 300;
 }
 
-.thank_you_detail {
-  width: 450px;
-  padding-bottom: 3rem;
-  text-align: justify;
+@media (min-width: 375px) {
+  .thank_you_page {
+    width: 335px;
+  }
+
+  .admin-forgot-head {
+    font-size: 3.8rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .thank_you_page {
+    width: 450px;
+  }
+
+  .admin-forgot-head {
+    font-size: 4rem;
+  }
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }
 </style>

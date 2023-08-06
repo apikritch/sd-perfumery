@@ -12,17 +12,20 @@
             </div>
             <div class="col-8 information-input">
               <input
-                type="text"
                 v-model.trim="$v.first_name.$model"
+                type="text"
                 :class="[
                   $v.first_name.$error ? 'border-fail' : 'input_border',
                   $v.first_name.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-8 offset-4">
-              <div v-if="$v.first_name.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.first_name.required">
+              <div
+                v-if="$v.first_name.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.first_name.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -35,17 +38,20 @@
             </div>
             <div class="col-8 information-input">
               <input
-                type="text"
                 v-model.trim="$v.last_name.$model"
+                type="text"
                 :class="[
                   $v.last_name.$error ? 'border-fail' : 'input_border',
                   $v.last_name.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-8 offset-4">
-              <div v-if="$v.last_name.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.last_name.required">
+              <div
+                v-if="$v.last_name.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.last_name.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -61,25 +67,32 @@
             </div>
             <div class="col-8 information-input">
               <input
-                type="text"
                 v-model.trim="$v.email.$model"
+                type="text"
                 :class="[
                   $v.email.$error ? 'border-fail' : 'input_border',
                   $v.email.required && $v.email.email && $v.email.isUnique
                     ? 'border-success'
                     : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-8 offset-4">
-              <div v-if="$v.email.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.email.required">
+              <div
+                v-if="$v.email.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.email.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.email.email">
+                <div
+                  v-if="!$v.email.email"
+                  class="error">
                   Invalid email format
                 </div>
-                <div class="error" v-if="!$v.email.isUnique">
+                <div
+                  v-if="!$v.email.isUnique"
+                  class="error">
                   Email already exists. Please try with another one.
                 </div>
               </div>
@@ -92,22 +105,27 @@
             </div>
             <div class="col-8 information-input">
               <input
-                type="text"
                 v-model.trim="$v.phone.$model"
+                type="text"
                 :class="[
                   $v.phone.$error ? 'border-fail' : 'input_border',
                   $v.phone.required && $v.phone.numeric
                     ? 'border-success'
                     : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-8 offset-4">
-              <div v-if="$v.phone.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.phone.required">
+              <div
+                v-if="$v.phone.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.phone.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.phone.numeric">
+                <div
+                  v-if="!$v.phone.numeric"
+                  class="error">
                   Invalid value
                 </div>
               </div>
@@ -122,18 +140,21 @@
               </div>
               <div class="col-8 information-input">
                 <b-form-select
+                  v-model.trim="$v.user_type.$model"
                   :options="user_type_options"
                   class="add-select-form"
-                  v-model.trim="$v.user_type.$model"
                   :class="[
                     $v.user_type.$error ? 'select-fail' : null,
                     $v.user_type.required ? 'border-success' : null,
-                  ]"
-                />
+                  ]" />
               </div>
               <div class="col-8 offset-4">
-                <div v-if="$v.user_type.$dirty" class="position-relative">
-                  <div class="error" v-if="!$v.user_type.required">
+                <div
+                  v-if="$v.user_type.$dirty"
+                  class="position-relative">
+                  <div
+                    v-if="!$v.user_type.required"
+                    class="error">
                     Required
                   </div>
                 </div>
@@ -154,22 +175,27 @@
               </div>
               <div class="col-8 information-input">
                 <input
-                  type="password"
                   v-model.trim="$v.password.$model"
+                  type="password"
                   :class="[
                     $v.password.$error ? 'border-fail' : null,
                     $v.password.required && $v.password.minLength
                       ? 'border-success'
                       : null,
-                  ]"
-                />
+                  ]" />
               </div>
               <div class="col-8 offset-4">
-                <div v-if="$v.password.$dirty" class="position-relative">
-                  <div class="error" v-if="!$v.password.required">
+                <div
+                  v-if="$v.password.$dirty"
+                  class="position-relative">
+                  <div
+                    v-if="!$v.password.required"
+                    class="error">
                     Required
                   </div>
-                  <div class="error" v-if="!$v.password.minLength">
+                  <div
+                    v-if="!$v.password.minLength"
+                    class="error">
                     Password must have at least 6 letters
                   </div>
                 </div>
@@ -182,32 +208,31 @@
               </div>
               <div class="col-8 information-input">
                 <input
-                  type="password"
                   v-model.trim="$v.confirm_password.$model"
+                  type="password"
                   :class="[
                     $v.confirm_password.$error ? 'border-fail' : null,
                     $v.confirm_password.required &&
                     $v.confirm_password.sameAsPassword
                       ? 'border-success'
                       : null,
-                  ]"
-                />
+                  ]" />
               </div>
               <div class="col-8 offset-4">
                 <div
                   v-if="$v.confirm_password.$dirty"
-                  class="position-relative"
-                >
-                  <div class="error" v-if="!$v.confirm_password.required">
+                  class="position-relative">
+                  <div
+                    v-if="!$v.confirm_password.required"
+                    class="error">
                     Required
                   </div>
                   <div
-                    class="error"
                     v-if="
                       !$v.confirm_password.sameAsPassword &&
-                        $v.confirm_password.required
+                      $v.confirm_password.required
                     "
-                  >
+                    class="error">
                     Passwords must be identical
                   </div>
                 </div>
@@ -219,23 +244,37 @@
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="clearForm" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="clearForm">
                 Clear
               </button>
             </div>
             <div class="col-6">
-              <button type="submit" class="button-save">Save</button>
+              <button
+                type="submit"
+                class="button-save">
+                Save
+              </button>
             </div>
           </div>
         </div>
       </form>
     </div>
-    <div class="sent_box" :class="success ? 'visible' : 'hidden'">
-      <font-awesome-icon icon="check" class="me-2" />User successfully added!
+    <div
+      class="sent_box"
+      :class="success ? 'visible' : 'hidden'">
+      <font-awesome-icon
+        icon="check"
+        class="me-2" />User successfully added!
     </div>
-    <div class="sent_box_2" :class="email_exist ? 'visible' : 'hidden'">
-      <font-awesome-icon icon="check" class="me-2" />Email already exists.
-      Please try with another one.
+    <div
+      class="sent_box_2"
+      :class="email_exist ? 'visible' : 'hidden'">
+      <font-awesome-icon
+        icon="check"
+        class="me-2" />Email already exists. Please try with another one.
     </div>
   </div>
 </template>
@@ -254,6 +293,7 @@ import { getNewUserTypeOptions } from "@/services/AdminOptionService";
 
 export default {
   name: "AddProduct",
+  mixins: [validationMixin],
   data() {
     return {
       first_name: "",
@@ -268,7 +308,6 @@ export default {
       email_exist: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     first_name: { required },
     last_name: { required },
@@ -313,6 +352,9 @@ export default {
       this.$v.password.$reset();
       this.$v.confirm_password.$reset();
     },
+  },
+  async mounted() {
+    this.init();
   },
   methods: {
     async addItem() {
@@ -371,9 +413,6 @@ export default {
       this.confirm_password = null;
       this.init();
     },
-  },
-  async mounted() {
-    this.init();
   },
 };
 </script>
@@ -572,7 +611,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .select-fail {

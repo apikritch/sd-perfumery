@@ -9,7 +9,9 @@
         <div class="unau_text">You are not authorized to access this page.</div>
       </div>
 
-      <div class="login-button" @click="goToDashBoard">
+      <div
+        class="login-button"
+        @click="goToDashBoard">
         GO TO HOME PAGE
       </div>
     </div>

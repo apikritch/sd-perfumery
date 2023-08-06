@@ -3,42 +3,44 @@
     <div class="d-flex justify-content-between admin-product-padding">
       <div class="d-flex align-items-center admin-product-header">Brands</div>
       <div class="d-flex align-items-end">
-        <router-link class="admin-product-add" to="/admin/brand/add">
-          <font-awesome-icon icon="plus" class="me-1" /> Add Brand
+        <router-link
+          class="admin-product-add"
+          to="/admin/brand/add">
+          <font-awesome-icon
+            icon="plus"
+            class="me-1" />
+          Add Brand
         </router-link>
       </div>
     </div>
 
     <div
       v-if="loading || loading_2"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
     <div v-if="!loading && !loading_2">
-      <div class="row align-items-center product-padding-search-bar">
+      <div class="d-flex align-items-center product-padding-search-bar">
         <!--Search-->
         <div class="col-4">
           <input
+            v-model="search"
             type="text"
             class="form-control admin-product-search-bar"
-            placeholder="Search by keyword"
-            v-model="search"
-          />
+            placeholder="Search by keyword" />
         </div>
         <div class="col-4">{{ found_brand }} BRANDS FOUND</div>
         <!--Search-->
 
         <!--Pagination-->
-        <div class="col-4 ms-auto">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -46,22 +48,19 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page-button d-flex align-items-center justify-content-center"
-                  @click="previousPage"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page-button d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -75,16 +74,16 @@
         <!--Label-->
         <div class="d-flex admin-product-label">
           <div
-            class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2">
             <div>ID</div>
-            <div class="caret-cover" @click="sortId">
+            <div
+              class="caret-cover"
+              @click="sortId">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'id' && sortDirection == 'asc' ? 'sort-white' : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -92,23 +91,22 @@
                   sortBy == 'id' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
             <div>Brand</div>
-            <div class="caret-cover" @click="sortText">
+            <div
+              class="caret-cover"
+              @click="sortText">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'text' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -116,8 +114,7 @@
                   sortBy == 'text' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div class="last-product-table-label label-3"></div>
@@ -126,42 +123,39 @@
 
         <!--Table-->
         <div
-          class="d-flex admin-product-detail"
           v-for="(brand, index) in pageAndFilter"
           :key="brand.id"
-        >
+          class="d-flex admin-product-detail">
           <div
-            class="border-right-product-table detail-1 d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table detail-1 d-flex align-items-center justify-content-center">
             {{ brand.id }}
           </div>
           <div
-            class="border-right-product-table detail-2 d-flex align-items-center"
-          >
+            class="border-right-product-table detail-2 d-flex align-items-center">
             {{ brand.text }}
           </div>
           <div
-            class="detail-3 d-flex align-items-center justify-content-center"
-          >
+            class="detail-3 d-flex align-items-center justify-content-center">
             <div
               class="after_action d-flex align-items-center justify-content-center"
-              @click="showAction(index)"
               :class="brand.display_action == 1 ? 'after_action_click' : null"
-            >
+              @click="showAction(index)">
               <font-awesome-icon icon="ellipsis-h" />
             </div>
 
             <!--Mini Menu-->
-            <div class="action" v-if="brand.display_action == 1">
-              <div class="modal-overelay" @click="hideAction(index)"></div>
+            <div
+              v-if="brand.display_action == 1"
+              class="action">
+              <div
+                class="modal-overelay"
+                @click="hideAction(index)"></div>
               <div class="modal-content">
                 <div
-                  class="d-flex flex-column justify-content-end align-items-center h-100 text-start"
-                >
+                  class="d-flex flex-column justify-content-end align-items-center h-100 text-start">
                   <router-link
                     class="w-100 action-options border-action ps-2"
-                    :to="'/admin/brand/' + brand.id + '/edit'"
-                  >
+                    :to="'/admin/brand/' + brand.id + '/edit'">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -173,8 +167,7 @@
                   </router-link>
                   <button
                     class="w-100 action-delete-options border-action ps-2"
-                    @click="deleteItem(index, brand.id)"
-                  >
+                    @click="deleteItem(index, brand.id)">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -194,16 +187,15 @@
         <!--Table-->
 
         <!--Pagination-->
-        <div class="row align-items-center product-padding-search-bar">
-          <div class="col-4 ms-auto">
+        <div class="d-flex align-items-center product-padding-search-bar">
+          <div class="col-4">
             <div class="row align-items-center">
               <div class="col-5 per-page">
                 <div class="d-flex justify-content-between align-items-center">
                   <b-form-select
                     v-model="per_page"
                     :options="per_page_options"
-                    class="product-select-form-per-page"
-                  ></b-form-select>
+                    class="product-select-form-per-page"></b-form-select>
                   per page
                 </div>
               </div>
@@ -211,24 +203,20 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div
                     class="page-button d-flex align-items-center justify-content-center"
-                    @click="previousPage"
-                  >
+                    @click="previousPage">
                     <font-awesome-icon icon="chevron-left" />
                   </div>
                   <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
+                    class="d-flex justify-content-between align-items-center">
                     <input
-                      type="number"
-                      class="product-page-input"
                       v-model="current_page"
-                    />
+                      type="number"
+                      class="product-page-input" />
                     <div>of {{ all_pages }}</div>
                   </div>
                   <div
                     class="page-button d-flex align-items-center justify-content-center next-page"
-                    @click="nextPage"
-                  >
+                    @click="nextPage">
                     <font-awesome-icon icon="chevron-right" />
                   </div>
                 </div>
@@ -319,6 +307,10 @@ export default {
       },
     },
   },
+  async mounted() {
+    this.per_page_options = await getPerPageOptions();
+    this.loading = false;
+  },
   methods: {
     nextPage() {
       if (this.current_page >= this.all_pages) {
@@ -365,7 +357,7 @@ export default {
     pageProducts(brands) {
       return brands.slice(
         this.page * this.per_page,
-        this.page * this.per_page + this.per_page
+        this.page * this.per_page + this.per_page,
       );
     },
     sortId() {
@@ -416,10 +408,6 @@ export default {
         this.current_page = this.all_pages;
       }
     },
-  },
-  async mounted() {
-    this.per_page_options = await getPerPageOptions();
-    this.loading = false;
   },
 };
 </script>
@@ -550,7 +538,6 @@ export default {
   font-size: 0.85rem;
   color: #384648;
   border: 1px solid #384648;
-  margin-right: 0.5rem;
 }
 
 .user-list-page .product-page-input:focus-visible {

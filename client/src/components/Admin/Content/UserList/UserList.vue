@@ -2,22 +2,25 @@
   <div class="h-100">
     <AdminNotAuthorized v-if="$store.state.user.user_type == 'General User'" />
     <div
-      class="padding-under-pagination user-list-page h-100"
       v-if="$store.state.user.user_type !== 'General User'"
-    >
+      class="padding-under-pagination user-list-page h-100">
       <div class="d-flex justify-content-between admin-product-padding">
         <div class="d-flex align-items-center admin-product-header">Users</div>
         <div class="d-flex align-items-end">
-          <router-link class="admin-product-add" to="/admin/user/add">
-            <font-awesome-icon icon="plus" class="me-1" /> Add User
+          <router-link
+            class="admin-product-add"
+            to="/admin/user/add">
+            <font-awesome-icon
+              icon="plus"
+              class="me-1" />
+            Add User
           </router-link>
         </div>
       </div>
 
       <div
         v-if="loading || loading_2"
-        class="d-flex align-items-center justify-content-center cover_loader"
-      >
+        class="d-flex align-items-center justify-content-center cover_loader">
         <MoonLoader color="#985855" />
       </div>
       <div v-if="!loading && !loading_2">
@@ -28,42 +31,38 @@
             <b-form-select
               v-model="user_type"
               :options="user_type_options"
-              class="product-select-form"
-            ></b-form-select>
+              class="product-select-form"></b-form-select>
           </div>
           <div class="col-medium-select">
             <div>User Status:</div>
             <b-form-select
               v-model="user_status"
               :options="user_status_options"
-              class="product-select-form"
-            ></b-form-select>
+              class="product-select-form"></b-form-select>
           </div>
         </div>
         <!--Filter Row 1-->
-        <div class="row align-items-center product-padding-search-bar">
+        <div class="d-flex align-items-center product-padding-search-bar">
           <!--Search-->
           <div class="col-4">
             <input
+              v-model="search"
               type="text"
               class="form-control admin-product-search-bar"
-              placeholder="Search by keyword"
-              v-model="search"
-            />
+              placeholder="Search by keyword" />
           </div>
           <div class="col-4">{{ found_user }} USERS FOUND</div>
           <!--Search-->
 
           <!--Pagination-->
-          <div class="col-4 ms-auto">
+          <div class="col-4">
             <div class="row align-items-center">
               <div class="col-5 per-page">
                 <div class="d-flex justify-content-between align-items-center">
                   <b-form-select
                     v-model="per_page"
                     :options="per_page_options"
-                    class="product-select-form-per-page"
-                  ></b-form-select>
+                    class="product-select-form-per-page"></b-form-select>
                   per page
                 </div>
               </div>
@@ -71,24 +70,20 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div
                     class="page-button d-flex align-items-center justify-content-center"
-                    @click="previousPage"
-                  >
+                    @click="previousPage">
                     <font-awesome-icon icon="chevron-left" />
                   </div>
                   <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
+                    class="d-flex justify-content-between align-items-center">
                     <input
-                      type="number"
-                      class="product-page-input"
                       v-model="current_page"
-                    />
+                      type="number"
+                      class="product-page-input" />
                     <div>of {{ all_pages }}</div>
                   </div>
                   <div
                     class="page-button d-flex align-items-center justify-content-center next-page"
-                    @click="nextPage"
-                  >
+                    @click="nextPage">
                     <font-awesome-icon icon="chevron-right" />
                   </div>
                 </div>
@@ -99,8 +94,7 @@
         </div>
         <div
           v-if="loading"
-          class="d-flex justify-content-center align-items-center loading-height"
-        ></div>
+          class="d-flex justify-content-center align-items-center loading-height"></div>
 
         <div v-if="!loading">
           <!--Label-->
@@ -109,19 +103,19 @@
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2"
-            >
+              class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2">
               <div>ID</div>
 
-              <div class="caret-cover" @click="sortId">
+              <div
+                class="caret-cover"
+                @click="sortId">
                 <div
                   class="caret-up"
                   :class="
                     sortBy == 'id' && sortDirection == 'asc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
 
                 <div
                   class="caret-down"
@@ -129,26 +123,25 @@
                     sortBy == 'id' && sortDirection == 'desc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
               </div>
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-            >
+              class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
               <div>First Name</div>
-              <div class="caret-cover" @click="sortFirstName">
+              <div
+                class="caret-cover"
+                @click="sortFirstName">
                 <div
                   class="caret-up"
                   :class="
                     sortBy == 'first_name' && sortDirection == 'asc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
 
                 <div
                   class="caret-down"
@@ -156,26 +149,25 @@
                     sortBy == 'first_name' && sortDirection == 'desc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
               </div>
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-            >
+              class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
               <div>Last Name</div>
-              <div class="caret-cover" @click="sortLastName">
+              <div
+                class="caret-cover"
+                @click="sortLastName">
                 <div
                   class="caret-up"
                   :class="
                     sortBy == 'last_name' && sortDirection == 'asc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
 
                 <div
                   class="caret-down"
@@ -183,26 +175,25 @@
                     sortBy == 'last_name' && sortDirection == 'desc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
               </div>
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2"
-            >
+              class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2">
               <div>Email</div>
-              <div class="caret-cover" @click="sortEmail">
+              <div
+                class="caret-cover"
+                @click="sortEmail">
                 <div
                   class="caret-up"
                   :class="
                     sortBy == 'email' && sortDirection == 'asc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
 
                 <div
                   class="caret-down"
@@ -210,16 +201,14 @@
                     sortBy == 'email' && sortDirection == 'desc'
                       ? 'sort-white'
                       : null
-                  "
-                />
+                  " />
               </div>
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table-label label-4 d-flex align-items-center justify-content-center"
-            >
+              class="border-right-product-table-label label-4 d-flex align-items-center justify-content-center">
               Phone
             </div>
             <div
@@ -229,68 +218,59 @@
                   ? 'border-right-product-table-label'
                   : null,
               ]"
-              class="label-5 d-flex align-items-center justify-content-center"
-            >
+              class="label-5 d-flex align-items-center justify-content-center">
               User Type
             </div>
             <div
-              class="border-right-product-table-label label-6 d-flex align-items-center justify-content-center"
               v-if="$store.state.user.user_type !== 'Admin'"
-            >
+              class="border-right-product-table-label label-6 d-flex align-items-center justify-content-center">
               User Status
             </div>
 
             <div
-              class="last-product-table-label label-7"
               v-if="$store.state.user.user_type !== 'Admin'"
-            ></div>
+              class="last-product-table-label label-7"></div>
           </div>
           <!--Label-->
 
           <!--Table-->
           <div
-            class="d-flex admin-product-detail"
             v-for="(user, index) in pageAndFilter"
             :key="index"
-          >
+            class="d-flex admin-product-detail">
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table detail-1 d-flex align-items-center justify-content-center"
-            >
+              class="border-right-product-table detail-1 d-flex align-items-center justify-content-center">
               {{ user.id }}
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table detail-2 d-flex align-items-center"
-            >
+              class="border-right-product-table detail-2 d-flex align-items-center">
               {{ user.first_name }}
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table detail-2 d-flex align-items-center"
-            >
+              class="border-right-product-table detail-2 d-flex align-items-center">
               {{ user.last_name }}
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table detail-3 d-flex align-items-center"
-            >
+              class="border-right-product-table detail-3 d-flex align-items-center">
               {{ user.email }}
             </div>
             <div
               :class="
                 $store.state.user.user_type == 'Admin' ? 'hide_admin' : null
               "
-              class="border-right-product-table detail-4 d-flex align-items-center justify-content-center"
-            >
+              class="border-right-product-table detail-4 d-flex align-items-center justify-content-center">
               {{ user.phone }}
             </div>
             <div
@@ -300,33 +280,31 @@
                   ? 'border-right-product-table'
                   : null,
               ]"
-              class="detail-5 d-flex align-items-center justify-content-center"
-            >
+              class="detail-5 d-flex align-items-center justify-content-center">
               {{ user.user_type }}
             </div>
             <div
               v-if="$store.state.user.user_type !== 'Admin'"
-              class="border-right-product-table detail-6 d-flex align-items-center justify-content-center"
-            >
+              class="border-right-product-table detail-6 d-flex align-items-center justify-content-center">
               {{ user.user_status }}
             </div>
 
             <div
-              class="detail-7 d-flex align-items-center justify-content-center"
               v-if="
                 $store.state.user.user_type !== 'Admin' &&
                 user.user_type !== 'Owner'
               "
-            >
-              <div class="w-100" @click="suspendAction(index, user.id)">
+              class="detail-7 d-flex align-items-center justify-content-center">
+              <div
+                class="w-100"
+                @click="suspendAction(index, user.id)">
                 <div class="d-flex justify-content-center align-items-center">
                   <div class="form-check form-switch">
                     <input
-                      class="form-check-input"
-                      type="checkbox"
                       id="flexSwitchCheckChecked"
                       v-model="user.suspend_switch"
-                    />
+                      class="form-check-input"
+                      type="checkbox" />
                   </div>
                 </div>
               </div>
@@ -335,45 +313,38 @@
           <!--Table-->
 
           <!--Pagination-->
-          <div class="row align-items-center product-padding-search-bar">
-            <div class="col-4 ms-auto">
+          <div class="d-flex align-items-center product-padding-search-bar">
+            <div class="col-4">
               <div class="row align-items-center">
                 <div class="col-5 per-page">
                   <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
+                    class="d-flex justify-content-between align-items-center">
                     <b-form-select
                       v-model="per_page"
                       :options="per_page_options"
-                      class="product-select-form-per-page"
-                    ></b-form-select>
+                      class="product-select-form-per-page"></b-form-select>
                     per page
                   </div>
                 </div>
                 <div class="col-7 page">
                   <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
+                    class="d-flex justify-content-between align-items-center">
                     <div
                       class="page-button d-flex align-items-center justify-content-center"
-                      @click="previousPage"
-                    >
+                      @click="previousPage">
                       <font-awesome-icon icon="chevron-left" />
                     </div>
                     <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
+                      class="d-flex justify-content-between align-items-center">
                       <input
-                        type="number"
-                        class="product-page-input"
                         v-model="current_page"
-                      />
+                        type="number"
+                        class="product-page-input" />
                       <div>of {{ all_pages }}</div>
                     </div>
                     <div
                       class="page-button d-flex align-items-center justify-content-center next-page"
-                      @click="nextPage"
-                    >
+                      @click="nextPage">
                       <font-awesome-icon icon="chevron-right" />
                     </div>
                   </div>
@@ -426,7 +397,7 @@ export default {
   computed: {
     pageAndFilter() {
       return this.pageUsers(
-        this.sortUsers(this.filterUserType(this.filterUserStatus(this.users)))
+        this.sortUsers(this.filterUserType(this.filterUserStatus(this.users))),
       );
     },
   },
@@ -483,6 +454,12 @@ export default {
       this.checkAll();
     },
   },
+  async mounted() {
+    this.per_page_options = await getPerPageOptions();
+    this.user_type_options = await getUserTypeOptions();
+    this.user_status_options = await getUserStatusOptions();
+    this.loading_2 = false;
+  },
   methods: {
     nextPage() {
       if (this.current_page >= this.all_pages) {
@@ -528,7 +505,7 @@ export default {
     pageUsers(users) {
       return users.slice(
         this.page * this.per_page,
-        this.page * this.per_page + this.per_page
+        this.page * this.per_page + this.per_page,
       );
     },
     filterUserType(users) {
@@ -543,7 +520,7 @@ export default {
         return users;
       } else {
         return users.filter((user) =>
-          this.user_status.includes(user.user_status)
+          this.user_status.includes(user.user_status),
         );
       }
     },
@@ -604,7 +581,7 @@ export default {
     },
     checkAll() {
       const item_length = this.filterUserType(
-        this.filterUserStatus(this.users)
+        this.filterUserStatus(this.users),
       ).length;
 
       this.found_user = item_length;
@@ -617,12 +594,6 @@ export default {
         this.current_page = this.all_pages;
       }
     },
-  },
-  async mounted() {
-    this.per_page_options = await getPerPageOptions();
-    this.user_type_options = await getUserTypeOptions();
-    this.user_status_options = await getUserStatusOptions();
-    this.loading_2 = false;
   },
 };
 </script>
@@ -753,7 +724,6 @@ export default {
   font-size: 0.85rem;
   color: #384648;
   border: 1px solid #384648;
-  margin-right: 0.5rem;
 }
 
 .user-list-page .product-page-input:focus-visible {

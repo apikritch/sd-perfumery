@@ -1,13 +1,11 @@
 <template>
   <div
-    class="d-flex justify-content-center account-content edit-product-page h-100"
-  >
+    class="d-flex justify-content-center account-content edit-product-page h-100">
     <div class="account-width">
       <div class="account-header">Edit Shipment</div>
       <div
         v-if="loading"
-        class="d-flex align-items-center justify-content-center cover_loader "
-      >
+        class="d-flex align-items-center justify-content-center cover_loader">
         <MoonLoader color="#985855" />
       </div>
       <div v-if="!loading">
@@ -19,22 +17,22 @@
             </div>
             <div class="col-8 information-input">
               <input
-                type="text"
                 v-model.trim="$v.shipment.shipping_method.$model"
+                type="text"
                 :class="[
                   $v.shipment.shipping_method.$error ? 'border-fail' : null,
                   $v.shipment.shipping_method.required
                     ? 'border-success'
                     : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-8 offset-4">
               <div
                 v-if="$v.shipment.shipping_method.$dirty"
-                class="position-relative"
-              >
-                <div class="error" v-if="!$v.shipment.shipping_method.required">
+                class="position-relative">
+                <div
+                  v-if="!$v.shipment.shipping_method.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -47,26 +45,28 @@
             </div>
             <div class="col-8 information-input">
               <input
-                type="text"
                 v-model.trim="$v.shipment.shipping_fee.$model"
+                type="text"
                 :class="[
                   $v.shipment.shipping_fee.$error ? 'border-fail' : null,
                   $v.shipment.shipping_fee.required &&
                   $v.shipment.shipping_fee.decimal
                     ? 'border-success'
                     : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-8 offset-4">
               <div
                 v-if="$v.shipment.shipping_fee.$dirty"
-                class="position-relative"
-              >
-                <div class="error" v-if="!$v.shipment.shipping_fee.required">
+                class="position-relative">
+                <div
+                  v-if="!$v.shipment.shipping_fee.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.shipment.shipping_fee.decimal">
+                <div
+                  v-if="!$v.shipment.shipping_fee.decimal"
+                  class="error">
                   Invalid value
                 </div>
               </div>
@@ -77,12 +77,19 @@
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="backPage" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="backPage">
                 Back
               </button>
             </div>
             <div class="col-6">
-              <button class="button-save" @click="saveItem">Save</button>
+              <button
+                class="button-save"
+                @click="saveItem">
+                Save
+              </button>
             </div>
           </div>
         </div>
@@ -100,6 +107,7 @@ import { required, decimal } from "vuelidate/lib/validators";
 export default {
   name: "EditShipment",
   components: { MoonLoader },
+  mixins: [validationMixin],
 
   data() {
     return {
@@ -110,7 +118,6 @@ export default {
       loading: true,
     };
   },
-  mixins: [validationMixin],
   validations: {
     shipment: {
       shipping_method: { required },
@@ -124,6 +131,11 @@ export default {
     "shipment.shipping_fee"() {
       this.$v.shipment.shipping_fee.$reset();
     },
+  },
+  async mounted() {
+    const shipmentId = this.$store.state.route.params.shipmentId;
+    this.shipment = (await getShipmentbyId(shipmentId)).data;
+    this.loading = false;
   },
   methods: {
     backPage() {
@@ -150,11 +162,6 @@ export default {
         console.log(error);
       }
     },
-  },
-  async mounted() {
-    const shipmentId = this.$store.state.route.params.shipmentId;
-    this.shipment = (await getShipmentbyId(shipmentId)).data;
-    this.loading = false;
   },
 };
 </script>

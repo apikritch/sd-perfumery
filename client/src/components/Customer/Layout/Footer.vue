@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="first-footer-section">
+    <div class="first-footer-section d-none d-md-block">
       <div class="container-lg">
         <div class="row justify-content-end">
           <div class="col-4 d-flex justify-content-center">
@@ -37,8 +37,7 @@
       </div>
     </div>
     <div
-      class="second-footer-section justify-content-center d-flex align-items-center"
-    >
+      class="second-footer-section justify-content-center d-flex align-items-center">
       Copyright © 2021 SDPerfumerry.lk All Rights Reserved.
     </div>
   </div>
@@ -58,13 +57,13 @@ export default {
   padding-top: 3rem;
 }
 
-.first-footer-section .col-4 p {
+.first-footer-section p {
   font-size: 0.8rem;
   font-weight: 300;
   margin-bottom: 0.3rem;
 }
 
-.first-footer-section .col-4 h6 {
+.first-footer-section h6 {
   margin-bottom: 1rem;
 }
 
@@ -72,6 +71,12 @@ export default {
   background-color: #384648;
   height: 40px;
   color: #ffffff;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 576px) {
+  .second-footer-section {
+    font-size: 0.9rem;
+  }
 }
 </style>

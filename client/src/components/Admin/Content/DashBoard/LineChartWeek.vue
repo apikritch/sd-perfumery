@@ -39,11 +39,14 @@ export default {
       this.init();
     },
   },
+  mounted() {
+    this.init();
+  },
   methods: {
     init() {
       for (let i = 0; i < this.orders.length; i++) {
         const full = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "YYYYMMDD"
+          "YYYYMMDD",
         );
         var whichDay;
         var existing = this.formatted_data.filter((item, index) => {
@@ -56,13 +59,13 @@ export default {
         });
         const day = moment(this.orders[i].order_date, "DD/MM/YYYY").day();
         const date = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "DD"
+          "DD",
         );
         const month = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "MM"
+          "MM",
         );
         const year = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "YYYY"
+          "YYYY",
         );
         if (existing.length) {
           this.formatted_data[whichDay].total =
@@ -90,7 +93,7 @@ export default {
       const date = moment(time_now).day();
 
       var start_date = moment(
-        time_now_1.setDate(time_now_1.getDate() - date)
+        time_now_1.setDate(time_now_1.getDate() - date),
       ).format("YYYYMMDD");
 
       for (let i = 0; i < 7; i++) {
@@ -120,7 +123,7 @@ export default {
           legend: {
             display: false,
           },
-        }
+        },
       );
     },
 
@@ -132,14 +135,14 @@ export default {
       var till_end = 6 - Number(date);
 
       var start_date = moment(
-        time_now_1.setDate(time_now_1.getDate() - date)
+        time_now_1.setDate(time_now_1.getDate() - date),
       ).format("YYYYMMDD");
       var end_date = moment(
-        time_now_2.setDate(time_now_2.getDate() + till_end)
+        time_now_2.setDate(time_now_2.getDate() + till_end),
       ).format("YYYYMMDD");
 
       return formatted_data.filter(
-        (f_data) => f_data.full >= start_date && f_data.full <= end_date
+        (f_data) => f_data.full >= start_date && f_data.full <= end_date,
       );
     },
     getRandom() {
@@ -150,9 +153,6 @@ export default {
       }
       return color;
     },
-  },
-  mounted() {
-    this.init();
   },
 };
 </script>

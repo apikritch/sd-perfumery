@@ -9,10 +9,14 @@
         <div class="unau_text">Please sign in to access this page.</div>
       </div>
 
-      <div class="login-button_2" @click="showSignIn">
+      <div
+        class="login-button_2"
+        @click="showSignIn">
         SIGN IN
       </div>
-      <div class="login-button" @click="goToHome">
+      <div
+        class="login-button"
+        @click="goToHome">
         GO TO HOME PAGE
       </div>
     </div>

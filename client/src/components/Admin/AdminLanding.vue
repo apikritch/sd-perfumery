@@ -4,36 +4,32 @@
     <AdminAccountSuspended
       v-if="
         $store.state.isUserLoggedIn &&
-          $store.state.user.user_status == 'Suspended'
-      "
-    />
+        $store.state.user.user_status == 'Suspended'
+      " />
     <AdminNavbar
+      v-if="
+        $store.state.isUserLoggedIn && $store.state.user.user_status == 'Active'
+      "
       :unReadOrder="unReadOrder"
-      class="sticky-nav"
-      v-if="
-        $store.state.isUserLoggedIn && $store.state.user.user_status == 'Active'
-      "
-    ></AdminNavbar>
+      class="sticky-nav"></AdminNavbar>
     <div
-      class="admin-side-and-body"
       v-if="
         $store.state.isUserLoggedIn && $store.state.user.user_status == 'Active'
       "
-    >
+      class="admin-side-and-body">
       <div class="container-fluid">
         <div class="row">
           <div class="col-3 admin-side-bar">
             <AdminSideBar></AdminSideBar>
           </div>
           <div
-            class="col-9 "
+            class="col-9"
             :class="
               $route.name == 'UserList' &&
               $store.state.user.user_type == 'General User'
                 ? 'gen_user_padding'
                 : 'admin-content'
-            "
-          >
+            ">
             <router-view :readOrder="readOrder" />
           </div>
         </div>
@@ -64,23 +60,6 @@ export default {
       haveCookies: false,
     };
   },
-  async created() {
-    if (this.$cookies.get("EM")) {
-      this.haveCookies = true;
-
-      const bytesEM = CryptoJS.AES.decrypt(
-        this.$cookies.get("EM"),
-        "secret_1234"
-      );
-      const dencryptedEM = bytesEM.toString(CryptoJS.enc.Utf8);
-      const response = await getUserByCookies({
-        email: dencryptedEM,
-      });
-
-      this.$store.dispatch("setUser", response.data);
-      this.haveCookies = false;
-    }
-  },
   computed: {
     unReadOrder() {
       let unread = [];
@@ -92,11 +71,22 @@ export default {
       return unread;
     },
   },
-  methods: {
-    async readOrder(orderId) {
-      await updateOrderNotificationById(orderId, { notification: "Read" });
-      this.orders = (await getOrder()).data;
-    },
+  async created() {
+    if (this.$cookies.get("EM")) {
+      this.haveCookies = true;
+
+      const bytesEM = CryptoJS.AES.decrypt(
+        this.$cookies.get("EM"),
+        "secret_1234",
+      );
+      const dencryptedEM = bytesEM.toString(CryptoJS.enc.Utf8);
+      const response = await getUserByCookies({
+        email: dencryptedEM,
+      });
+
+      this.$store.dispatch("setUser", response.data);
+      this.haveCookies = false;
+    }
   },
   async mounted() {
     this.orders = (await getOrder()).data;
@@ -108,6 +98,12 @@ export default {
     //console.log(device);
 
     //console.log(navigator.geolocation.getCurrentPosition);
+  },
+  methods: {
+    async readOrder(orderId) {
+      await updateOrderNotificationById(orderId, { notification: "Read" });
+      this.orders = (await getOrder()).data;
+    },
   },
 };
 </script>

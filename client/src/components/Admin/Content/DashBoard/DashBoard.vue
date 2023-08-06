@@ -8,18 +8,21 @@
     </div>
     <div
       v-if="loading"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
-    <div class="cover_dash_content" v-if="!loading">
+    <div
+      v-if="!loading"
+      class="cover_dash_content">
       <div class="row">
         <div class="col-3">
           <div class="shadow_card">
             <div class="card_dash_header">Customers</div>
             <div class="d-flex justify-content-between pt-2">
               <div>
-                <font-awesome-icon class="icon_dash_size" icon="users" />
+                <font-awesome-icon
+                  class="icon_dash_size"
+                  icon="users" />
               </div>
               <div class="text_dash">{{ customers.length }}</div>
             </div>
@@ -30,7 +33,9 @@
             <div class="card_dash_header">Users</div>
             <div class="d-flex justify-content-between pt-2">
               <div>
-                <font-awesome-icon class="icon_dash_size" icon="user-circle" />
+                <font-awesome-icon
+                  class="icon_dash_size"
+                  icon="user-circle" />
               </div>
               <div class="text_dash">{{ users.length }}</div>
             </div>
@@ -43,7 +48,9 @@
             <div class="card_dash_header">Orders</div>
             <div class="d-flex justify-content-between pt-2">
               <div>
-                <font-awesome-icon class="icon_dash_size" icon="store" />
+                <font-awesome-icon
+                  class="icon_dash_size"
+                  icon="store" />
               </div>
               <div class="text_dash">{{ orders.length }}</div>
             </div>
@@ -54,7 +61,9 @@
             <div class="card_dash_header">Completed Orders</div>
             <div class="d-flex justify-content-between pt-2">
               <div>
-                <font-awesome-icon class="icon_dash_size" icon="check-circle" />
+                <font-awesome-icon
+                  class="icon_dash_size"
+                  icon="check-circle" />
               </div>
               <div class="text_dash">{{ completedOrders.length }}</div>
             </div>
@@ -65,7 +74,9 @@
             <div class="card_dash_header">Product Sold</div>
             <div class="d-flex justify-content-between pt-2">
               <div>
-                <font-awesome-icon class="icon_dash_size" icon="box" />
+                <font-awesome-icon
+                  class="icon_dash_size"
+                  icon="box" />
               </div>
               <div class="text_dash">{{ orderedProducts }}</div>
             </div>
@@ -76,7 +87,9 @@
             <div class="card_dash_header">Sales</div>
             <div class="d-flex justify-content-between pt-2">
               <div>
-                <font-awesome-icon class="icon_dash_size" icon="coins" />
+                <font-awesome-icon
+                  class="icon_dash_size"
+                  icon="coins" />
               </div>
               <div class="text_dash">Rs. {{ sales }}</div>
             </div>
@@ -88,7 +101,9 @@
           <div class="shadow_card_top">
             <div class="card_dash_header d-flex mb-2">
               <div>
-                <font-awesome-icon class="icon_dash_size" icon="fire" />
+                <font-awesome-icon
+                  class="icon_dash_size"
+                  icon="fire" />
               </div>
               <div class="ps-3">Top 5 Sales</div>
             </div>
@@ -101,10 +116,9 @@
                 </div>
               </div>
               <div
-                class="row detail_text_dash"
                 v-for="(product, index) in topFiveProducts"
                 :key="index"
-              >
+                class="row detail_text_dash">
                 <div class="col-1 text-center">{{ product.product.id }}</div>
                 <div class="col-9">
                   <div>
@@ -131,20 +145,17 @@
                 <font-awesome-icon
                   icon="chevron-left"
                   class="me-2 cursor_pointer"
-                  @click="goBackWeek"
-                />
+                  @click="goBackWeek" />
                 <font-awesome-icon
                   icon="chevron-right"
                   class="ms-2 cursor_pointer"
-                  @click="goNextWeek"
-                />
+                  @click="goNextWeek" />
               </div>
             </div>
             <div v-if="orders.length > 0 && timestamp_1">
               <LineChartWeek
                 :orders="orders"
-                :timestamp="timestamp_1"
-              ></LineChartWeek>
+                :timestamp="timestamp_1"></LineChartWeek>
             </div>
           </div>
         </div>
@@ -156,20 +167,17 @@
                 <font-awesome-icon
                   icon="chevron-left"
                   class="me-2 cursor_pointer"
-                  @click="goBackMonth"
-                />
+                  @click="goBackMonth" />
                 <font-awesome-icon
                   icon="chevron-right"
                   class="ms-2 cursor_pointer"
-                  @click="goNextMonth"
-                />
+                  @click="goNextMonth" />
               </div>
             </div>
             <div v-if="orders.length > 0 && timestamp_2">
               <LineChartMonth
                 :orders="orders"
-                :timestamp="timestamp_2"
-              ></LineChartMonth>
+                :timestamp="timestamp_2"></LineChartMonth>
             </div>
           </div>
         </div>
@@ -232,15 +240,26 @@ export default {
     },
     topFiveProducts() {
       return this.sliceProducts(
-        this.sortProductsByQty(this.findTopFiveProducts(this.ordered_products))
+        this.sortProductsByQty(this.findTopFiveProducts(this.ordered_products)),
       );
     },
+  },
+
+  async mounted() {
+    this.timestamp_1 = Date.now();
+    this.timestamp_2 = Date.now();
+    this.users = (await getUsers()).data;
+    this.customers = (await getCustomers()).data;
+    this.orders = (await getOrder()).data;
+    this.ordered_products = (await getOrderedProducts()).data;
+    this.dashboard_year = (await getYearly()).data;
+    this.loading = false;
   },
   methods: {
     goNextWeek() {
       const time_now = new Date(this.timestamp_1);
       var next_week = moment(time_now.setDate(time_now.getDate() + 7)).format(
-        "YYYY,MM,DD"
+        "YYYY,MM,DD",
       );
       var to_time_stamp = new Date(next_week);
       this.timestamp_1 = Number(to_time_stamp);
@@ -249,7 +268,7 @@ export default {
     goBackWeek() {
       const time_now = new Date(this.timestamp_1);
       var last_week = moment(time_now.setDate(time_now.getDate() - 7)).format(
-        "YYYY,MM,DD"
+        "YYYY,MM,DD",
       );
       var to_time_stamp = new Date(last_week);
       this.timestamp_1 = Number(to_time_stamp);
@@ -259,7 +278,7 @@ export default {
       var next_month = new Date(
         time_now.getFullYear(),
         time_now.getMonth() + 1,
-        1
+        1,
       );
       var to_time_stamp = new Date(moment(next_month).format("YYYY,MM,DD"));
       this.timestamp_2 = Number(to_time_stamp);
@@ -270,7 +289,7 @@ export default {
       var last_month = new Date(
         time_now.getFullYear(),
         time_now.getMonth() - 1,
-        1
+        1,
       );
       var to_time_stamp = new Date(moment(last_month).format("YYYY,MM,DD"));
       this.timestamp_2 = Number(to_time_stamp);
@@ -338,17 +357,6 @@ export default {
         return 0;
       });
     },
-  },
-
-  async mounted() {
-    this.timestamp_1 = Date.now();
-    this.timestamp_2 = Date.now();
-    this.users = (await getUsers()).data;
-    this.customers = (await getCustomers()).data;
-    this.orders = (await getOrder()).data;
-    this.ordered_products = (await getOrderedProducts()).data;
-    this.dashboard_year = (await getYearly()).data;
-    this.loading = false;
   },
 };
 </script>

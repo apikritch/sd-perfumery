@@ -5,23 +5,20 @@
         <div class="d-flex justify-content-center reset-logo">
           <font-awesome-icon icon="user-lock" />
         </div>
-        <div class="admin-forgot-head">
-          Reset User Account Password
-        </div>
+        <div class="admin-forgot-head">Reset User Account Password</div>
         <input
+          v-model.trim="$v.password.$model"
           type="password"
           placeholder="New Password"
-          v-model.trim="$v.password.$model"
           :class="[
             $v.password.$error || expire_link ? 'border_fail_2' : null,
             $v.password.required && $v.password.minLength && !expire_link
               ? 'border-success'
               : null,
-          ]"
-        />
+          ]" />
         <input
-          type="password"
           v-model.trim="$v.confirm_password.$model"
+          type="password"
           placeholder="Confirm New Password"
           :class="[
             $v.confirm_password.$error || expire_link ? 'border_fail_2' : null,
@@ -30,44 +27,47 @@
             !expire_link
               ? 'border-success'
               : null,
-          ]"
-        />
+          ]" />
         <div class="position-relative d-flex flex-column">
           <div
             v-if="$v.confirm_password.$dirty"
-            class=" w-100"
+            class="w-100"
             :class="
               $v.password.required && $v.password.minLength
                 ? 'position-relative'
                 : 'position-absolute'
-            "
-          >
-            <div class="error_2" v-if="!$v.confirm_password.required">
+            ">
+            <div
+              v-if="!$v.confirm_password.required"
+              class="error_2">
               Please confirm your new password.
             </div>
             <div
-              class="error_2"
               v-if="
                 !$v.confirm_password.sameAsPassword &&
-                  $v.password.minLength &&
-                  $v.confirm_password.required
+                $v.password.minLength &&
+                $v.confirm_password.required
               "
-            >
+              class="error_2">
               Passwords must be identical.
             </div>
           </div>
-          <div v-if="$v.password.$dirty" class=" position-relative w-100">
-            <div class="error_2" v-if="!$v.password.required">
+          <div
+            v-if="$v.password.$dirty"
+            class="position-relative w-100">
+            <div
+              v-if="!$v.password.required"
+              class="error_2">
               Please enter your new password.
             </div>
-            <div class="error_2" v-if="!$v.password.minLength">
+            <div
+              v-if="!$v.password.minLength"
+              class="error_2">
               Password must have at least 6 letters.
             </div>
           </div>
           <div v-if="success">
-            <div class="success">
-              Your password successfully changed!
-            </div>
+            <div class="success">Your password successfully changed!</div>
           </div>
           <div v-if="expire_link">
             <div class="expire">
@@ -75,8 +75,16 @@
             </div>
           </div>
         </div>
-        <div class="login-button" @click="reset">Reset Password</div>
-        <div class="login-button_2" @click="goHome">Login</div>
+        <div
+          class="login-button"
+          @click="reset">
+          Reset Password
+        </div>
+        <div
+          class="login-button_2"
+          @click="goHome">
+          Login
+        </div>
       </div>
     </div>
   </div>
@@ -89,6 +97,7 @@ import { required, minLength, sameAs } from "vuelidate/lib/validators";
 
 export default {
   name: "AdminResetPassword",
+  mixins: [validationMixin],
   data() {
     return {
       password: null,
@@ -98,7 +107,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     password: { required, minLength: minLength(6) },
     confirm_password: { required, sameAsPassword: sameAs("password") },
@@ -112,6 +120,9 @@ export default {
       this.$v.password.$reset();
       this.$v.confirm_password.$reset();
     },
+  },
+  async mounted() {
+    this.token = await this.$store.state.route.params.token;
   },
   methods: {
     async reset() {
@@ -144,9 +155,6 @@ export default {
         name: "DashBoard",
       });
     },
-  },
-  async mounted() {
-    this.token = await this.$store.state.route.params.token;
   },
 };
 </script>

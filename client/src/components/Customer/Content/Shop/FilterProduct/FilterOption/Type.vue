@@ -4,24 +4,32 @@
       class="d-flex justify-content-between align-items-center w-100 type-collapse-button"
       aria-controls="collapse-type"
       :aria-expanded="visible ? 'true' : 'false'"
-      @click="visible = !visible"
       :class="visible ? null : 'collapsed'"
-    >
+      @click="visible = !visible">
       <div class="filter-type-header">Type</div>
-      <font-awesome-icon icon="chevron-down" class="rotate-chevron" />
+      <font-awesome-icon
+        icon="chevron-down"
+        class="rotate-chevron" />
     </b-button>
-    <b-collapse id="collapse-type" v-model="visible" class="type-collapse-area">
+    <b-collapse
+      id="collapse-type"
+      v-model="visible"
+      class="type-collapse-area">
       <div class="padding-type">
-        <div class="form-check" v-for="(type, index) in types" :key="index">
+        <div
+          v-for="(type, index) in types"
+          :key="index"
+          class="form-check">
           <input
+            :id="`${type.text}-check-box`"
+            v-model="selected"
             class="form-check-input"
             type="checkbox"
             :value="type.title"
-            :id="`${type.text}-check-box`"
-            v-model="selected"
-            @change="changeValueType(selected)"
-          />
-          <label class="form-check-label" :for="`${type.text}-check-box`">
+            @change="changeValueType(selected)" />
+          <label
+            class="form-check-label"
+            :for="`${type.text}-check-box`">
             {{ type.title }}
           </label>
         </div>

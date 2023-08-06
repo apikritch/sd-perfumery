@@ -1,5 +1,5 @@
-<template
-  ><div class="col-3 account-side-bar">
+<template>
+  <div class="col-3 account-side-bar">
     <div class="side-bar-header">My Account</div>
     <router-link
       to="/myaccount"
@@ -34,7 +34,6 @@ export default {
   color: #fff;
   padding-right: unset;
   padding-left: unset;
-  width: 20%;
   min-height: 55vh;
 }
 

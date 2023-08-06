@@ -3,9 +3,7 @@
     <div class="admin-login-bg">
       <div class="d-flex justify-content-center align-items-end h-100">
         <div class="d-flex flex-column">
-          <div class="admin-forgot-head">
-            Forgot Password
-          </div>
+          <div class="admin-forgot-head">Forgot Password</div>
           <div class="admin-forgot-details">
             Enter your email address. You will receive an email with a link to
             reset you password.
@@ -17,9 +15,9 @@
       <div class="d-flex justify-content-center align-items-center h-100">
         <div class="d-flex flex-column">
           <input
+            v-model.trim="$v.forgot_password.$model"
             type="text"
             placeholder="Email"
-            v-model.trim="$v.forgot_password.$model"
             :class="[
               $v.forgot_password.$error ? 'border_fail_2' : null,
               $v.forgot_password.required &&
@@ -27,16 +25,21 @@
               $v.forgot_password.isUnique
                 ? 'border-success'
                 : null,
-            ]"
-          />
+            ]" />
           <div v-if="$v.forgot_password.$dirty">
-            <div class="error_2" v-if="!$v.forgot_password.required">
+            <div
+              v-if="!$v.forgot_password.required"
+              class="error_2">
               Email is required.
             </div>
-            <div class="error_2" v-if="!$v.forgot_password.email">
+            <div
+              v-if="!$v.forgot_password.email"
+              class="error_2">
               Invalid email format.
             </div>
-            <div class="error_2" v-if="!$v.forgot_password.isUnique">
+            <div
+              v-if="!$v.forgot_password.isUnique"
+              class="error_2">
               No account found with that email address.
             </div>
           </div>
@@ -48,22 +51,19 @@
           </div>
 
           <div
-            class="d-flex justify-content-center align-irems-center login-button "
-            @click="forgot"
-          >
+            class="d-flex justify-content-center align-irems-center login-button"
+            @click="forgot">
             <div v-if="!forgot_loading">Send</div>
             <div>
               <BeatLoader
-                class="text-center "
+                class="text-center"
                 :loading="forgot_loading"
                 color="#fff"
-                size="0.5rem"
-              ></BeatLoader>
+                size="0.5rem"></BeatLoader>
             </div>
           </div>
           <div
-            class="d-flex justify-content-center align-irems-center back-to-button "
-          >
+            class="d-flex justify-content-center align-irems-center back-to-button">
             <router-link to="/admin">
               <div class="text-button">Back to Log In</div>
             </router-link>
@@ -83,6 +83,7 @@ import BeatLoader from "vue-spinner/src/BeatLoader.vue";
 export default {
   name: "AdminForgotPassword",
   components: { BeatLoader },
+  mixins: [validationMixin],
   data() {
     return {
       forgot_password: "",
@@ -91,7 +92,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     forgot_password: {
       required,

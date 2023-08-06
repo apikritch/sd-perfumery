@@ -4,28 +4,32 @@
       class="d-flex justify-content-between align-items-center w-100 gender-collapse-button"
       aria-controls="collapse-gender"
       :aria-expanded="visible ? 'true' : 'false'"
-      @click="visible = !visible"
       :class="visible ? null : 'collapsed'"
-    >
+      @click="visible = !visible">
       <div class="filter-gender-header">Gender</div>
-      <font-awesome-icon icon="chevron-down" class="rotate-chevron" />
+      <font-awesome-icon
+        icon="chevron-down"
+        class="rotate-chevron" />
     </b-button>
     <b-collapse
       id="collapse-gender"
       v-model="visible"
-      class="gender-collapse-area"
-    >
+      class="gender-collapse-area">
       <div class="padding-gender">
-        <div class="form-check" v-for="(gender, index) in genders" :key="index">
+        <div
+          v-for="(gender, index) in genders"
+          :key="index"
+          class="form-check">
           <input
+            :id="`${gender.text}-check-box`"
+            v-model="selected"
             class="form-check-input"
             type="checkbox"
             :value="gender.title"
-            :id="`${gender.text}-check-box`"
-            v-model="selected"
-            @change="changeValueGender(selected)"
-          />
-          <label class="form-check-label" :for="`${gender.text}-check-box`">
+            @change="changeValueGender(selected)" />
+          <label
+            class="form-check-label"
+            :for="`${gender.text}-check-box`">
             {{ gender.title }}
           </label>
         </div>

@@ -1,13 +1,11 @@
 <template>
   <div
-    class="d-flex justify-content-center account-content edit-product-page h-100"
-  >
+    class="d-flex justify-content-center account-content edit-product-page h-100">
     <div class="account-width">
       <div class="account-header">Edit Brand</div>
       <div
         v-if="loading"
-        class="d-flex align-items-center justify-content-center cover_loader "
-      >
+        class="d-flex align-items-center justify-content-center cover_loader">
         <MoonLoader color="#985855" />
       </div>
       <div v-if="!loading">
@@ -19,17 +17,20 @@
             </div>
             <div class="col-9 information-input">
               <input
-                type="text"
                 v-model.trim="$v.brand.text.$model"
+                type="text"
                 :class="[
                   $v.brand.text.$error ? 'border-fail' : null,
                   $v.brand.text.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.brand.text.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.brand.text.required">
+              <div
+                v-if="$v.brand.text.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.brand.text.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -40,12 +41,19 @@
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="backPage" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="backPage">
                 Back
               </button>
             </div>
             <div class="col-6">
-              <button class="button-save" @click="saveItem">Save</button>
+              <button
+                class="button-save"
+                @click="saveItem">
+                Save
+              </button>
             </div>
           </div>
         </div>
@@ -63,6 +71,7 @@ import { required } from "vuelidate/lib/validators";
 export default {
   name: "EditBrand",
   components: { MoonLoader },
+  mixins: [validationMixin],
   data() {
     return {
       brand: {
@@ -72,7 +81,6 @@ export default {
       loading: true,
     };
   },
-  mixins: [validationMixin],
   validations: {
     brand: { text: { required } },
   },
@@ -80,6 +88,11 @@ export default {
     "brand.text"() {
       this.$v.brand.text.$reset();
     },
+  },
+  async mounted() {
+    const brandId = this.$store.state.route.params.brandId;
+    this.brand = (await getBrandbyId(brandId)).data;
+    this.loading = false;
   },
   methods: {
     backPage() {
@@ -103,11 +116,6 @@ export default {
         console.log(error);
       }
     },
-  },
-  async mounted() {
-    const brandId = this.$store.state.route.params.brandId;
-    this.brand = (await getBrandbyId(brandId)).data;
-    this.loading = false;
   },
 };
 </script>

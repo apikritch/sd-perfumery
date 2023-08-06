@@ -1,12 +1,11 @@
 <template>
-  <div class="col-3 shop-filter col-3-self">
+  <div class="col-3 shop-filter col-3-self d-none d-xl-block">
     <div class="filter-header">FILTER BY</div>
     <div>
       <Price :changeValuePrice="changeValuePrice" />
       <Gender
-        :changeValueGender="changeValueGender"
         v-if="$route.name == 'SHOP'"
-      />
+        :changeValueGender="changeValueGender" />
       <Size :changeValueSize="changeValueSize" />
       <Type :changeValueType="changeValueType" />
       <Brand :changeValueBrand="changeValueBrand" />
@@ -23,6 +22,7 @@ import Brand from "./FilterOption/Brand.vue";
 
 export default {
   name: "FilterProduct",
+  components: { Price, Gender, Size, Type, Brand },
   props: [
     "changeValuePrice",
     "changeValueSize",
@@ -30,7 +30,6 @@ export default {
     "changeValueType",
     "changeValueBrand",
   ],
-  components: { Price, Gender, Size, Type, Brand },
 };
 </script>
 
@@ -51,5 +50,23 @@ export default {
 .shop-filter {
   border-right: 1px solid #384648;
   padding-right: 1.5rem;
+}
+
+@media (min-width: 375px) {
+}
+
+@media (min-width: 576px) {
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }
 </style>

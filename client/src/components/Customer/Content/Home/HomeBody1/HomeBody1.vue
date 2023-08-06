@@ -1,8 +1,15 @@
 <template>
   <div class="carousel-section">
-    <VueSlickCarousel v-bind="settings" v-if="images.length > 0"
-      ><div v-for="(image, index) in sort" :key="index">
-        <img :src="image.link_address" width="100%" /></div
+    <VueSlickCarousel
+      v-if="images.length > 0"
+      v-bind="settings"
+      ><div
+        v-for="(image, index) in sort"
+        :key="index"
+        class="overflow-hidden shadow-sm">
+        <img
+          :src="image.link_address"
+          width="100%" /></div
     ></VueSlickCarousel>
   </div>
 </template>
@@ -15,7 +22,7 @@ export default {
   name: "HomeBody1",
   components: { VueSlickCarousel },
 
-  data: function() {
+  data: function () {
     return {
       settings: {
         dots: true,
@@ -25,6 +32,14 @@ export default {
         slidesToScroll: 1,
         autoplay: true,
         arrows: true,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              arrows: false,
+            },
+          },
+        ],
       },
       images: [],
     };
@@ -33,6 +48,9 @@ export default {
     sort() {
       return this.sortCarousel(this.images);
     },
+  },
+  async mounted() {
+    this.images = (await getCarousels()).data;
   },
   methods: {
     sortCarousel(images) {
@@ -47,36 +65,13 @@ export default {
       });
     },
   },
-  async mounted() {
-    this.images = (await getCarousels()).data;
-  },
 };
 </script>
 
 <style>
 .carousel-section img {
-  height: 400px;
+  height: 200px;
   object-fit: cover;
-}
-
-.carousel-section .slick-prev:before {
-  color: rgba(255, 255, 255, 1) !important;
-  font-family: "Font Awesome 5 Free" !important;
-  content: "\f053" !important;
-  display: inline-block;
-  font-weight: 900;
-  font-size: 1.75rem !important;
-  margin-left: -5px !important;
-}
-
-.carousel-section .slick-next:before {
-  color: rgba(255, 255, 255, 1) !important;
-  font-family: "Font Awesome 5 Free" !important;
-  content: "\f054" !important;
-  display: inline-block;
-  font-weight: 900;
-  font-size: 1.75rem !important;
-  margin-right: -5px !important;
 }
 
 .carousel-section .slick-dots li button:before {
@@ -116,20 +111,58 @@ export default {
   left: -15px !important;
 }
 
-.carousel-section .slick-prev {
-  left: 50px !important;
-  z-index: 100 !important;
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 100%;
+@media (min-width: 768px) {
+  .carousel-section img {
+    height: 400px;
+    object-fit: cover;
+  }
+
+  .carousel-section .slick-prev:before {
+    color: rgba(255, 255, 255, 1) !important;
+    font-family: "Font Awesome 5 Free" !important;
+    content: "\f053" !important;
+    display: inline-block;
+    font-weight: 900;
+    font-size: 1.5rem !important;
+    margin-left: -1px !important;
+  }
+
+  .carousel-section .slick-next:before {
+    color: rgba(255, 255, 255, 1) !important;
+    font-family: "Font Awesome 5 Free" !important;
+    content: "\f054" !important;
+    display: inline-block;
+    font-weight: 900;
+    font-size: 1.5rem !important;
+    margin-right: -1px !important;
+  }
+
+  .carousel-section .slick-prev {
+    left: 25px !important;
+    z-index: 100 !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 100%;
+  }
+
+  .carousel-section .slick-next {
+    right: 25px !important;
+    z-index: 100 !important;
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 100%;
+  }
 }
-.carousel-section .slick-next {
-  right: 50px !important;
-  z-index: 100 !important;
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 100%;
+
+@media (min-width: 1200px) {
+  .carousel-section .slick-prev {
+    left: 50px !important;
+  }
+
+  .carousel-section .slick-next {
+    right: 50px !important;
+  }
 }
 </style>

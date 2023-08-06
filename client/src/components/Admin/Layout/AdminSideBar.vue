@@ -1,16 +1,15 @@
 <template>
   <div>
-    <div class="admin-side-bar-header">
-      Menu
-    </div>
+    <div class="admin-side-bar-header">Menu</div>
 
     <router-link to="/admin">
       <div
         class="row admin-side-bar-option align-items-center"
-        :class="$route.path == '/admin' ? 'text-white' : null"
-      >
+        :class="$route.path == '/admin' ? 'text-white' : null">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="chart-bar" class="option-icon" />
+          <font-awesome-icon
+            icon="chart-bar"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">Dashboard</div>
       </div>
@@ -24,10 +23,11 @@
           $route.matched[1].path == '/admin/product/:productId/edit'
             ? 'text-white'
             : null
-        "
-      >
+        ">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="box" class="option-icon" />
+          <font-awesome-icon
+            icon="box"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">Products</div>
       </div>
@@ -41,10 +41,11 @@
           $route.matched[1].path == '/admin/brand/:brandId/edit'
             ? 'text-white'
             : null
-        "
-      >
+        ">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="th" class="option-icon" />
+          <font-awesome-icon
+            icon="th"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">Brands</div>
       </div>
@@ -52,10 +53,11 @@
     <router-link to="/admin/order">
       <div
         class="row admin-side-bar-option align-items-center"
-        :class="$route.path == '/admin/order' ? 'text-white' : null"
-      >
+        :class="$route.path == '/admin/order' ? 'text-white' : null">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="store" class="option-icon" />
+          <font-awesome-icon
+            icon="store"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">Orders</div>
       </div>
@@ -69,10 +71,11 @@
           $route.matched[1].path == '/admin/shipment/:shipmentId/edit'
             ? 'text-white'
             : null
-        "
-      >
+        ">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="truck" class="option-icon" />
+          <font-awesome-icon
+            icon="truck"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">Shipment</div>
       </div>
@@ -80,10 +83,11 @@
     <router-link to="/admin/customer">
       <div
         class="row admin-side-bar-option align-items-center"
-        :class="$route.path == '/admin/customer' ? 'text-white' : null"
-      >
+        :class="$route.path == '/admin/customer' ? 'text-white' : null">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="users" class="option-icon" />
+          <font-awesome-icon
+            icon="users"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">Customers</div>
       </div>
@@ -97,28 +101,29 @@
           $route.matched[1].path == '/admin/uicomponent/:carouselId/edit'
             ? 'text-white'
             : null
-        "
-      >
+        ">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="columns" class="option-icon" />
+          <font-awesome-icon
+            icon="columns"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">UI Component</div>
       </div>
     </router-link>
     <router-link
-      to="/admin/user"
       v-if="$store.state.user.user_type !== 'General User'"
-    >
+      to="/admin/user">
       <div
         class="row admin-side-bar-option align-items-center"
         :class="
           $route.path == '/admin/user' || $route.path == '/admin/user/add'
             ? 'text-white'
             : null
-        "
-      >
+        ">
         <div class="col-2 side-bar-icon text-center">
-          <font-awesome-icon icon="user-circle" class="option-icon" />
+          <font-awesome-icon
+            icon="user-circle"
+            class="option-icon" />
         </div>
         <div class="col side-bar-text">Users</div>
       </div>

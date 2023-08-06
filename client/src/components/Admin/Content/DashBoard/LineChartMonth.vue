@@ -46,11 +46,14 @@ export default {
         this.init();
     },
   },
+  mounted() {
+    this.init();
+  },
   methods: {
     init() {
       for (let i = 0; i < this.orders.length; i++) {
         const full = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "YYYYMMDD"
+          "YYYYMMDD",
         );
         var whichDay;
         var existing = this.formatted_data.filter((item, index) => {
@@ -63,13 +66,13 @@ export default {
         });
         const day = moment(this.orders[i].order_date, "DD/MM/YYYY").day();
         const date = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "DD"
+          "DD",
         );
         const month = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "MM"
+          "MM",
         );
         const year = moment(this.orders[i].order_date, "DD/MM/YYYY").format(
-          "YYYY"
+          "YYYY",
         );
         if (existing.length) {
           this.formatted_data[whichDay].total =
@@ -126,7 +129,7 @@ export default {
         {
           responsive: true,
           maintainAspectRatio: false,
-        }
+        },
       );
     },
     filterMonth(formatted_data) {
@@ -139,7 +142,7 @@ export default {
       var max = moment(m_e).format("YYYYMMDD");
 
       return formatted_data.filter(
-        (f_data) => f_data.full >= min && f_data.full <= max
+        (f_data) => f_data.full >= min && f_data.full <= max,
       );
     },
     getRandom() {
@@ -150,9 +153,6 @@ export default {
       }
       return color;
     },
-  },
-  mounted() {
-    this.init();
   },
 };
 </script>

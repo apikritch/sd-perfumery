@@ -9,7 +9,11 @@
           <div>Account Suspended</div>
         </div>
 
-        <div class="login-button" @click="signOut">RETURN TO LOGIN</div>
+        <div
+          class="login-button"
+          @click="signOut">
+          RETURN TO LOGIN
+        </div>
       </div>
     </div>
   </div>

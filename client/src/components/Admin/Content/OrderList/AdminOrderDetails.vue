@@ -4,23 +4,36 @@
       <div class="d-flex align-items-center admin-product-header">
         Order Details
       </div>
-      <div class="d-flex align-items-end" v-if="!order_information">
-        <div class="admin-order-update" @click="editOrder">
-          <font-awesome-icon icon="pen" class="me-1" /> Update Order
+      <div
+        v-if="!order_information"
+        class="d-flex align-items-end">
+        <div
+          class="admin-order-update"
+          @click="editOrder">
+          <font-awesome-icon
+            icon="pen"
+            class="me-1" />
+          Update Order
         </div>
       </div>
       <div
-        class="d-flex align-items-end padding_update_save"
         v-if="order_information"
-      >
-        <div class="cancel-button" @click="cancelUpdate">Cancel</div>
-        <div class="save-button ms-2" @click="saveOrderInformation">Save</div>
+        class="d-flex align-items-end padding_update_save">
+        <div
+          class="cancel-button"
+          @click="cancelUpdate">
+          Cancel
+        </div>
+        <div
+          class="save-button ms-2"
+          @click="saveOrderInformation">
+          Save
+        </div>
       </div>
     </div>
     <div
       v-if="loading"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
 
@@ -36,51 +49,51 @@
 
           <div class="row order-detail-box">
             <div
-              class="col-4 d-flex order-detail-padding flex-column text-center"
-            >
+              class="col-4 d-flex order-detail-padding flex-column text-center">
               <div>Order Date:</div>
               <div class="order-date">{{ order.order_date }}</div>
             </div>
             <div
-              class="col-4 d-flex order-detail-padding flex-column text-center"
-            >
+              class="col-4 d-flex order-detail-padding flex-column text-center">
               <div>Shipment Status:</div>
-              <div class="order-ship-status" v-if="!order_information">
+              <div
+                v-if="!order_information"
+                class="order-ship-status">
                 {{ order.shippment_status }}
               </div>
               <b-form-select
                 v-if="order_information"
                 v-model="shipment_status"
                 :options="shipment_status_options"
-                class="product-select-form order_input_select"
-              ></b-form-select>
+                class="product-select-form order_input_select"></b-form-select>
             </div>
             <div
-              class="col-4 d-flex order-detail-padding flex-column text-center"
-            >
+              class="col-4 d-flex order-detail-padding flex-column text-center">
               <div>Order Status:</div>
-              <div class="order-ship-status" v-if="!order_information">
+              <div
+                v-if="!order_information"
+                class="order-ship-status">
                 {{ order.order_status }}
               </div>
               <b-form-select
                 v-if="order_information"
                 v-model="order_status"
                 :options="order_status_options"
-                class="product-select-form order_input_select"
-              ></b-form-select>
+                class="product-select-form order_input_select"></b-form-select>
             </div>
 
             <div class="col-12 text-center order-detail-padding">
               <div class="pe-2">Tracking Number:</div>
-              <div class="order-tracking-number" v-if="!order_information">
+              <div
+                v-if="!order_information"
+                class="order-tracking-number">
                 {{ order.tracking_number }}
               </div>
               <input
-                type="text"
-                v-model="tracking_number"
                 v-if="order_information"
-                class="tracking_number_input"
-              />
+                v-model="tracking_number"
+                type="text"
+                class="tracking_number_input" />
             </div>
           </div>
           <div class="order-detail-section">
@@ -91,10 +104,9 @@
               <div class="text-center order-total">Total</div>
             </div>
             <div
-              class="d-flex justify-content-between align-items-center padding-item-detail"
               v-for="(product, index) in ordered_product"
               :key="index"
-            >
+              class="d-flex justify-content-between align-items-center padding-item-detail">
               <div class="item-col">
                 <div class="d-flex align-items-center">
                   <div class="order-image-col">
@@ -108,7 +120,9 @@
                 </div>
               </div>
               <div class="text-center order-price-list">
-                <div v-if="product.discount" class="small-full-price">
+                <div
+                  v-if="product.discount"
+                  class="small-full-price">
                   Rs.
                   {{
                     product.price.toLocaleString(undefined, {
@@ -131,7 +145,9 @@
                 {{ product.quantity }}
               </div>
               <div class="text-center order-total-list">
-                <div v-if="product.discount" class="big-full-price">
+                <div
+                  v-if="product.discount"
+                  class="big-full-price">
                   Rs.
                   {{
                     (product.quantity * product.price).toLocaleString(
@@ -139,7 +155,7 @@
                       {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      }
+                      },
                     )
                   }}
                 </div>
@@ -162,8 +178,7 @@
               <div>{{ order.first_name }} {{ order.last_name }}</div>
             </div>
             <div
-              class="col-6 order-summary-padding-2 order-summary-padding-right"
-            >
+              class="col-6 order-summary-padding-2 order-summary-padding-right">
               <div class="summary-header">Email</div>
               <div>
                 {{ order.email }}
@@ -191,8 +206,7 @@
               </div>
             </div>
             <div
-              class="col-6 order-summary-padding-2 order-summary-padding-right"
-            >
+              class="col-6 order-summary-padding-2 order-summary-padding-right">
               <div class="h-100 d-flex align-content-between flex-wrap">
                 <div class="w-100">
                   <div class="summary-header">Order Total</div>
@@ -269,8 +283,7 @@
               <div>{{ shipping_address.country }}</div>
             </div>
             <div
-              class="col-6 order-summary-padding-2 order-summary-padding-right"
-            >
+              class="col-6 order-summary-padding-2 order-summary-padding-right">
               <div class="summary-header">Billing Address</div>
               <div>
                 {{ billing_address.first_name }} {{ billing_address.last_name }}
@@ -308,8 +321,8 @@ import {
 
 export default {
   name: "OrderDetail",
-  props: { readOrder: Function },
   components: { MoonLoader },
+  props: { readOrder: Function },
 
   data() {
     return {
@@ -382,6 +395,23 @@ export default {
       this.readOrder(this.orderId);
     },
   },
+  async mounted() {
+    this.orderId = this.$store.state.route.params.orderId;
+
+    this.order = (await getOrderById(this.orderId)).data;
+    this.ordered_product = (await getOrderedProductById(this.orderId)).data;
+    this.shipping_address = (await getShippingAddressById(this.orderId)).data;
+    this.billing_address = (await getBillingAddressById(this.orderId)).data;
+
+    this.order_status = this.order.order_status;
+    this.order_status_options = await getUpdateOrderStatusOptions();
+    this.shipment_status = this.order.shippment_status;
+    this.shipment_status_options = await getUpdateShipmentStatusOptions();
+    this.tracking_number = this.order.tracking_number;
+
+    this.readOrder(this.orderId);
+    this.loading = false;
+  },
   methods: {
     async editOrder() {
       this.order_information = true;
@@ -399,23 +429,6 @@ export default {
       this.order.tracking_number = this.tracking_number;
       await putOrderById(orderId, this.order);
     },
-  },
-  async mounted() {
-    this.orderId = this.$store.state.route.params.orderId;
-
-    this.order = (await getOrderById(this.orderId)).data;
-    this.ordered_product = (await getOrderedProductById(this.orderId)).data;
-    this.shipping_address = (await getShippingAddressById(this.orderId)).data;
-    this.billing_address = (await getBillingAddressById(this.orderId)).data;
-
-    this.order_status = this.order.order_status;
-    this.order_status_options = await getUpdateOrderStatusOptions();
-    this.shipment_status = this.order.shippment_status;
-    this.shipment_status_options = await getUpdateShipmentStatusOptions();
-    this.tracking_number = this.order.tracking_number;
-
-    this.readOrder(this.orderId);
-    this.loading = false;
   },
 };
 </script>

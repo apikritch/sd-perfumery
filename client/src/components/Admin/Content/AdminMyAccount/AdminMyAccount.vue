@@ -5,22 +5,19 @@
 
       <div
         v-if="loading"
-        class="d-flex align-items-center justify-content-center cover_loader "
-      >
+        class="d-flex align-items-center justify-content-center cover_loader">
         <MoonLoader color="#985855" />
       </div>
 
       <div v-if="!loading">
         <div class="padding-account-section">
           <div
-            class="d-flex justify-content-between align-items-center account-topic-padding"
-          >
+            class="d-flex justify-content-between align-items-center account-topic-padding">
             <div class="account-topic">Personal Information</div>
             <div
-              class="edit-text"
               v-if="!personal_information"
-              @click="editPersonal"
-            >
+              class="edit-text"
+              @click="editPersonal">
               <div class="circle-icon-my-account">
                 <font-awesome-icon icon="pen" />
               </div>
@@ -28,8 +25,14 @@
             </div>
             <div v-if="personal_information">
               <div class="d-flex">
-                <div class="cancel-button" @click="cancelUpdate">Cancel</div>
-                <div class="save-button ms-2" @click="saveInformation">
+                <div
+                  class="cancel-button"
+                  @click="cancelUpdate">
+                  Cancel
+                </div>
+                <div
+                  class="save-button ms-2"
+                  @click="saveInformation">
                   Save
                 </div>
               </div>
@@ -43,19 +46,22 @@
             </div>
             <div class="col-7 information-input">
               <input
+                v-model.trim="$v.user.first_name.$model"
                 type="text"
                 :disabled="!personal_information"
-                v-model.trim="$v.user.first_name.$model"
                 :class="[
                   $v.user.first_name.$error ? 'border-fail' : 'input_border',
                   $v.user.first_name.required ? 'border-success' : null,
                   !personal_information ? 'disable-input' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-7 offset-5 offset_unique_my_ac">
-              <div v-if="$v.user.first_name.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.user.first_name.required">
+              <div
+                v-if="$v.user.first_name.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.user.first_name.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -68,19 +74,22 @@
             </div>
             <div class="col-7 information-input">
               <input
+                v-model.trim="$v.user.last_name.$model"
                 type="text"
                 :disabled="!personal_information"
-                v-model.trim="$v.user.last_name.$model"
                 :class="[
                   $v.user.last_name.$error ? 'border-fail' : 'input_border',
                   $v.user.last_name.required ? 'border-success' : null,
                   !personal_information ? 'disable-input' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-7 offset-5 offset_unique_my_ac">
-              <div v-if="$v.user.last_name.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.user.last_name.required">
+              <div
+                v-if="$v.user.last_name.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.user.last_name.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -89,14 +98,12 @@
         </div>
         <div class="padding-account-section">
           <div
-            class="d-flex justify-content-between align-items-center account-topic-padding"
-          >
+            class="d-flex justify-content-between align-items-center account-topic-padding">
             <div class="account-topic">Contact Information</div>
             <div
-              class="edit-text"
               v-if="!contact_information"
-              @click="editContact"
-            >
+              class="edit-text"
+              @click="editContact">
               <div class="circle-icon-my-account">
                 <font-awesome-icon icon="pen" />
               </div>
@@ -104,8 +111,14 @@
             </div>
             <div v-if="contact_information">
               <div class="d-flex">
-                <div class="cancel-button" @click="cancelUpdate">Cancel</div>
-                <div class="save-button ms-2" @click="saveInformation">
+                <div
+                  class="cancel-button"
+                  @click="cancelUpdate">
+                  Cancel
+                </div>
+                <div
+                  class="save-button ms-2"
+                  @click="saveInformation">
                   Save
                 </div>
               </div>
@@ -125,24 +138,29 @@
             </div>
             <div class="col-7 information-input">
               <input
+                v-model.trim="$v.user.phone.$model"
                 type="text"
                 :disabled="!contact_information"
-                v-model.trim="$v.user.phone.$model"
                 :class="[
                   $v.user.phone.$error ? 'border-fail' : 'input_border',
                   $v.user.phone.required && $v.user.phone.numeric
                     ? 'border-success'
                     : null,
                   !contact_information ? 'disable-input' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-7 offset-5 offset_unique_my_ac">
-              <div v-if="$v.user.phone.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.user.phone.required">
+              <div
+                v-if="$v.user.phone.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.user.phone.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.user.phone.numeric">
+                <div
+                  v-if="!$v.user.phone.numeric"
+                  class="error">
                   Invalid value
                 </div>
               </div>
@@ -151,14 +169,19 @@
         </div>
         <div class="padding-account-section">
           <div
-            class="d-flex justify-content-between align-items-center account-topic-padding"
-          >
+            class="d-flex justify-content-between align-items-center account-topic-padding">
             <div class="account-topic">Account Information</div>
 
             <div v-if="account_information">
               <div class="d-flex">
-                <div class="cancel-button" @click="cancelUpdate">Cancel</div>
-                <div class="save-button ms-2" @click="savePassword">
+                <div
+                  class="cancel-button"
+                  @click="cancelUpdate">
+                  Cancel
+                </div>
+                <div
+                  class="save-button ms-2"
+                  @click="savePassword">
                   Save
                 </div>
               </div>
@@ -172,10 +195,11 @@
             </div>
           </div>
           <div
-            class="d-flex align-items-center justify-content-center account-row"
             v-if="!account_information"
-          >
-            <div class="change-password-button" @click="editAccount">
+            class="d-flex align-items-center justify-content-center account-row">
+            <div
+              class="change-password-button"
+              @click="editAccount">
               Change Password
             </div>
           </div>
@@ -188,25 +212,27 @@
               </div>
               <div class="col-7 information-input">
                 <input
-                  type="password"
                   v-model.trim="$v.current_password.$model"
+                  type="password"
                   :class="[
                     $v.current_password.$error ? 'border-fail' : null,
                     $v.current_password.required && $v.current_password.isUnique
                       ? 'border-success'
                       : null,
-                  ]"
-                />
+                  ]" />
               </div>
               <div class="col-7 offset-5 offset_unique_my_ac">
                 <div
                   v-if="$v.current_password.$dirty"
-                  class="position-relative"
-                >
-                  <div class="error" v-if="!$v.current_password.required">
+                  class="position-relative">
+                  <div
+                    v-if="!$v.current_password.required"
+                    class="error">
                     Required
                   </div>
-                  <div class="error" v-if="!$v.current_password.isUnique">
+                  <div
+                    v-if="!$v.current_password.isUnique"
+                    class="error">
                     Incorrect Password
                   </div>
                 </div>
@@ -214,67 +240,69 @@
             </div>
             <div class="new-password">
               <div
-                class="row align-items-center justify-content-end account-row"
-              >
+                class="row align-items-center justify-content-end account-row">
                 <div class="col-5 information-head text-end">
                   <div class="text-danger d-inline">*</div>
                   New Password:
                 </div>
                 <div class="col-7 information-input">
                   <input
-                    type="password"
                     v-model.trim="$v.new_password.$model"
+                    type="password"
                     :class="[
                       $v.new_password.$error ? 'border-fail' : null,
                       $v.new_password.required && $v.new_password.minLength
                         ? 'border-success'
                         : null,
-                    ]"
-                  />
+                    ]" />
                 </div>
                 <div class="col-7 offset-5 offset_unique_my_ac">
-                  <div v-if="$v.new_password.$dirty" class="position-relative">
-                    <div class="error" v-if="!$v.new_password.required">
+                  <div
+                    v-if="$v.new_password.$dirty"
+                    class="position-relative">
+                    <div
+                      v-if="!$v.new_password.required"
+                      class="error">
                       Required
                     </div>
-                    <div class="error" v-if="!$v.new_password.minLength">
+                    <div
+                      v-if="!$v.new_password.minLength"
+                      class="error">
                       Password must have at least 6 letters
                     </div>
                   </div>
                 </div>
               </div>
               <div
-                class="row align-items-center justify-content-end account-row"
-              >
+                class="row align-items-center justify-content-end account-row">
                 <div class="col-5 information-head text-end">
                   <div class="text-danger d-inline">*</div>
                   Confirm New Password:
                 </div>
                 <div class="col-7 information-input">
                   <input
-                    type="password"
                     v-model.trim="$v.confirm_new_password.$model"
+                    type="password"
                     :class="[
                       $v.confirm_new_password.$error ? 'border-fail' : null,
                       $v.confirm_new_password.required &&
                       $v.confirm_new_password.sameAsNewPassword
                         ? 'border-success'
                         : null,
-                    ]"
-                  />
+                    ]" />
                 </div>
                 <div class="col-7 offset-5 offset_unique_my_ac">
                   <div
                     v-if="$v.confirm_new_password.$dirty"
-                    class="position-relative"
-                  >
-                    <div class="error" v-if="!$v.confirm_new_password.required">
+                    class="position-relative">
+                    <div
+                      v-if="!$v.confirm_new_password.required"
+                      class="error">
                       Required
                     </div>
                     <div
-                      class="error"
                       v-if="!$v.confirm_new_password.sameAsNewPassword"
-                    >
+                      class="error">
                       Passwords must be identical
                     </div>
                   </div>
@@ -284,9 +312,12 @@
           </div>
         </div>
       </div>
-      <div class="sent_box" :class="success ? 'visible' : 'hidden'">
-        <font-awesome-icon icon="check" class="me-2" />Your password has been
-        changed successfully!
+      <div
+        class="sent_box"
+        :class="success ? 'visible' : 'hidden'">
+        <font-awesome-icon
+          icon="check"
+          class="me-2" />Your password has been changed successfully!
       </div>
     </div>
   </div>
@@ -304,6 +335,7 @@ import { required, minLength, sameAs, numeric } from "vuelidate/lib/validators";
 export default {
   name: "AdminMyAccount",
   components: { MoonLoader },
+  mixins: [validationMixin],
 
   data() {
     return {
@@ -319,7 +351,6 @@ export default {
       loading: true,
     };
   },
-  mixins: [validationMixin],
   validations: {
     user: {
       first_name: { required },
@@ -362,6 +393,12 @@ export default {
     confirm_new_password() {
       this.$v.confirm_new_password.$reset();
     },
+  },
+  async mounted() {
+    const userId = this.$store.state.user.id;
+    this.user = (await getUserById(userId)).data;
+    this.loading = false;
+    //console.log(this.$route);
   },
   methods: {
     async savePassword() {
@@ -477,12 +514,6 @@ export default {
       this.$v.new_password.$reset();
       this.$v.confirm_new_password.$reset();
     },
-  },
-  async mounted() {
-    const userId = this.$store.state.user.id;
-    this.user = (await getUserById(userId)).data;
-    this.loading = false;
-    //console.log(this.$route);
   },
 };
 </script>
@@ -690,7 +721,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .cover_loader {

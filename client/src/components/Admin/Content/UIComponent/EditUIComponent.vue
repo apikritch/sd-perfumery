@@ -1,20 +1,17 @@
 <template>
   <div
-    class="d-flex justify-content-center account-content edit-component-page h-100"
-  >
+    class="d-flex justify-content-center account-content edit-component-page h-100">
     <div class="account-width">
       <div class="account-header">Edit Carousel Image</div>
       <div
         v-if="loading"
-        class="d-flex align-items-center justify-content-center cover_loader "
-      >
+        class="d-flex align-items-center justify-content-center cover_loader">
         <MoonLoader color="#985855" />
       </div>
       <div v-if="!loading">
         <div class="padding-account-section">
           <div
-            class="row align-items-center justify-content-start sequence-row"
-          >
+            class="row align-items-center justify-content-start sequence-row">
             <div class="col-3 information-head text-end">
               <div class="text-danger d-inline">*</div>
               Sequence:
@@ -22,23 +19,28 @@
 
             <div class="col-9 information-input">
               <input
+                v-model.trim="$v.carousel.sequence.$model"
                 type="text"
                 class="text-center w-25"
-                v-model.trim="$v.carousel.sequence.$model"
                 :class="[
                   $v.carousel.sequence.$error ? 'border-fail' : null,
                   $v.carousel.sequence.required && $v.carousel.sequence.numeric
                     ? 'border-success'
                     : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.carousel.sequence.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.carousel.sequence.required">
+              <div
+                v-if="$v.carousel.sequence.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.carousel.sequence.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.carousel.sequence.numeric">
+                <div
+                  v-if="!$v.carousel.sequence.numeric"
+                  class="error">
                   Invalid value
                 </div>
               </div>
@@ -52,21 +54,21 @@
 
             <div class="col-9 information-input textarea-height">
               <textarea
+                v-model.trim="$v.carousel.link_address.$model"
                 type="text"
                 class="carousel-input"
-                v-model.trim="$v.carousel.link_address.$model"
                 :class="[
                   $v.carousel.link_address.$error ? 'border-fail' : null,
                   $v.carousel.link_address.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
               <div
                 v-if="$v.carousel.link_address.$dirty"
-                class="position-relative"
-              >
-                <div class="error" v-if="!$v.carousel.link_address.required">
+                class="position-relative">
+                <div
+                  v-if="!$v.carousel.link_address.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -78,20 +80,26 @@
               :src="carousel.link_address"
               width="100%"
               class="preview-img"
-              :class="carousel.link_address !== '' ? 'preview-frame' : null"
-            />
+              :class="carousel.link_address !== '' ? 'preview-frame' : null" />
           </div>
         </div>
 
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="backPage" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="backPage">
                 Back
               </button>
             </div>
             <div class="col-6">
-              <button class="button-save" @click="saveItem">Save</button>
+              <button
+                class="button-save"
+                @click="saveItem">
+                Save
+              </button>
             </div>
           </div>
         </div>
@@ -113,6 +121,7 @@ import {
 export default {
   name: "EditUIComponent",
   components: { MoonLoader },
+  mixins: [validationMixin],
   data() {
     return {
       carousel: {
@@ -122,7 +131,6 @@ export default {
       loading: true,
     };
   },
-  mixins: [validationMixin],
   validations: {
     carousel: { sequence: { required, numeric }, link_address: { required } },
   },
@@ -133,6 +141,15 @@ export default {
     "carousel.link_address"() {
       this.$v.carousel.link_address.$reset();
     },
+  },
+  async mounted() {
+    try {
+      const carouselId = this.$store.state.route.params.carouselId;
+      this.carousel = (await getCarouselById(carouselId)).data;
+      this.loading = false;
+    } catch (error) {
+      console.log(error);
+    }
   },
   methods: {
     backPage() {
@@ -159,15 +176,6 @@ export default {
         console.log(error);
       }
     },
-  },
-  async mounted() {
-    try {
-      const carouselId = this.$store.state.route.params.carouselId;
-      this.carousel = (await getCarouselById(carouselId)).data;
-      this.loading = false;
-    } catch (error) {
-      console.log(error);
-    }
   },
 };
 </script>

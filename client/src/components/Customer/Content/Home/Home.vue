@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="home-z-index shadow-sm">
     <HomeBody1></HomeBody1>
     <HomeBody2></HomeBody2>
     <HomeBody3></HomeBody3>
@@ -21,4 +21,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.home-z-index {
+  position: relative;
+  z-index: 9000;
+}
+</style>

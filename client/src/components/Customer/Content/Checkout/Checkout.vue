@@ -1,20 +1,21 @@
 <template>
   <div>
-    <div class="checkout-top">
-      <div class="container-lg h-100 checkout-padding">
-        <div class="row align-items-center h-100">SD Perfumery</div>
+    <div class="checkout-top shadow-sm">
+      <div class="container h-100 checkout-padding d-flex align-items-center">
+        <div>SD Perfumery</div>
       </div>
     </div>
-    <div class="container-lg h-100 checkout-padding">
+    <div class="container h-100 checkout-padding">
       <div class="row checkout-body-padding">
-        <div class="col-8 checkout-right-padding">
+        <div class="col-12 col-xl-7 checkout-right-padding order-1 order-xl-0">
           <div class="checkout-header">Checkout</div>
           <div
-            class="d-flex align-items-start flex-column checkout-sign-in-section"
             v-if="!$store.state.isCustomerLoggedIn"
-          >
+            class="d-flex align-items-start flex-column checkout-sign-in-section">
             <div>Already have an account?</div>
-            <div class="checkout-sign-in-button" @click="showSignIn">
+            <div
+              class="checkout-sign-in-button"
+              @click="showSignIn">
               Sign In
             </div>
           </div>
@@ -23,35 +24,39 @@
             <div class="checkout-row">
               <div class="shipping-label">Email:</div>
               <input
+                v-model.trim="$v.email.$model"
                 type="text"
                 class="shipping-long-input email"
-                v-model.trim="$v.email.$model"
                 :class="[
                   $v.email.$error ? 'border-fail' : null,
                   $v.email.required && $v.email.email ? 'border-success' : null,
                 ]"
-                :disabled="$store.state.isCustomerLoggedIn"
-              />
-              <div v-if="$v.email.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.email.required">
+                :disabled="$store.state.isCustomerLoggedIn" />
+              <div
+                v-if="$v.email.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.email.required"
+                  class="error">
                   Email is required.
                 </div>
-                <div class="error" v-if="!$v.email.email">
+                <div
+                  v-if="!$v.email.email"
+                  class="error">
                   Invalid email format.
                 </div>
               </div>
             </div>
             <div
-              class="checkout-row"
               v-if="
                 !$store.state.isCustomerLoggedIn || !$store.state.customer.email
               "
-            >
+              class="checkout-row">
               <div class="shipping-label">Confirm Email:</div>
               <input
+                v-model.trim="$v.confirm_email.$model"
                 type="text"
                 class="shipping-long-input"
-                v-model.trim="$v.confirm_email.$model"
                 :class="[
                   $v.confirm_email.$error ? 'border-fail' : null,
                   $v.confirm_email.required &&
@@ -59,23 +64,27 @@
                   $v.confirm_email.sameAsEmail
                     ? 'border-success'
                     : null,
-                ]"
-              />
-              <div v-if="$v.confirm_email.$dirty" class="position-relative">
+                ]" />
+              <div
+                v-if="$v.confirm_email.$dirty"
+                class="position-relative">
                 <div
-                  class="error"
                   v-if="
                     !$v.confirm_email.sameAsEmail &&
                     $v.confirm_email.required &&
                     $v.confirm_email.email
                   "
-                >
+                  class="error">
                   Emails must be identical.
                 </div>
-                <div class="error" v-if="!$v.confirm_email.email">
+                <div
+                  v-if="!$v.confirm_email.email"
+                  class="error">
                   Invalid email format.
                 </div>
-                <div class="error" v-if="!$v.confirm_email.required">
+                <div
+                  v-if="!$v.confirm_email.required"
+                  class="error">
                   Confirm Email is required.
                 </div>
               </div>
@@ -85,16 +94,19 @@
                 <div class="col-6">
                   <div class="shipping-label">First Name:</div>
                   <input
+                    v-model.trim="$v.first_name.$model"
                     type="text"
                     class="shipping-long-input"
-                    v-model.trim="$v.first_name.$model"
                     :class="[
                       $v.first_name.$error ? 'border-fail' : null,
                       $v.first_name.required ? 'border-success' : null,
-                    ]"
-                  />
-                  <div v-if="$v.first_name.$dirty" class="position-relative">
-                    <div class="error" v-if="!$v.first_name.required">
+                    ]" />
+                  <div
+                    v-if="$v.first_name.$dirty"
+                    class="position-relative">
+                    <div
+                      v-if="!$v.first_name.required"
+                      class="error">
                       Required.
                     </div>
                   </div>
@@ -102,16 +114,19 @@
                 <div class="col-6">
                   <div class="shipping-label">Last Name:</div>
                   <input
+                    v-model.trim="$v.last_name.$model"
                     type="text"
                     class="shipping-long-input"
-                    v-model.trim="$v.last_name.$model"
                     :class="[
                       $v.last_name.$error ? 'border-fail' : null,
                       $v.last_name.required ? 'border-success' : null,
-                    ]"
-                  />
-                  <div v-if="$v.last_name.$dirty" class="position-relative">
-                    <div class="error" v-if="!$v.last_name.required">
+                    ]" />
+                  <div
+                    v-if="$v.last_name.$dirty"
+                    class="position-relative">
+                    <div
+                      v-if="!$v.last_name.required"
+                      class="error">
                       Required.
                     </div>
                   </div>
@@ -123,19 +138,26 @@
                 <div class="col-6">
                   <div class="shipping-label">Phone:</div>
                   <input
+                    v-model.trim="$v.phone.$model"
                     type="text"
                     class="shipping-long-input"
-                    v-model.trim="$v.phone.$model"
                     :class="[
                       $v.phone.$error ? 'border-fail' : null,
                       $v.phone.required && $v.phone.numeric
                         ? 'border-success'
                         : null,
-                    ]"
-                  />
-                  <div v-if="$v.phone.$dirty" class="position-relative">
-                    <div class="error" v-if="!$v.phone.required">Required.</div>
-                    <div class="error" v-if="!$v.phone.numeric">
+                    ]" />
+                  <div
+                    v-if="$v.phone.$dirty"
+                    class="position-relative">
+                    <div
+                      v-if="!$v.phone.required"
+                      class="error">
+                      Required.
+                    </div>
+                    <div
+                      v-if="!$v.phone.numeric"
+                      class="error">
                       Invalid value.
                     </div>
                   </div>
@@ -151,16 +173,19 @@
                 <div class="col-6">
                   <div class="shipping-label">Address 1:</div>
                   <input
+                    v-model.trim="$v.address_1.$model"
                     type="text"
                     class="shipping-long-input"
-                    v-model.trim="$v.address_1.$model"
                     :class="[
                       $v.address_1.$error ? 'border-fail' : null,
                       $v.address_1.required ? 'border-success' : null,
-                    ]"
-                  />
-                  <div v-if="$v.address_1.$dirty" class="position-relative">
-                    <div class="error" v-if="!$v.address_1.required">
+                    ]" />
+                  <div
+                    v-if="$v.address_1.$dirty"
+                    class="position-relative">
+                    <div
+                      v-if="!$v.address_1.required"
+                      class="error">
                       Required.
                     </div>
                   </div>
@@ -168,41 +193,50 @@
                 <div class="col-6">
                   <div class="shipping-label">Adress 2:</div>
                   <input
-                    type="text"
-                    class="shipping-long-input"
                     v-model="address_2"
-                  />
+                    type="text"
+                    class="shipping-long-input" />
                 </div>
               </div>
             </div>
             <div class="checkout-row">
               <div class="shipping-label">Town / City:</div>
               <input
+                v-model.trim="$v.city.$model"
                 type="text"
                 class="shipping-long-input"
-                v-model.trim="$v.city.$model"
                 :class="[
                   $v.city.$error ? 'border-fail' : null,
                   $v.city.required ? 'border-success' : null,
-                ]"
-              />
-              <div v-if="$v.city.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.city.required">Required.</div>
+                ]" />
+              <div
+                v-if="$v.city.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.city.required"
+                  class="error">
+                  Required.
+                </div>
               </div>
             </div>
             <div class="checkout-row">
               <div class="shipping-label">District / State:</div>
               <input
+                v-model.trim="$v.state.$model"
                 type="text"
                 class="shipping-long-input"
-                v-model.trim="$v.state.$model"
                 :class="[
                   $v.state.$error ? 'border-fail' : null,
                   $v.state.required ? 'border-success' : null,
-                ]"
-              />
-              <div v-if="$v.state.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.state.required">Required.</div>
+                ]" />
+              <div
+                v-if="$v.state.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.state.required"
+                  class="error">
+                  Required.
+                </div>
               </div>
             </div>
             <div class="checkout-row">
@@ -210,21 +244,26 @@
                 <div class="col-6">
                   <div class="shipping-label">Postcode:</div>
                   <input
+                    v-model.trim="$v.postcode.$model"
                     type="text"
                     class="shipping-long-input"
-                    v-model.trim="$v.postcode.$model"
                     :class="[
                       $v.postcode.$error ? 'border-fail' : null,
                       $v.postcode.required && $v.postcode.numeric
                         ? 'border-success'
                         : null,
-                    ]"
-                  />
-                  <div v-if="$v.postcode.$dirty" class="position-relative">
-                    <div class="error" v-if="!$v.postcode.required">
+                    ]" />
+                  <div
+                    v-if="$v.postcode.$dirty"
+                    class="position-relative">
+                    <div
+                      v-if="!$v.postcode.required"
+                      class="error">
                       Required.
                     </div>
-                    <div class="error" v-if="!$v.postcode.numeric">
+                    <div
+                      v-if="!$v.postcode.numeric"
+                      class="error">
                       Invalid value.
                     </div>
                   </div>
@@ -235,18 +274,17 @@
           <div class="shipping-section-padding">
             <div
               class="checkout-topic"
-              :class="no_shipping_method ? 'text-danger' : null"
-            >
+              :class="no_shipping_method ? 'text-danger' : null">
               2. Shipping Method
             </div>
             <div class="checkout-row">
               <div class="row">
-                <div class="col-6">
+                <div class="col-12 col-sm-8 col-lg-7">
                   <div>
                     <div
-                      class="form-check shipping_method_hover d-flex align-items-center"
                       v-for="(shipment, index) in shipments"
                       :key="index"
+                      class="form-check shipping_method_hover d-flex align-items-center"
                       :class="[
                         no_shipping_method ? 'border-danger text-danger' : null,
                         shipment.shipping_method == shipping_method
@@ -273,20 +311,17 @@
                             shipments.length !== 1 &&
                             index == shipments.length - 1,
                         },
-                      ]"
-                    >
+                      ]">
                       <input
+                        :id="shipment.shipping_method"
                         class="form-check-input"
                         type="radio"
                         name="radio-shipping-method"
-                        :id="shipment.shipping_method"
                         :value="shipment.shipping_method"
-                        @change="chooseShipping(index)"
-                      />
+                        @change="chooseShipping(index)" />
                       <label
                         class="form-check-label w-50"
-                        :for="shipment.shipping_method"
-                      >
+                        :for="shipment.shipping_method">
                         {{ shipment.shipping_method }}
                       </label>
                       <div class="w-50 d-flex justify-content-end">
@@ -309,18 +344,15 @@
           <div class="shipping-section-padding">
             <div class="checkout-topic">3. Billing Address</div>
             <div
-              class="form-check checkout-same-check-box d-flex align-items-center"
-            >
+              class="form-check checkout-same-check-box d-flex align-items-center">
               <input
-                class="form-check-input"
-                type="checkbox"
                 id="same-address-check-box"
                 v-model="same_address"
-              />
+                class="form-check-input"
+                type="checkbox" />
               <label
                 class="form-check-label adjust-center-box"
-                for="same-address-check-box"
-              >
+                for="same-address-check-box">
                 My Billing address is the same as my Shipping address
               </label>
             </div>
@@ -335,8 +367,7 @@
                 city &&
                 state &&
                 postcode
-              "
-            >
+              ">
               <div class="billing-address-text billing-name">
                 {{ first_name }} {{ last_name }}
               </div>
@@ -354,21 +385,21 @@
                   <div class="col-6">
                     <div class="shipping-label">First Name:</div>
                     <input
+                      v-model.trim="$v.billing_first_name.$model"
                       type="text"
                       class="shipping-long-input"
-                      v-model.trim="$v.billing_first_name.$model"
                       :class="[
                         $v.billing_first_name.$error ? 'border-fail' : null,
                         $v.billing_first_name.required
                           ? 'border-success'
                           : null,
-                      ]"
-                    />
+                      ]" />
                     <div
                       v-if="$v.billing_first_name.$dirty"
-                      class="position-relative"
-                    >
-                      <div class="error" v-if="!$v.billing_first_name.required">
+                      class="position-relative">
+                      <div
+                        v-if="!$v.billing_first_name.required"
+                        class="error">
                         Required.
                       </div>
                     </div>
@@ -376,19 +407,19 @@
                   <div class="col-6">
                     <div class="shipping-label">Last Name:</div>
                     <input
+                      v-model.trim="$v.billing_last_name.$model"
                       type="text"
                       class="shipping-long-input"
-                      v-model.trim="$v.billing_last_name.$model"
                       :class="[
                         $v.billing_last_name.$error ? 'border-fail' : null,
                         $v.billing_last_name.required ? 'border-success' : null,
-                      ]"
-                    />
+                      ]" />
                     <div
                       v-if="$v.billing_last_name.$dirty"
-                      class="position-relative"
-                    >
-                      <div class="error" v-if="!$v.billing_last_name.required">
+                      class="position-relative">
+                      <div
+                        v-if="!$v.billing_last_name.required"
+                        class="error">
                         Required.
                       </div>
                     </div>
@@ -400,24 +431,26 @@
                   <div class="col-6">
                     <div class="shipping-label">Phone:</div>
                     <input
+                      v-model.trim="$v.billing_phone.$model"
                       type="text"
                       class="shipping-long-input"
-                      v-model.trim="$v.billing_phone.$model"
                       :class="[
                         $v.billing_phone.$error ? 'border-fail' : null,
                         $v.billing_phone.required && $v.billing_phone.numeric
                           ? 'border-success'
                           : null,
-                      ]"
-                    />
+                      ]" />
                     <div
                       v-if="$v.billing_phone.$dirty"
-                      class="position-relative"
-                    >
-                      <div class="error" v-if="!$v.billing_phone.required">
+                      class="position-relative">
+                      <div
+                        v-if="!$v.billing_phone.required"
+                        class="error">
                         Required.
                       </div>
-                      <div class="error" v-if="!$v.billing_phone.numeric">
+                      <div
+                        v-if="!$v.billing_phone.numeric"
+                        class="error">
                         Invalid value.
                       </div>
                     </div>
@@ -433,19 +466,19 @@
                   <div class="col-6">
                     <div class="shipping-label">Address 1:</div>
                     <input
+                      v-model.trim="$v.billing_address_1.$model"
                       type="text"
                       class="shipping-long-input"
-                      v-model.trim="$v.billing_address_1.$model"
                       :class="[
                         $v.billing_address_1.$error ? 'border-fail' : null,
                         $v.billing_address_1.required ? 'border-success' : null,
-                      ]"
-                    />
+                      ]" />
                     <div
                       v-if="$v.billing_address_1.$dirty"
-                      class="position-relative"
-                    >
-                      <div class="error" v-if="!$v.billing_address_1.required">
+                      class="position-relative">
+                      <div
+                        v-if="!$v.billing_address_1.required"
+                        class="error">
                         Required.
                       </div>
                     </div>
@@ -453,26 +486,28 @@
                   <div class="col-6">
                     <div class="shipping-label">Adress 2:</div>
                     <input
-                      type="text"
-                      class="shipping-long-input"
                       v-model="billing_address_2"
-                    />
+                      type="text"
+                      class="shipping-long-input" />
                   </div>
                 </div>
               </div>
               <div class="checkout-row">
                 <div class="shipping-label">Town / City:</div>
                 <input
+                  v-model.trim="$v.billing_city.$model"
                   type="text"
                   class="shipping-long-input"
-                  v-model.trim="$v.billing_city.$model"
                   :class="[
                     $v.billing_city.$error ? 'border-fail' : null,
                     $v.billing_city.required ? 'border-success' : null,
-                  ]"
-                />
-                <div v-if="$v.billing_city.$dirty" class="position-relative">
-                  <div class="error" v-if="!$v.billing_city.required">
+                  ]" />
+                <div
+                  v-if="$v.billing_city.$dirty"
+                  class="position-relative">
+                  <div
+                    v-if="!$v.billing_city.required"
+                    class="error">
                     Required.
                   </div>
                 </div>
@@ -480,16 +515,19 @@
               <div class="checkout-row">
                 <div class="shipping-label">District / State:</div>
                 <input
+                  v-model.trim="$v.billing_state.$model"
                   type="text"
                   class="shipping-long-input"
-                  v-model.trim="$v.billing_state.$model"
                   :class="[
                     $v.billing_state.$error ? 'border-fail' : null,
                     $v.billing_state.required ? 'border-success' : null,
-                  ]"
-                />
-                <div v-if="$v.billing_state.$dirty" class="position-relative">
-                  <div class="error" v-if="!$v.billing_state.required">
+                  ]" />
+                <div
+                  v-if="$v.billing_state.$dirty"
+                  class="position-relative">
+                  <div
+                    v-if="!$v.billing_state.required"
+                    class="error">
                     Required.
                   </div>
                 </div>
@@ -499,25 +537,27 @@
                   <div class="col-6">
                     <div class="shipping-label">Postcode:</div>
                     <input
+                      v-model.trim="$v.billing_postcode.$model"
                       type="text"
                       class="shipping-long-input"
-                      v-model.trim="$v.billing_postcode.$model"
                       :class="[
                         $v.billing_postcode.$error ? 'border-fail' : null,
                         $v.billing_postcode.required &&
                         $v.billing_postcode.numeric
                           ? 'border-success'
                           : null,
-                      ]"
-                    />
+                      ]" />
                     <div
                       v-if="$v.billing_postcode.$dirty"
-                      class="position-relative"
-                    >
-                      <div class="error" v-if="!$v.billing_postcode.required">
+                      class="position-relative">
+                      <div
+                        v-if="!$v.billing_postcode.required"
+                        class="error">
                         Required.
                       </div>
-                      <div class="error" v-if="!$v.billing_postcode.numeric">
+                      <div
+                        v-if="!$v.billing_postcode.numeric"
+                        class="error">
                         Invalid value.
                       </div>
                     </div>
@@ -529,8 +569,7 @@
           <div class="shipping-section-padding">
             <div
               class="checkout-topic"
-              :class="no_payment_method ? 'text-danger' : null"
-            >
+              :class="no_payment_method ? 'text-danger' : null">
               4. Payment Method
             </div>
             <div class="checkout-row">
@@ -541,17 +580,17 @@
                   payment_method == 'bank-a' || payment_method == null
                     ? 'payment-color'
                     : null,
-                ]"
-              >
+                ]">
                 <input
+                  id="bank-a"
+                  v-model="payment_method"
                   class="form-check-input"
                   type="radio"
                   name="radio-payment"
-                  id="bank-a"
-                  value="bank-a"
-                  v-model="payment_method"
-                />
-                <label class="form-check-label" for="bank-a">
+                  value="bank-a" />
+                <label
+                  class="form-check-label"
+                  for="bank-a">
                   Direct Deposit / Transfer - Commercial Bank of Ceylon
                 </label>
               </div>
@@ -560,17 +599,17 @@
                 :class="[
                   no_payment_method ? 'border-danger text-danger' : null,
                   payment_method == 'bank-b' ? 'payment-color' : null,
-                ]"
-              >
+                ]">
                 <input
+                  id="bank-b"
+                  v-model="payment_method"
                   class="form-check-input"
                   type="radio"
                   name="radio-payment"
-                  id="bank-b"
-                  value="bank-b"
-                  v-model="payment_method"
-                />
-                <label class="form-check-label" for="bank-b">
+                  value="bank-b" />
+                <label
+                  class="form-check-label"
+                  for="bank-b">
                   Direct Deposit / Transfer - Sampath Bank Plc
                 </label>
               </div>
@@ -579,22 +618,24 @@
                 :class="[
                   no_payment_method ? 'border-danger text-danger' : null,
                   payment_method == 'bank-c' ? 'payment-color' : null,
-                ]"
-              >
+                ]">
                 <input
+                  id="bank-c"
+                  v-model="payment_method"
                   class="form-check-input"
                   type="radio"
                   name="radio-payment"
-                  id="bank-c"
-                  value="bank-c"
-                  v-model="payment_method"
-                />
-                <label class="form-check-label" for="bank-c">
+                  value="bank-c" />
+                <label
+                  class="form-check-label"
+                  for="bank-c">
                   Direct Deposit / Transfer - Hatton National Bank
                 </label>
               </div>
             </div>
-            <div v-if="payment_method" class="checkout-description">
+            <div
+              v-if="payment_method"
+              class="checkout-description">
               <div class="pb-4">
                 Please use the following details to make a direct deposit or
                 transfer your total order value:
@@ -638,32 +679,37 @@
             </div>
           </div>
           <div class="position-relative">
-            <div class="sent_box_2" :class="success ? 'visible' : 'hidden'">
+            <div
+              class="sent_box_2"
+              :class="success ? 'visible' : 'hidden'">
               Your order successfully placed!
             </div>
-            <div class="sent_box_3" v-if="place_order_loading"></div>
-            <div class="place-order-button" @click="placeOrder">
+            <div
+              v-if="place_order_loading"
+              class="sent_box_3"></div>
+            <div
+              class="place-order-button"
+              @click="placeOrder">
               <div v-if="!place_order_loading">PLACE ORDER</div>
               <BeatLoader
                 :loading="place_order_loading"
                 color="#fff"
                 size="0.5rem"
-                class="text-center"
-              ></BeatLoader>
+                class="text-center"></BeatLoader>
             </div>
-            <div class="sent_box" :class="no_item ? 'visible' : 'hidden'">
+            <div
+              class="sent_box"
+              :class="no_item ? 'visible' : 'hidden'">
               You have no items in your shopping cart.
             </div>
             <div
               class="sent_box"
-              :class="no_payment_method ? 'visible' : 'hidden'"
-            >
+              :class="no_payment_method ? 'visible' : 'hidden'">
               Please select payment method.
             </div>
             <div
               class="sent_box"
-              :class="no_shipping_method ? 'visible' : 'hidden'"
-            >
+              :class="no_shipping_method ? 'visible' : 'hidden'">
               Please select shipping method.
             </div>
             <div
@@ -687,14 +733,13 @@
                 $v.billing_postcode.$anyError
                   ? 'visible'
                   : 'hidden'
-              "
-            >
+              ">
               Please fill in a valid value for all required fields.
             </div>
           </div>
         </div>
-        <div class="col-4 checkout-left-padding">
-          <div class="summary-card">
+        <div class="col-12 col-xl-5 checkout-left-padding order-0 order-xl-1">
+          <div class="summary-card mb-4 mb-xl-0">
             <div class="d-flex justify-content-between summary-head-section">
               <div class="summary-header">Order Summary</div>
               <router-link to="/cart">
@@ -708,27 +753,48 @@
             </div>
             <div class="max-height-summary-item">
               <div
-                class="d-flex justify-content-between align-items-center summary-item-detail"
                 v-for="(item, index) in cart"
                 :key="index"
-              >
+                class="d-flex flex-column flex-sm-row justify-content-between align-items-center summary-item-detail">
                 <div class="img-width">
                   <img
                     :src="item.product.image"
                     width="100%"
-                    class="img-size"
-                  />
+                    class="img-size" />
                 </div>
-                <div class="summary-qty">{{ item.qty }}</div>
-                <div class="summary-multiply">
+                <div class="d-flex d-sm-none align-items-center">
+                  <div class="sub-summary-qty">{{ item.qty }}</div>
+                  <div class="sub-summary-multiply">
+                    <font-awesome-icon icon="times" />
+                  </div>
+                  <div class="sub-summary-title">
+                    {{ item.product.title }} | {{ item.product.type }} |
+                    {{ item.product.gender }} - {{ item.product.size }} ml by
+                    {{ item.product.brand }}
+                  </div>
+                  <div class="sub-summary-total">
+                    Rs.
+                    {{
+                      (item.qty * item.product.final_price).toLocaleString(
+                        undefined,
+                        {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        },
+                      )
+                    }}
+                  </div>
+                </div>
+                <div class="summary-qty d-none d-sm-block">{{ item.qty }}</div>
+                <div class="summary-multiply d-none d-sm-block">
                   <font-awesome-icon icon="times" />
                 </div>
-                <div class="summary-title">
+                <div class="summary-title d-none d-sm-block">
                   {{ item.product.title }} | {{ item.product.type }} |
                   {{ item.product.gender }} - {{ item.product.size }} ml by
                   {{ item.product.brand }}
                 </div>
-                <div class="summary-total">
+                <div class="summary-total d-none d-sm-block">
                   Rs.
                   {{
                     (item.qty * item.product.final_price).toLocaleString(
@@ -736,7 +802,7 @@
                       {
                         minimumFractionDigits: 2,
                         maximumFractionDigits: 2,
-                      }
+                      },
                     )
                   }}
                 </div>
@@ -756,29 +822,34 @@
                   }}
                 </div>
               </div>
-              <div class="d-flex justify-content-between summary-total-between">
+              <div
+                class="d-flex justify-content-between align-items-center summary-total-between">
                 <div>Shipping:</div>
                 <div
                   v-if="!shipping_method"
-                  class="shipping-fee-font checkout-important"
-                >
+                  class="shipping-fee-font checkout-important">
                   Please Select Shipping Method
                 </div>
-                <div v-if="shipping_fee == 0" class="shipping-fee-font">
+                <div
+                  v-if="shipping_fee == 0"
+                  class="shipping-fee-font">
                   Free
                 </div>
 
-                <div v-if="shipping_fee > 0" class="shipping-fee-font">
+                <div
+                  v-if="shipping_fee > 0"
+                  class="shipping-fee-font">
                   Rs.
                   {{ shipping_fee }}
                 </div>
               </div>
             </div>
             <div
-              class="d-flex justify-content-between align-items-end summary-grand-padding"
-            >
+              class="d-flex justify-content-between align-items-end summary-grand-padding">
               <div>Total:</div>
-              <div v-if="!shipping_method" class="summary-grand-total">
+              <div
+                v-if="!shipping_method"
+                class="summary-grand-total">
                 Rs.
                 {{
                   cartTotal.toLocaleString(undefined, {
@@ -787,7 +858,9 @@
                   })
                 }}
               </div>
-              <div v-if="shipping_method" class="summary-grand-total">
+              <div
+                v-if="shipping_method"
+                class="summary-grand-total">
                 Rs.
                 {{
                   (cartTotal + shipping_fee).toLocaleString(undefined, {
@@ -822,6 +895,8 @@ import moment from "moment-timezone";
 
 export default {
   name: "MyCheckout",
+  components: { BeatLoader },
+  mixins: [validationMixin],
   props: {
     cart: Array,
     total: Number,
@@ -829,7 +904,6 @@ export default {
     clearCart: Function,
     showSignIn: Function,
   },
-  components: { BeatLoader },
   data() {
     return {
       shipments: [],
@@ -871,7 +945,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     email: { required, email },
     confirm_email: { required, email, sameAsEmail: sameAs("email") },
@@ -988,6 +1061,15 @@ export default {
         }
       },
     },
+  },
+  async mounted() {
+    this.shipments = (await getShipment()).data;
+    if (
+      this.$store.state.isCustomerLoggedIn &&
+      this.$store.state.customer.email
+    ) {
+      this.email = this.$store.state.customer.email;
+    }
   },
   methods: {
     chooseShipping(index) {
@@ -1240,32 +1322,10 @@ export default {
       }, 3000);
     },
   },
-  async mounted() {
-    this.shipments = (await getShipment()).data;
-    if (
-      this.$store.state.isCustomerLoggedIn &&
-      this.$store.state.customer.email
-    ) {
-      this.email = this.$store.state.customer.email;
-    }
-  },
 };
 </script>
 
 <style scoped>
-.checkout-top {
-  height: 150px;
-  background-color: #7e989c;
-  color: #fff;
-  font-size: 4.5rem;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.checkout-padding {
-  padding-right: 5rem;
-  padding-left: 5rem;
-}
-
 .checkout-body-padding {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -1292,17 +1352,6 @@ export default {
   font-size: 2.5rem;
   padding-bottom: 1.4rem;
   border-bottom: 1px solid #384648;
-}
-
-.checkout-right-padding {
-  border-right: 1px solid #384648;
-  padding-right: calc(var(--bs-gutter-x) * 1);
-  width: 60%;
-}
-
-.checkout-left-padding {
-  padding-left: calc(var(--bs-gutter-x) * 1);
-  width: 40%;
 }
 
 .checkout-sign-in-section {
@@ -1493,15 +1542,6 @@ input.shipping-long-input:focus-visible {
   background: #814643;
 }
 
-.summary-card {
-  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.25);
-  border-radius: 0.5rem;
-  padding: 1.25rem 1.25rem 1rem 1.25rem;
-  max-height: 28rem;
-  position: sticky;
-  top: 75px;
-}
-
 .summary-header {
   font-weight: 500;
   font-size: 1.2rem;
@@ -1537,10 +1577,6 @@ input.shipping-long-input:focus-visible {
 .summary-head-section {
   border-bottom: 1px solid #384648;
   padding-bottom: 0.75rem;
-}
-
-.img-width {
-  width: 12.5%;
 }
 
 .img-size {
@@ -1610,10 +1646,6 @@ input.shipping-long-input:focus-visible {
   margin: 1rem 0rem 1rem 0rem;
 }
 
-.shipping-fee-font {
-  font-size: 0.95rem;
-  font-weight: 400;
-}
 .thin-label {
   font-weight: 400;
 }
@@ -1654,19 +1686,6 @@ input.shipping-long-input:focus-visible {
   background-color: #dee2e6;
 }
 
-.sent_box {
-  margin-top: 0.5rem;
-  background-color: #fcdbd8;
-  color: #dc3545;
-  border: 2px solid #dc3545;
-  font-size: 1rem;
-  text-align: center;
-  font-weight: 500;
-  width: 100%;
-  position: absolute;
-  border-radius: 0.25rem;
-}
-
 .sent_box_2 {
   background-color: #e7f7e1;
   color: #639551;
@@ -1702,6 +1721,156 @@ input.shipping-long-input:focus-visible {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
+}
+
+.container {
+  max-width: 320px;
+}
+
+.summary-card {
+  box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 0.5rem;
+  padding: 1.25rem 1.25rem 1rem 1.25rem;
+  max-height: 28rem;
+  top: 75px;
+}
+
+.sub-summary-qty {
+  width: 7.5%;
+  font-size: 0.85rem;
+  text-align: start;
+}
+.sub-summary-multiply {
+  width: 7.5%;
+  font-size: 0.6rem;
+  text-align: start;
+}
+.sub-summary-title {
+  width: 49%;
+  font-size: 0.8rem;
+  text-align: start;
+  padding-right: 0.25rem;
+}
+.sub-summary-total {
+  font-size: 0.85rem;
+  width: 36%;
+  text-align: right;
+}
+
+.shipping-fee-font {
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-align: end;
+}
+
+.img-width {
+  width: 3.5rem;
+}
+
+.checkout-top {
+  height: 150px;
+  background-color: #7e989c;
+  color: #fff;
+  font-size: 3rem;
+}
+
+.sent_box {
+  margin-top: 0.5rem;
+  background-color: #fcdbd8;
+  color: #dc3545;
+  border: 2px solid #dc3545;
+  font-size: 0.85rem;
+  text-align: center;
+  font-weight: 500;
+  width: 100%;
+  position: absolute;
+  border-radius: 0.25rem;
+}
+
+@media (min-width: 375px) {
+  .container {
+    max-width: 350px;
+  }
+
+  .shipping-fee-font {
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+
+  .img-width {
+    width: 12.5%;
+  }
+
+  .sent_box {
+    font-size: 1rem;
+  }
+
+  .checkout-top {
+    font-size: 4.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+
+  .checkout-padding {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+
+  .checkout-padding {
+    padding-right: 7.5rem;
+    padding-left: 7.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+
+  .summary-card {
+    position: sticky;
+  }
+  .checkout-right-padding {
+    border-right: 1px solid #384648;
+    padding-right: calc(var(--bs-gutter-x) * 1);
+  }
+
+  .checkout-left-padding {
+    padding-left: calc(var(--bs-gutter-x) * 1);
+  }
+
+  .checkout-padding {
+    padding-right: 0rem;
+    padding-left: 0rem;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+
+  .checkout-padding {
+    padding-right: 5rem;
+    padding-left: 5rem;
+  }
 }
 </style>

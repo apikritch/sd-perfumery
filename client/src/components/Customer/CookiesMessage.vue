@@ -1,5 +1,7 @@
 <template>
-  <div v-if="isOpen" class="cover_cookie">
+  <div
+    v-if="isOpen"
+    class="cover_cookie">
     <div class="row align-items-center">
       <div class="col-10">
         <div class="cookie_message">
@@ -10,8 +12,7 @@
       </div>
       <div
         class="col-2 d-flex justify-content-center align-items-center"
-        @click="accept"
-      >
+        @click="accept">
         Accept
       </div>
     </div>
@@ -47,6 +48,7 @@ export default {
   background-color: rgba(0, 0, 0, 0.75);
   width: 100%;
   padding: 0.75rem;
+  z-index: 9000;
 }
 
 .cover_cookie .row {

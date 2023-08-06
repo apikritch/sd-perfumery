@@ -11,17 +11,20 @@
             </div>
             <div class="col-8 information-input">
               <input
-                type="text"
                 v-model.trim="$v.shipping_method.$model"
+                type="text"
                 :class="[
                   $v.shipping_method.$error ? 'border-fail' : 'input_border',
                   $v.shipping_method.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-8 offset-4">
-              <div v-if="$v.shipping_method.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.shipping_method.required">
+              <div
+                v-if="$v.shipping_method.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.shipping_method.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -34,28 +37,33 @@
               Shipping Fee:
             </div>
 
-            <div class="col-8 information-input ">
+            <div class="col-8 information-input">
               <div class="input-group">
                 <span class="input-group-text">Rs.</span>
                 <input
+                  v-model.trim="$v.shipping_fee.$model"
                   type="text"
                   class="form-control form-icon text-end"
-                  v-model.trim="$v.shipping_fee.$model"
                   :class="[
                     $v.shipping_fee.$error ? 'border-fail' : 'input_border',
                     $v.shipping_fee.required && $v.shipping_fee.decimal
                       ? 'border-success'
                       : null,
-                  ]"
-                />
+                  ]" />
               </div>
             </div>
             <div class="col-8 offset-4">
-              <div v-if="$v.shipping_fee.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.shipping_fee.required">
+              <div
+                v-if="$v.shipping_fee.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.shipping_fee.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.shipping_fee.decimal">
+                <div
+                  v-if="!$v.shipping_fee.decimal"
+                  class="error">
                   Invalid value
                 </div>
               </div>
@@ -66,20 +74,30 @@
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="clearForm" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="clearForm">
                 Clear
               </button>
             </div>
             <div class="col-6">
-              <button type="submit" class="button-save">Save</button>
+              <button
+                type="submit"
+                class="button-save">
+                Save
+              </button>
             </div>
           </div>
         </div>
       </form>
     </div>
-    <div class="sent_box" :class="success ? 'visible' : 'hidden'">
-      <font-awesome-icon icon="check" class="me-2" />Shipment successfully
-      added!
+    <div
+      class="sent_box"
+      :class="success ? 'visible' : 'hidden'">
+      <font-awesome-icon
+        icon="check"
+        class="me-2" />Shipment successfully added!
     </div>
   </div>
 </template>
@@ -91,6 +109,7 @@ import { required, decimal } from "vuelidate/lib/validators";
 
 export default {
   name: "AddShipment",
+  mixins: [validationMixin],
   data() {
     return {
       shipping_method: "",
@@ -98,7 +117,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     shipping_method: { required },
     shipping_fee: { required, decimal },
@@ -240,7 +258,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .border-fail {

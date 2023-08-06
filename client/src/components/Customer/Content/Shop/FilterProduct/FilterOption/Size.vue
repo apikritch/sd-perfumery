@@ -4,23 +4,30 @@
       class="d-flex justify-content-between align-items-center w-100 size-collapse-button"
       aria-controls="collapse-size"
       :aria-expanded="visible ? 'true' : 'false'"
-      @click="visible = !visible"
       :class="visible ? null : 'collapsed'"
-    >
+      @click="visible = !visible">
       <div class="filter-size-header">Size</div>
-      <font-awesome-icon icon="chevron-down" class="rotate-chevron" />
+      <font-awesome-icon
+        icon="chevron-down"
+        class="rotate-chevron" />
     </b-button>
-    <b-collapse id="collapse-size" v-model="visible" class="size-collapse-area">
-      <div class="padding-size" v-if="max > 0">
+    <b-collapse
+      id="collapse-size"
+      v-model="visible"
+      class="size-collapse-area">
+      <div
+        v-if="max > 0"
+        class="padding-size">
         <VueSlider
+          v-model="value"
           :interval="1"
           :min="min"
           :max="max"
-          v-model="value"
-          @change="changeValueSize(value)"
-        />
+          @change="changeValueSize(value)" />
       </div>
-      <div class="d-flex justify-content-between" v-if="max > 0">
+      <div
+        v-if="max > 0"
+        class="d-flex justify-content-between">
         <div>{{ value[0] }} ml</div>
         <div>{{ value[1] }} ml</div>
       </div>
@@ -50,14 +57,14 @@ export default {
 
     this.max = await Math.max.apply(
       Math,
-      this.products.map((product) => product.size)
+      this.products.map((product) => product.size),
     );
 
     this.value = [
       0,
       await Math.max.apply(
         Math,
-        this.products.map((product) => product.size)
+        this.products.map((product) => product.size),
       ),
     ];
   },

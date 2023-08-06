@@ -1,16 +1,19 @@
 <template>
   <div class="filter-price">
     <div class="filter-price-header">Price</div>
-    <div class="padding-slider" v-if="max > 0">
+    <div
+      v-if="max > 0"
+      class="padding-slider">
       <VueSlider
+        v-model="value"
         :interval="1"
         :min="min"
         :max="max"
-        v-model="value"
-        @change="changeValuePrice(value)"
-      />
+        @change="changeValuePrice(value)" />
     </div>
-    <div class="d-flex justify-content-between" v-if="max > 0">
+    <div
+      v-if="max > 0"
+      class="d-flex justify-content-between">
       <div>Rs. {{ value[0] }}</div>
       <div>Rs. {{ value[1] }}</div>
     </div>
@@ -38,14 +41,14 @@ export default {
 
     this.max = await Math.max.apply(
       Math,
-      this.products.map((product) => product.final_price)
+      this.products.map((product) => product.final_price),
     );
 
     this.value = [
       0,
       await Math.max.apply(
         Math,
-        this.products.map((product) => product.final_price)
+        this.products.map((product) => product.final_price),
       ),
     ];
   },

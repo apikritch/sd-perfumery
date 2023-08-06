@@ -28,8 +28,7 @@
         :hideCart="hideCart"
         :showCart="showCart"
         :display_cart_redirect="display_cart_redirect"
-        :clearCart="clearCart"
-      />
+        :clearCart="clearCart" />
     </div>
   </div>
 </template>
@@ -50,6 +49,56 @@ export default {
       valueBrand: [],
       display_cart: false,
     };
+  },
+  computed: {
+    cartTotal() {
+      let sum = 0;
+      for (let key in this.cart) {
+        if (!this.cart[key].product.final_price) {
+          sum = sum + this.cart[key].product.price * this.cart[key].qty;
+        } else if (this.cart[key].product.final_price) {
+          sum = sum + this.cart[key].product.final_price * this.cart[key].qty;
+        }
+      }
+      return sum;
+    },
+    total() {
+      let sum = 0;
+      for (let key in this.cart) {
+        if (!this.cart[key].product.price) {
+          sum = sum + this.cart[key].product.price * this.cart[key].qty;
+        } else if (this.cart[key].product.price) {
+          sum = sum + this.cart[key].product.price * this.cart[key].qty;
+        }
+      }
+      return sum;
+    },
+    cartQty() {
+      let qty = 0;
+      for (let key in this.cart) {
+        qty = qty + this.cart[key].qty;
+      }
+      return qty;
+    },
+  },
+  async mounted() {
+    this.products = (await getProducts()).data;
+
+    this.valueSliderPrice = [
+      0,
+      await Math.max.apply(
+        Math,
+        this.products.map((product) => product.price),
+      ),
+    ];
+
+    this.valueSliderSize = [
+      0,
+      await Math.max.apply(
+        Math,
+        this.products.map((product) => product.size),
+      ),
+    ];
   },
   methods: {
     display_cart_redirect() {
@@ -114,56 +163,6 @@ export default {
     clearCart() {
       this.cart = [];
     },
-  },
-  computed: {
-    cartTotal() {
-      let sum = 0;
-      for (let key in this.cart) {
-        if (!this.cart[key].product.final_price) {
-          sum = sum + this.cart[key].product.price * this.cart[key].qty;
-        } else if (this.cart[key].product.final_price) {
-          sum = sum + this.cart[key].product.final_price * this.cart[key].qty;
-        }
-      }
-      return sum;
-    },
-    total() {
-      let sum = 0;
-      for (let key in this.cart) {
-        if (!this.cart[key].product.price) {
-          sum = sum + this.cart[key].product.price * this.cart[key].qty;
-        } else if (this.cart[key].product.price) {
-          sum = sum + this.cart[key].product.price * this.cart[key].qty;
-        }
-      }
-      return sum;
-    },
-    cartQty() {
-      let qty = 0;
-      for (let key in this.cart) {
-        qty = qty + this.cart[key].qty;
-      }
-      return qty;
-    },
-  },
-  async mounted() {
-    this.products = (await getProducts()).data;
-
-    this.valueSliderPrice = [
-      0,
-      await Math.max.apply(
-        Math,
-        this.products.map((product) => product.price)
-      ),
-    ];
-
-    this.valueSliderSize = [
-      0,
-      await Math.max.apply(
-        Math,
-        this.products.map((product) => product.size)
-      ),
-    ];
   },
 };
 </script>

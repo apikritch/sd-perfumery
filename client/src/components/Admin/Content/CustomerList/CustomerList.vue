@@ -1,15 +1,13 @@
 <template>
   <div class="padding-under-pagination h-100">
     <div
-      class="d-flex justify-content-between align-items-center admin-Order-head"
-    >
+      class="d-flex justify-content-between align-items-center admin-Order-head">
       Customers
     </div>
 
     <div
       v-if="loading || loading_2"
-      class="d-flex align-items-center justify-content-center cover_loader"
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
 
@@ -20,59 +18,53 @@
           <b-form-select
             v-model="first_name"
             :options="first_name_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
         <div class="col-medium-select">
           <div>Last Name:</div>
           <b-form-select
             v-model="last_name"
             :options="last_name_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
         <div class="col-medium-select">
           <div>City:</div>
           <b-form-select
             v-model="city"
             :options="city_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
         <div class="col-medium-select">
           <div>State:</div>
           <b-form-select
             v-model="state"
             :options="state_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
       </div>
 
-      <div class="row align-items-center product-padding-search-bar">
+      <div class="d-flex align-items-center product-padding-search-bar">
         <!--Search-->
         <div class="col-4">
           <input
+            v-model="search"
             type="text"
             class="form-control admin-product-search-bar"
-            placeholder="Search by keyword"
-            v-model="search"
-          />
+            placeholder="Search by keyword" />
         </div>
         <div class="col-4">{{ found_customer }} CUSTOMERS FOUND</div>
 
         <!--Search-->
 
         <!--Pagination-->
-        <div class="col-4 ms-auto">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -80,22 +72,19 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page-button d-flex align-items-center justify-content-center"
-                  @click="previousPage"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page-button d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -108,38 +97,37 @@
       <!--Label-->
       <div class="d-flex admin-product-label">
         <div
-          class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-1 d-flex align-items-center justify-content-between px-2">
           <div>ID</div>
-          <div class="caret-cover" @click="sortId">
+          <div
+            class="caret-cover"
+            @click="sortId">
             <div
               class="caret-up"
               :class="
                 sortBy == 'id' && sortDirection == 'asc' ? 'sort-white' : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
               :class="
                 sortBy == 'id' && sortDirection == 'desc' ? 'sort-white' : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
           <div>First Name</div>
-          <div class="caret-cover" @click="sortFirstName">
+          <div
+            class="caret-cover"
+            @click="sortFirstName">
             <div
               class="caret-up"
               :class="
                 sortBy == 'first_name' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -147,23 +135,22 @@
                 sortBy == 'first_name' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-2 d-flex align-items-center justify-content-between px-2">
           <div>Last Name</div>
-          <div class="caret-cover" @click="sortLastName">
+          <div
+            class="caret-cover"
+            @click="sortLastName">
             <div
               class="caret-up"
               :class="
                 sortBy == 'last_name' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -171,23 +158,22 @@
                 sortBy == 'last_name' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-3 d-flex align-items-center justify-content-between px-2">
           <div>Email</div>
-          <div class="caret-cover" @click="sortEmail">
+          <div
+            class="caret-cover"
+            @click="sortEmail">
             <div
               class="caret-up"
               :class="
                 sortBy == 'email' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -195,36 +181,32 @@
                 sortBy == 'email' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-4 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table-label label-4 d-flex align-items-center justify-content-center">
           Phone
         </div>
         <div
-          class="border-right-product-table-label label-5 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table-label label-5 d-flex align-items-center justify-content-center">
           Address 1
         </div>
         <div
-          class="border-right-product-table-label label-6 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table-label label-6 d-flex align-items-center justify-content-center">
           Address 2
         </div>
         <div
-          class="border-right-product-table-label label-7 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-7 d-flex align-items-center justify-content-between px-2">
           <div>City</div>
-          <div class="caret-cover" @click="sortCity">
+          <div
+            class="caret-cover"
+            @click="sortCity">
             <div
               class="caret-up"
               :class="
                 sortBy == 'city' && sortDirection == 'asc' ? 'sort-white' : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -232,23 +214,22 @@
                 sortBy == 'city' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
         <div
-          class="border-right-product-table-label label-8 d-flex align-items-center justify-content-between px-2"
-        >
+          class="border-right-product-table-label label-8 d-flex align-items-center justify-content-between px-2">
           <div>State</div>
-          <div class="caret-cover" @click="sortState">
+          <div
+            class="caret-cover"
+            @click="sortState">
             <div
               class="caret-up"
               :class="
                 sortBy == 'state' && sortDirection == 'asc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
 
             <div
               class="caret-down"
@@ -256,8 +237,7 @@
                 sortBy == 'state' && sortDirection == 'desc'
                   ? 'sort-white'
                   : null
-              "
-            />
+              " />
           </div>
         </div>
 
@@ -269,53 +249,43 @@
 
       <!--Table-->
       <div
-        class="d-flex admin-product-detail"
         v-for="(customer, index) in pageAndFilter"
         :key="index"
-      >
+        class="d-flex admin-product-detail">
         <div
-          class="border-right-product-table detail-1 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-1 d-flex align-items-center justify-content-center">
           {{ customer.id }}
         </div>
         <div
-          class="border-right-product-table detail-2 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-2 d-flex align-items-center">
           {{ customer.first_name }}
         </div>
         <div
-          class="border-right-product-table detail-2 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-2 d-flex align-items-center">
           {{ customer.last_name }}
         </div>
         <div
-          class="border-right-product-table detail-3 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-3 d-flex align-items-center">
           {{ customer.email }}
         </div>
         <div
-          class="border-right-product-table detail-4 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-4 d-flex align-items-center justify-content-center">
           {{ customer.phone }}
         </div>
         <div
-          class="border-right-product-table detail-5 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-5 d-flex align-items-center">
           {{ customer.address_1 }}
         </div>
         <div
-          class="border-right-product-table detail-6 d-flex align-items-center"
-        >
+          class="border-right-product-table detail-6 d-flex align-items-center">
           {{ customer.address_2 }}
         </div>
         <div
-          class="border-right-product-table detail-7 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-7 d-flex align-items-center justify-content-center">
           {{ customer.city }}
         </div>
         <div
-          class="border-right-product-table detail-8 d-flex align-items-center justify-content-center"
-        >
+          class="border-right-product-table detail-8 d-flex align-items-center justify-content-center">
           {{ customer.state }}
         </div>
 
@@ -325,16 +295,15 @@
       </div>
       <!--Table-->
 
-      <div class="row align-items-center product-padding-search-bar">
-        <div class="col-4 ms-auto">
+      <div class="d-flex align-items-center product-padding-search-bar">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -342,22 +311,19 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page-button d-flex align-items-center justify-content-center"
-                  @click="previousPage"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page-button d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -463,10 +429,10 @@ export default {
         this.sortCustomers(
           this.filterFirstName(
             this.filterLastName(
-              this.filterCity(this.filterState(this.customers))
-            )
-          )
-        )
+              this.filterCity(this.filterState(this.customers)),
+            ),
+          ),
+        ),
       );
     },
   },
@@ -523,6 +489,10 @@ export default {
       this.checkAll();
     },
   },
+  async mounted() {
+    this.per_page_options = await getPerPageOptions();
+    this.loading_2 = false;
+  },
   methods: {
     nextPage() {
       if (this.current_page >= this.all_pages) {
@@ -541,7 +511,7 @@ export default {
     pageCustomers(customers) {
       return customers.slice(
         this.page * this.per_page,
-        this.page * this.per_page + this.per_page
+        this.page * this.per_page + this.per_page,
       );
     },
     filterFirstName(customers) {
@@ -655,7 +625,7 @@ export default {
     },
     checkAll() {
       const item_length = this.filterFirstName(
-        this.filterLastName(this.filterCity(this.filterState(this.customers)))
+        this.filterLastName(this.filterCity(this.filterState(this.customers))),
       ).length;
 
       this.found_customer = item_length;
@@ -668,10 +638,6 @@ export default {
         this.current_page = this.all_pages;
       }
     },
-  },
-  async mounted() {
-    this.per_page_options = await getPerPageOptions();
-    this.loading_2 = false;
   },
 };
 </script>
@@ -802,7 +768,6 @@ export default {
   font-size: 0.85rem;
   color: #384648;
   border: 1px solid #384648;
-  margin-right: 0.5rem;
 }
 
 .product-page-input:focus-visible {

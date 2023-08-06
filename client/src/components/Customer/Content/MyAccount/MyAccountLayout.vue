@@ -1,10 +1,14 @@
 <template>
   <div class="container-fluid remove-gap-container">
-    <div class="row padding_hide" v-if="!$store.state.isCustomerLoggedIn">
+    <div
+      v-if="!$store.state.isCustomerLoggedIn"
+      class="row padding_hide">
       <RequireLogin :showSignIn="showSignIn"></RequireLogin>
     </div>
-    <div class="row" v-if="$store.state.isCustomerLoggedIn">
-      <router-view></router-view>
+    <div
+      v-if="$store.state.isCustomerLoggedIn"
+      class="row">
+      <router-view class="d-none d-lg-block"></router-view>
       <router-view name="my_account_content"></router-view>
     </div>
   </div>
@@ -14,8 +18,8 @@
 import RequireLogin from "./../../RequireLogin.vue";
 export default {
   name: "MyAccountLayout",
-  props: ["showSignIn"],
   components: { RequireLogin },
+  props: ["showSignIn"],
 };
 </script>
 

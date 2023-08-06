@@ -4,28 +4,32 @@
       class="d-flex justify-content-between align-items-center w-100 brand-collapse-button"
       aria-controls="collapse-brand"
       :aria-expanded="visible ? 'true' : 'false'"
-      @click="visible = !visible"
       :class="visible ? null : 'collapsed'"
-    >
+      @click="visible = !visible">
       <div class="filter-brand-header">Brand</div>
-      <font-awesome-icon icon="chevron-down" class="rotate-chevron" />
+      <font-awesome-icon
+        icon="chevron-down"
+        class="rotate-chevron" />
     </b-button>
     <b-collapse
       id="collapse-brand"
       v-model="visible"
-      class="brand-collapse-area"
-    >
+      class="brand-collapse-area">
       <div class="padding-brand">
-        <div class="form-check" v-for="(brand, index) in brands" :key="index">
+        <div
+          v-for="(brand, index) in brands"
+          :key="index"
+          class="form-check">
           <input
+            :id="`${brand.text}-check-box`"
+            v-model="selected"
             class="form-check-input"
             type="checkbox"
             :value="brand.text"
-            :id="`${brand.text}-check-box`"
-            v-model="selected"
-            @change="changeValueBrand(selected)"
-          />
-          <label class="form-check-label" :for="`${brand.text}-check-box`">
+            @change="changeValueBrand(selected)" />
+          <label
+            class="form-check-label"
+            :for="`${brand.text}-check-box`">
             {{ brand.text }}
           </label>
         </div>

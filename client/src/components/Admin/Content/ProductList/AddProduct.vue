@@ -11,8 +11,7 @@
                 :src="image"
                 width="100%"
                 class="preview-img"
-                :class="image !== '' ? 'preview-frame' : null"
-              />
+                :class="image !== '' ? 'preview-frame' : null" />
             </div>
           </div>
           <div class="row align-items-center justify-content-end account-row">
@@ -20,19 +19,22 @@
               <div class="text-danger d-inline">*</div>
               Image Link:
             </div>
-            <div class="col-9 information-input ">
+            <div class="col-9 information-input">
               <input
-                type="text"
                 v-model.trim="$v.image.$model"
+                type="text"
                 :class="[
                   $v.image.$error ? 'border-fail' : null,
                   $v.image.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.image.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.image.required">
+              <div
+                v-if="$v.image.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.image.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -40,25 +42,27 @@
           </div>
           <div
             class="row align-items-center justify-content-end account-row"
-            :class="$v.image.$error ? 'padding_fail' : null"
-          >
+            :class="$v.image.$error ? 'padding_fail' : null">
             <div class="col-3 information-head text-end">
               <div class="text-danger d-inline">*</div>
               Title:
             </div>
             <div class="col-9 information-input">
               <input
-                type="text"
                 v-model.trim="$v.title.$model"
+                type="text"
                 :class="[
                   $v.title.$error ? 'border-fail' : null,
                   $v.title.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.title.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.title.required">
+              <div
+                v-if="$v.title.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.title.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -66,26 +70,28 @@
           </div>
           <div
             class="row align-items-center justify-content-end account-row"
-            :class="$v.title.$error ? 'padding_fail' : null"
-          >
+            :class="$v.title.$error ? 'padding_fail' : null">
             <div class="col-3 information-head text-end">
               <div class="text-danger d-inline">*</div>
               Brand:
             </div>
             <div class="col-9 information-input">
               <b-form-select
+                v-model.trim="$v.brand.$model"
                 :options="brand_options"
                 class="add-select-form"
-                v-model.trim="$v.brand.$model"
                 :class="[
                   $v.brand.$error ? 'select-fail' : null,
                   $v.brand.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.brand.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.brand.required">
+              <div
+                v-if="$v.brand.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.brand.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -93,26 +99,28 @@
           </div>
           <div
             class="row align-items-center justify-content-end account-row"
-            :class="$v.brand.$error ? 'padding_fail' : null"
-          >
+            :class="$v.brand.$error ? 'padding_fail' : null">
             <div class="col-3 information-head text-end">
               <div class="text-danger d-inline">*</div>
               Type:
             </div>
             <div class="col-9 information-input">
               <b-form-select
+                v-model.trim="$v.type.$model"
                 :options="type_options"
                 class="add-select-form"
-                v-model.trim="$v.type.$model"
                 :class="[
                   $v.type.$error ? 'select-fail' : null,
                   $v.type.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.type.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.type.required">
+              <div
+                v-if="$v.type.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.type.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -120,8 +128,7 @@
           </div>
           <div
             class="row align-items-center justify-content-end account-row"
-            :class="$v.type.$error ? 'padding_fail' : null"
-          >
+            :class="$v.type.$error ? 'padding_fail' : null">
             <div class="col-3 information-head text-end unique-label">
               <div class="text-danger d-inline">*</div>
               Size:
@@ -129,16 +136,15 @@
             <div class="col-4 information-input unique-row-left">
               <div class="input-group">
                 <input
+                  v-model.trim="$v.size.$model"
                   type="text"
                   class="form-control form-icon"
-                  v-model.trim="$v.size.$model"
                   :class="[
                     $v.size.$error ? 'border-fail' : null,
                     $v.size.requiredv && $v.size.numeric
                       ? 'border-success'
                       : null,
-                  ]"
-                />
+                  ]" />
                 <span
                   class="input-group-text"
                   :class="$v.size.$error ? 'only-border' : null"
@@ -149,8 +155,7 @@
 
             <div
               class="col-1 information-head text-end unique-label-cover text-end unique_mandatory"
-              :class="$v.type.$error ? 'padding_fail' : null"
-            >
+              :class="$v.type.$error ? 'padding_fail' : null">
               <div>
                 <div class="text-danger d-inline">*</div>
                 Gender:
@@ -158,28 +163,37 @@
             </div>
             <div class="col-4 information-input unique-row-right">
               <b-form-select
+                v-model.trim="$v.gender.$model"
                 :options="gender_options"
                 class="add-select-form"
-                v-model.trim="$v.gender.$model"
                 :class="[
                   $v.gender.$error ? 'select-fail' : null,
                   $v.gender.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-4 offset-3 unique-row-right">
-              <div v-if="$v.size.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.size.required">
+              <div
+                v-if="$v.size.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.size.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.size.numeric">
+                <div
+                  v-if="!$v.size.numeric"
+                  class="error">
                   Invalid value
                 </div>
               </div>
             </div>
             <div class="col-4 offset-unique unique-row-right">
-              <div v-if="$v.gender.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.gender.required">
+              <div
+                v-if="$v.gender.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.gender.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -187,26 +201,28 @@
           </div>
           <div
             class="row align-items-start justify-content-end account-row"
-            :class="$v.size.$error || $v.gender.$error ? 'padding_fail' : null"
-          >
+            :class="$v.size.$error || $v.gender.$error ? 'padding_fail' : null">
             <div class="col-3 information-head text-end">
               <div class="text-danger d-inline">*</div>
               Description:
             </div>
             <div class="col-9 information-input textarea-height">
               <textarea
+                v-model.trim="$v.description.$model"
                 type="text"
                 class="description-size"
-                v-model.trim="$v.description.$model"
                 :class="[
                   $v.description.$error ? 'border-fail' : null,
                   $v.description.required ? 'border-success' : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.description.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.description.required">
+              <div
+                v-if="$v.description.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.description.required"
+                  class="error">
                   Required
                 </div>
               </div>
@@ -219,62 +235,61 @@
               <div class="text-danger d-inline">*</div>
               Quantity:
             </div>
-            <div class="col-9 information-input ">
+            <div class="col-9 information-input">
               <input
-                type="text"
                 v-model.trim="$v.stock.$model"
+                type="text"
                 :class="[
                   $v.stock.$error ? 'border-fail' : null,
                   $v.stock.required && $v.stock.numeric
                     ? 'border-success'
                     : null,
-                ]"
-              />
+                ]" />
             </div>
             <div class="col-9 offset-3">
-              <div v-if="$v.stock.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.stock.required">
+              <div
+                v-if="$v.stock.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.stock.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.stock.numeric">
+                <div
+                  v-if="!$v.stock.numeric"
+                  class="error">
                   Invalid value
                 </div>
               </div>
             </div>
           </div>
           <div class="row align-items-center justify-content-end account-row">
-            <div class="col-3 information-head text-end">
-              Discount:
-            </div>
-            <div class="col-2 information-input ">
+            <div class="col-3 information-head text-end">Discount:</div>
+            <div class="col-2 information-input">
               <b-form-select
                 v-model="discount"
                 :options="discount_options"
-                class="add-select-form"
-              ></b-form-select>
+                class="add-select-form"></b-form-select>
             </div>
             <div class="col-2 information-input">
               <input
-                type="text"
                 v-if="enable_discount"
                 v-model.trim="$v.discount_number.$model"
+                type="text"
                 :class="[
                   $v.discount_number.$error ? 'border-fail' : null,
                   $v.discount_number.required && $v.discount_number.decimal
                     ? 'border-success'
                     : null,
-                ]"
-              />
+                ]" />
               <input
+                v-if="!enable_discount"
                 type="text"
                 disabled
-                v-if="!enable_discount"
-                class="disabled-discount"
-              />
+                class="disabled-discount" />
             </div>
             <div
-              class="col-1 information-head text-end unique-label-cover-2 text-end unique_mandatory"
-            >
+              class="col-1 information-head text-end unique-label-cover-2 text-end unique_mandatory">
               <div>
                 <div class="text-danger d-inline">*</div>
                 Price:
@@ -288,51 +303,59 @@
                   >Rs.</span
                 >
                 <input
+                  v-model.trim="$v.price.$model"
                   type="text"
                   class="form-control form-icon text-end"
-                  v-model.trim="$v.price.$model"
                   :class="[
                     $v.price.$error ? 'border-fail' : null,
                     $v.price.required && $v.price.decimal
                       ? 'border-success'
                       : null,
-                  ]"
-                />
+                  ]" />
               </div>
             </div>
             <div class="col-2 offset-discount">
-              <div v-if="$v.discount_number.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.discount_number.required">
+              <div
+                v-if="$v.discount_number.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.discount_number.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.discount_number.decimal">
+                <div
+                  v-if="!$v.discount_number.decimal"
+                  class="error">
                   Invalid value
                 </div>
               </div>
             </div>
             <div class="col-4 offset-price">
-              <div v-if="$v.price.$dirty" class="position-relative">
-                <div class="error" v-if="!$v.price.required">
+              <div
+                v-if="$v.price.$dirty"
+                class="position-relative">
+                <div
+                  v-if="!$v.price.required"
+                  class="error">
                   Required
                 </div>
-                <div class="error" v-if="!$v.price.decimal">
+                <div
+                  v-if="!$v.price.decimal"
+                  class="error">
                   Invalid value
                 </div>
               </div>
             </div>
           </div>
           <div class="row align-items-center justify-content-end account-row">
-            <div class="col-3 information-head text-end">
-              Final Price:
-            </div>
+            <div class="col-3 information-head text-end">Final Price:</div>
 
-            <div class="col-9 information-input ">
+            <div class="col-9 information-input">
               <div class="input-group">
                 <span class="input-group-text">Rs.</span>
                 <div
                   class="show-discount text-end"
-                  :class="discount ? 'is-discount' : null"
-                >
+                  :class="discount ? 'is-discount' : null">
                   {{ final_price }}
                 </div>
               </div>
@@ -342,20 +365,31 @@
         <div>
           <div class="row pt-4">
             <div class="col-6">
-              <button type="reset" @click="clearForm" class="button-cancel">
+              <button
+                type="reset"
+                class="button-cancel"
+                @click="clearForm">
                 Clear
               </button>
             </div>
             <div class="col-6">
-              <button type="submit" class="button-save">Save</button>
+              <button
+                type="submit"
+                class="button-save">
+                Save
+              </button>
             </div>
           </div>
         </div>
       </form>
     </div>
 
-    <div class="sent_box" :class="success ? 'visible' : 'hidden'">
-      <font-awesome-icon icon="check" class="me-2" />Product successfully added!
+    <div
+      class="sent_box"
+      :class="success ? 'visible' : 'hidden'">
+      <font-awesome-icon
+        icon="check"
+        class="me-2" />Product successfully added!
     </div>
   </div>
 </template>
@@ -373,6 +407,7 @@ import {
 
 export default {
   name: "AddProduct",
+  mixins: [validationMixin],
   data() {
     return {
       image: "",
@@ -395,7 +430,6 @@ export default {
       success: false,
     };
   },
-  mixins: [validationMixin],
   validations: {
     image: { required },
     title: { required },
@@ -470,6 +504,9 @@ export default {
         this.final_price = val - this.discount_number;
       }
     },
+  },
+  async mounted() {
+    this.init();
   },
 
   methods: {
@@ -569,9 +606,6 @@ export default {
       this.$v.type.$reset();
       this.$v.gender.$reset();
     },
-  },
-  async mounted() {
-    this.init();
   },
 };
 </script>
@@ -783,7 +817,9 @@ export default {
 .hidden {
   visibility: hidden;
   opacity: 0;
-  transition: visibility 0s 1s, opacity 1s linear;
+  transition:
+    visibility 0s 1s,
+    opacity 1s linear;
 }
 
 .select-fail {

@@ -3,15 +3,19 @@
     <div class="d-flex justify-content-between admin-product-padding">
       <div class="d-flex align-items-center admin-product-header">Products</div>
       <div class="d-flex align-items-end">
-        <router-link class="admin-product-add" to="/admin/product/add">
-          <font-awesome-icon icon="plus" class="me-1" /> Add Product
+        <router-link
+          class="admin-product-add"
+          to="/admin/product/add">
+          <font-awesome-icon
+            icon="plus"
+            class="me-1" />
+          Add Product
         </router-link>
       </div>
     </div>
     <div
       v-if="loading || loading_2"
-      class="d-flex align-items-center justify-content-center cover_loader "
-    >
+      class="d-flex align-items-center justify-content-center cover_loader">
       <MoonLoader color="#985855" />
     </div>
     <div v-if="!loading && !loading_2">
@@ -21,35 +25,31 @@
           <b-form-select
             v-model="brand"
             :options="brand_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
         <div class="col-medium-select">
           <div>Type:</div>
           <b-form-select
             v-model="type"
             :options="type_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
         <div class="col-small-select">
           <div>Size:</div>
           <div class="row product-label-small-row">
             <div class="col-6">
               <input
+                v-model="size[0]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Min"
-                v-model="size[0]"
-              />
+                placeholder="Min" />
             </div>
             <div class="col-6">
               <input
+                v-model="size[1]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Max"
-                v-model="size[1]"
-              />
+                placeholder="Max" />
             </div>
           </div>
         </div>
@@ -58,8 +58,7 @@
           <b-form-select
             v-model="gender"
             :options="gender_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
       </div>
       <div class="row pt-3">
@@ -68,19 +67,17 @@
           <div class="row product-label-small-row">
             <div class="col-6">
               <input
+                v-model="stock[0]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Min"
-                v-model="stock[0]"
-              />
+                placeholder="Min" />
             </div>
             <div class="col-6">
               <input
+                v-model="stock[1]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Max"
-                v-model="stock[1]"
-              />
+                placeholder="Max" />
             </div>
           </div>
         </div>
@@ -89,19 +86,17 @@
           <div class="row product-label-small-row">
             <div class="col-6">
               <input
+                v-model="price[0]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Min"
-                v-model="price[0]"
-              />
+                placeholder="Min" />
             </div>
             <div class="col-6">
               <input
+                v-model="price[1]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Max"
-                v-model="price[1]"
-              />
+                placeholder="Max" />
             </div>
           </div>
         </div>
@@ -110,27 +105,24 @@
           <b-form-select
             v-model="discount_type"
             :options="discount_options"
-            class="product-select-form"
-          ></b-form-select>
+            class="product-select-form"></b-form-select>
         </div>
         <div class="col-small-select">
           <div>Discount:</div>
           <div class="row product-label-small-row">
             <div class="col-6">
               <input
+                v-model="discount[0]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Min"
-                v-model="discount[0]"
-              />
+                placeholder="Min" />
             </div>
             <div class="col-6">
               <input
+                v-model="discount[1]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Max"
-                v-model="discount[1]"
-              />
+                placeholder="Max" />
             </div>
           </div>
         </div>
@@ -141,43 +133,39 @@
           <div class="row product-label-small-row">
             <div class="col-6">
               <input
+                v-model="final_price[0]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Min"
-                v-model="final_price[0]"
-              />
+                placeholder="Min" />
             </div>
             <div class="col-6">
               <input
+                v-model="final_price[1]"
                 type="text"
                 class="w-100 product-small-input"
-                placeholder="Max"
-                v-model="final_price[1]"
-              />
+                placeholder="Max" />
             </div>
           </div>
         </div>
       </div>
-      <div class="row align-items-center product-padding-search-bar">
+      <div class="d-flex align-items-center product-padding-search-bar">
         <div class="col-4">
           <input
+            v-model="search"
             type="text"
             class="form-control admin-product-search-bar"
-            placeholder="Search by keyword"
-            v-model="search"
-          />
+            placeholder="Search by keyword" />
         </div>
         <div class="col-4">{{ found_product }} ITEMS FOUND</div>
 
-        <div class="col-4 ms-auto">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -185,26 +173,23 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page_button_layout d-flex align-items-center justify-content-center"
-                  @click="previousPage"
                   :class="current_page == 1 ? 'disable_page' : 'page-button'"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page_button_layout d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
                   :class="
                     current_page == all_pages ? 'disable_page' : 'page-button'
                   "
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -214,21 +199,20 @@
       </div>
       <div
         v-if="loading"
-        class="d-flex justify-content-center align-items-center loading-height"
-      ></div>
+        class="d-flex justify-content-center align-items-center loading-height"></div>
       <div v-if="!loading">
         <div class="d-flex admin-product-label">
           <div
-            class="border-right-product-table-label id-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label id-label d-flex align-items-center justify-content-between px-2">
             <div>ID</div>
-            <div class="caret-cover" @click="sortId">
+            <div
+              class="caret-cover"
+              @click="sortId">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'id' && sortDirection == 'asc' ? 'sort-white' : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -236,28 +220,26 @@
                   sortBy == 'id' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label image-label d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table-label image-label d-flex align-items-center justify-content-center">
             Image
           </div>
           <div
-            class="border-right-product-table-label title-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label title-label d-flex align-items-center justify-content-between px-2">
             <div>Title</div>
-            <div class="caret-cover" @click="sortTitle">
+            <div
+              class="caret-cover"
+              @click="sortTitle">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'title' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -265,23 +247,22 @@
                   sortBy == 'title' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label brand-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label brand-label d-flex align-items-center justify-content-between px-2">
             <div>Brand</div>
-            <div class="caret-cover" @click="sortBrand">
+            <div
+              class="caret-cover"
+              @click="sortBrand">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'brand' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -289,23 +270,22 @@
                   sortBy == 'brand' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label type-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label type-label d-flex align-items-center justify-content-between px-2">
             <div>Type</div>
-            <div class="caret-cover" @click="sortType">
+            <div
+              class="caret-cover"
+              @click="sortType">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'type' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -313,23 +293,22 @@
                   sortBy == 'type' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label size-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label size-label d-flex align-items-center justify-content-between px-2">
             <div>Size</div>
-            <div class="caret-cover" @click="sortSize">
+            <div
+              class="caret-cover"
+              @click="sortSize">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'size' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -337,23 +316,22 @@
                   sortBy == 'size' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label gender-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label gender-label d-flex align-items-center justify-content-between px-2">
             <div>Gender</div>
-            <div class="caret-cover" @click="sortGender">
+            <div
+              class="caret-cover"
+              @click="sortGender">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'gender' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -361,23 +339,22 @@
                   sortBy == 'gender' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label quantity-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label quantity-label d-flex align-items-center justify-content-between px-2">
             <div>Qty</div>
-            <div class="caret-cover" @click="sortStock">
+            <div
+              class="caret-cover"
+              @click="sortStock">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'stock' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -385,23 +362,22 @@
                   sortBy == 'stock' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label price-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label price-label d-flex align-items-center justify-content-between px-2">
             <div>Price</div>
-            <div class="caret-cover" @click="sortPrice">
+            <div
+              class="caret-cover"
+              @click="sortPrice">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'price' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -409,23 +385,22 @@
                   sortBy == 'price' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label discount-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label discount-label d-flex align-items-center justify-content-between px-2">
             <div>Discount</div>
-            <div class="caret-cover" @click="sortDiscountNumber">
+            <div
+              class="caret-cover"
+              @click="sortDiscountNumber">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'discount_number' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -433,24 +408,23 @@
                   sortBy == 'discount_number' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
 
           <div
-            class="border-right-product-table-label final-label d-flex align-items-center justify-content-between px-2"
-          >
+            class="border-right-product-table-label final-label d-flex align-items-center justify-content-between px-2">
             <div>Final Pric</div>
-            <div class="caret-cover" @click="sortFinalPrice">
+            <div
+              class="caret-cover"
+              @click="sortFinalPrice">
               <div
                 class="caret-up"
                 :class="
                   sortBy == 'final_price' && sortDirection == 'asc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
 
               <div
                 class="caret-down"
@@ -458,65 +432,55 @@
                   sortBy == 'final_price' && sortDirection == 'desc'
                     ? 'sort-white'
                     : null
-                "
-              />
+                " />
             </div>
           </div>
           <div
-            class="border-right-product-table-label description-label d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table-label description-label d-flex align-items-center justify-content-center">
             Description
           </div>
           <div class="action-label"></div>
         </div>
         <div
-          class="d-flex admin-product-detail"
           v-for="(product, index) in pageAndFilter"
           :key="index"
-        >
+          class="d-flex admin-product-detail">
           <div
-            class="border-right-product-table id-detail d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table id-detail d-flex align-items-center justify-content-center">
             {{ product.id }}
           </div>
           <div
-            class="border-right-product-table image-detail d-flex align-items-center justify-content-center"
-          >
-            <img :src="product.image" height="100%" />
+            class="border-right-product-table image-detail d-flex align-items-center justify-content-center">
+            <img
+              :src="product.image"
+              height="100%" />
           </div>
           <div
-            class="border-right-product-table title-detail d-flex align-items-center"
-          >
+            class="border-right-product-table title-detail d-flex align-items-center">
             {{ product.title }}
           </div>
           <div
-            class="border-right-product-table brand-detail d-flex align-items-center"
-          >
+            class="border-right-product-table brand-detail d-flex align-items-center">
             {{ product.brand }}
           </div>
           <div
-            class="border-right-product-table type-detail d-flex align-items-center"
-          >
+            class="border-right-product-table type-detail d-flex align-items-center">
             {{ product.type }}
           </div>
           <div
-            class="border-right-product-table size-detail d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table size-detail d-flex align-items-center justify-content-center">
             {{ product.size }}
           </div>
           <div
-            class="border-right-product-table gender-detail d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table gender-detail d-flex align-items-center justify-content-center">
             {{ product.gender }}
           </div>
           <div
-            class="border-right-product-table quantity-detail d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table quantity-detail d-flex align-items-center justify-content-center">
             {{ product.stock }}
           </div>
           <div
-            class="border-right-product-table price-detail d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table price-detail d-flex align-items-center justify-content-center">
             {{
               product.price.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -525,18 +489,15 @@
             }}
           </div>
           <div
-            class="border-right-product-table discount-type-detail d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table discount-type-detail d-flex align-items-center justify-content-center">
             {{ product.discount }}
           </div>
           <div
             v-if="product.discount_number == null"
-            class="border-right-product-table discount-detail d-flex align-items-center justify-content-center"
-          ></div>
+            class="border-right-product-table discount-detail d-flex align-items-center justify-content-center"></div>
           <div
             v-if="product.discount_number !== null"
-            class="border-right-product-table discount-detail d-flex align-items-center justify-content-center"
-          >
+            class="border-right-product-table discount-detail d-flex align-items-center justify-content-center">
             {{
               product.discount_number.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -547,8 +508,7 @@
 
           <div
             class="border-right-product-table discount-price-detail d-flex align-items-center justify-content-center"
-            :class="product.discount ? 'discount-text' : null"
-          >
+            :class="product.discount ? 'discount-text' : null">
             {{
               product.final_price.toLocaleString(undefined, {
                 minimumFractionDigits: 2,
@@ -560,26 +520,26 @@
             {{ product.description }}
           </div>
           <div
-            class="action-detail d-flex align-items-center justify-content-center"
-          >
+            class="action-detail d-flex align-items-center justify-content-center">
             <div
               class="after_action d-flex align-items-center justify-content-center"
-              @click="showAction(index)"
               :class="product.display_action == 1 ? 'after_action_click' : null"
-            >
+              @click="showAction(index)">
               <font-awesome-icon icon="ellipsis-h" />
             </div>
             <!--Mini Menu-->
-            <div class="action" v-if="product.display_action == 1">
-              <div class="modal-overelay" @click="hideAction(index)"></div>
+            <div
+              v-if="product.display_action == 1"
+              class="action">
+              <div
+                class="modal-overelay"
+                @click="hideAction(index)"></div>
               <div class="modal-content">
                 <div
-                  class="d-flex flex-column justify-content-start align-items-center h-100 text-start"
-                >
+                  class="d-flex flex-column justify-content-start align-items-center h-100 text-start">
                   <router-link
                     class="w-100 action-options border-action ps-2"
-                    :to="'/product/' + product.id"
-                  >
+                    :to="'/product/' + product.id">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -591,8 +551,7 @@
                   </router-link>
                   <router-link
                     class="w-100 action-options border-action ps-2"
-                    :to="'/admin/product/' + product.id + '/edit'"
-                  >
+                    :to="'/admin/product/' + product.id + '/edit'">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -604,8 +563,7 @@
                   </router-link>
                   <button
                     class="w-100 action-delete-options border-action ps-2"
-                    @click="deleteItem(index, product.id)"
-                  >
+                    @click="deleteItem(index, product.id)">
                     <div class="row align-items-center">
                       <div class="col-4 padding-right-text-action">
                         <div class="d-flex justify-content-center">
@@ -623,16 +581,15 @@
         </div>
       </div>
 
-      <div class="row align-items-center product-padding-search-bar">
-        <div class="col-4 ms-auto">
+      <div class="d-flex align-items-center product-padding-search-bar">
+        <div class="col-4">
           <div class="row align-items-center">
             <div class="col-5 per-page">
               <div class="d-flex justify-content-between align-items-center">
                 <b-form-select
                   v-model="per_page"
                   :options="per_page_options"
-                  class="product-select-form-per-page"
-                ></b-form-select>
+                  class="product-select-form-per-page"></b-form-select>
                 per page
               </div>
             </div>
@@ -640,26 +597,23 @@
               <div class="d-flex justify-content-between align-items-center">
                 <div
                   class="page_button_layout d-flex align-items-center justify-content-center"
-                  @click="previousPage"
                   :class="current_page == 1 ? 'disable_page' : 'page-button'"
-                >
+                  @click="previousPage">
                   <font-awesome-icon icon="chevron-left" />
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <input
-                    type="number"
-                    class="product-page-input"
                     v-model="current_page"
-                  />
+                    type="number"
+                    class="product-page-input" />
                   <div>of {{ all_pages }}</div>
                 </div>
                 <div
                   class="page_button_layout d-flex align-items-center justify-content-center next-page"
-                  @click="nextPage"
                   :class="
                     current_page == all_pages ? 'disable_page' : 'page-button'
                   "
-                >
+                  @click="nextPage">
                   <font-awesome-icon icon="chevron-right" />
                 </div>
               </div>
@@ -736,21 +690,21 @@ export default {
                     this.filterProductBrand(
                       this.filterProductType(
                         this.filterProductGender(
-                          this.filterProductDiscount(this.products)
-                        )
-                      )
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                          this.filterProductDiscount(this.products),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       );
     },
   },
   watch: {
-    current_page: function(val) {
+    current_page: function (val) {
       if (val < 1) {
         this.page = 0;
       } else {
@@ -763,10 +717,10 @@ export default {
           ? Math.abs(this.current_page)
           : null;
     },
-    per_page: function() {
+    per_page: function () {
       this.checkAll();
     },
-    products: function() {
+    products: function () {
       this.checkAll();
     },
     search() {
@@ -790,56 +744,77 @@ export default {
 
         this.price_max = await Math.max.apply(
           Math,
-          this.products.map((product) => product.price)
+          this.products.map((product) => product.price),
         );
         this.final_price_max = await Math.max.apply(
           Math,
-          this.products.map((product) => product.final_price)
+          this.products.map((product) => product.final_price),
         );
         this.size_max = await Math.max.apply(
           Math,
-          this.products.map((product) => product.size)
+          this.products.map((product) => product.size),
         );
         this.stock_max = await Math.max.apply(
           Math,
-          this.products.map((product) => product.stock)
+          this.products.map((product) => product.stock),
         );
         this.discount_max = await Math.max.apply(
           Math,
-          this.products.map((product) => product.discount_number)
+          this.products.map((product) => product.discount_number),
         );
 
         this.checkAll();
         this.loading_2 = false;
       },
     },
-    brand: function() {
+    brand: function () {
       this.checkAll();
     },
-    type: function() {
+    type: function () {
       this.checkAll();
     },
-    size: function() {
+    size: function () {
       this.checkAll();
     },
-    gender: function() {
+    gender: function () {
       this.checkAll();
     },
-    stock: function() {
+    stock: function () {
       this.checkAll();
     },
-    price: function() {
+    price: function () {
       this.checkAll();
     },
-    discount_type: function() {
+    discount_type: function () {
       this.checkAll();
     },
-    discount: function() {
+    discount: function () {
       this.checkAll();
     },
-    final_price: function() {
+    final_price: function () {
       this.checkAll();
     },
+  },
+  async mounted() {
+    const allbrand = (await getBrandOptions()).data;
+    const sort_all_brand = [...allbrand].sort((b1, b2) => {
+      var brand_a = b1.text;
+      var brand_b = b2.text;
+      if (brand_a < brand_b) {
+        return -1;
+      }
+      if (brand_a > brand_b) {
+        return 1;
+      }
+      return 0;
+    });
+    this.brand_options.push(...sort_all_brand);
+    this.per_page_options = await getPerPageOptions();
+    this.type_options = await getSearchTypeOptions();
+    this.gender_options = await getSearchGenderOptions();
+    this.discount_options = await getSearchDiscountOptions();
+
+    this.loading = false;
   },
   methods: {
     nextPage() {
@@ -888,27 +863,27 @@ export default {
     pageProducts(products) {
       return products.slice(
         this.page * this.per_page,
-        this.page * this.per_page + this.per_page
+        this.page * this.per_page + this.per_page,
       );
     },
     filterProductPrice(products) {
       if (this.price[0] == "" && this.price[1] == "") {
         return products.filter(
-          (product) => product.price >= 0 && product.price <= this.price_max
+          (product) => product.price >= 0 && product.price <= this.price_max,
         );
       } else if (this.price[0] == "" && this.price[1] !== "") {
         return products.filter(
-          (product) => product.price >= 0 && product.price <= this.price[1]
+          (product) => product.price >= 0 && product.price <= this.price[1],
         );
       } else if (this.price[0] !== "" && this.price[1] == "") {
         return products.filter(
           (product) =>
-            product.price >= this.price[0] && product.price <= this.price_max
+            product.price >= this.price[0] && product.price <= this.price_max,
         );
       } else {
         return products.filter(
           (product) =>
-            product.price >= this.price[0] && product.price <= this.price[1]
+            product.price >= this.price[0] && product.price <= this.price[1],
         );
       }
     },
@@ -917,46 +892,46 @@ export default {
         return products.filter(
           (product) =>
             product.final_price >= 0 &&
-            product.final_price <= this.final_price_max
+            product.final_price <= this.final_price_max,
         );
       } else if (this.final_price[0] == "" && this.final_price[1] !== "") {
         return products.filter(
           (product) =>
             product.final_price >= 0 &&
-            product.final_price <= this.final_price[1]
+            product.final_price <= this.final_price[1],
         );
       } else if (this.final_price[0] !== "" && this.final_price[1] == "") {
         return products.filter(
           (product) =>
             product.final_price >= this.final_price[0] &&
-            product.final_price <= this.final_price_max
+            product.final_price <= this.final_price_max,
         );
       } else {
         return products.filter(
           (product) =>
             product.final_price >= this.final_price[0] &&
-            product.final_price <= this.final_price[1]
+            product.final_price <= this.final_price[1],
         );
       }
     },
     filterProductSize(products) {
       if (this.size[0] == "" && this.size[1] == "") {
         return products.filter(
-          (product) => product.size >= 0 && product.size <= this.size_max
+          (product) => product.size >= 0 && product.size <= this.size_max,
         );
       } else if (this.size[0] == "" && this.size[1] !== "") {
         return products.filter(
-          (product) => product.size >= 0 && product.size <= this.size[1]
+          (product) => product.size >= 0 && product.size <= this.size[1],
         );
       } else if (this.size[0] !== "" && this.size[1] == "") {
         return products.filter(
           (product) =>
-            product.size >= this.size[0] && product.size <= this.size_max
+            product.size >= this.size[0] && product.size <= this.size_max,
         );
       } else {
         return products.filter(
           (product) =>
-            product.size >= this.size[0] && product.size <= this.size[1]
+            product.size >= this.size[0] && product.size <= this.size[1],
         );
       }
     },
@@ -965,46 +940,46 @@ export default {
         return products.filter(
           (product) =>
             product.discount_number >= 0 &&
-            product.discount_number <= this.discount_max
+            product.discount_number <= this.discount_max,
         );
       } else if (this.discount[0] == "" && this.discount[1] !== "") {
         return products.filter(
           (product) =>
             product.discount_number >= 0 &&
-            product.discount_number <= this.discount[1]
+            product.discount_number <= this.discount[1],
         );
       } else if (this.discount[0] !== "" && this.discount[1] == "") {
         return products.filter(
           (product) =>
             product.discount_number >= this.discount[0] &&
-            product.discount_number <= this.discount_max
+            product.discount_number <= this.discount_max,
         );
       } else {
         return products.filter(
           (product) =>
             product.discount_number >= this.discount[0] &&
-            product.discount_number <= this.discount[1]
+            product.discount_number <= this.discount[1],
         );
       }
     },
     filterProductStock(products) {
       if (this.stock[0] == "" && this.stock[1] == "") {
         return products.filter(
-          (product) => product.stock >= 0 && product.stock <= this.stock_max
+          (product) => product.stock >= 0 && product.stock <= this.stock_max,
         );
       } else if (this.stock[0] == "" && this.stock[1] !== "") {
         return products.filter(
-          (product) => product.stock >= 0 && product.stock <= this.stock[1]
+          (product) => product.stock >= 0 && product.stock <= this.stock[1],
         );
       } else if (this.stock[0] !== "" && this.stock[1] == "") {
         return products.filter(
           (product) =>
-            product.stock >= this.stock[0] && product.stock <= this.stock_max
+            product.stock >= this.stock[0] && product.stock <= this.stock_max,
         );
       } else {
         return products.filter(
           (product) =>
-            product.stock >= this.stock[0] && product.stock <= this.stock[1]
+            product.stock >= this.stock[0] && product.stock <= this.stock[1],
         );
       }
     },
@@ -1015,7 +990,7 @@ export default {
         return products.filter((product) => product.discount == null);
       } else {
         return products.filter((product) =>
-          this.discount_type.includes(product.discount)
+          this.discount_type.includes(product.discount),
         );
       }
     },
@@ -1038,7 +1013,7 @@ export default {
         return products;
       } else {
         return products.filter((product) =>
-          this.gender.includes(product.gender)
+          this.gender.includes(product.gender),
         );
       }
     },
@@ -1160,14 +1135,14 @@ export default {
                 this.filterProductBrand(
                   this.filterProductType(
                     this.filterProductGender(
-                      this.filterProductDiscount(this.products)
-                    )
-                  )
-                )
-              )
-            )
-          )
-        )
+                      this.filterProductDiscount(this.products),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ).length;
       this.found_product = item_length;
       if (Math.ceil(item_length / this.per_page) < 1) {
@@ -1179,27 +1154,6 @@ export default {
         this.current_page = this.all_pages;
       }
     },
-  },
-  async mounted() {
-    const allbrand = (await getBrandOptions()).data;
-    const sort_all_brand = [...allbrand].sort((b1, b2) => {
-      var brand_a = b1.text;
-      var brand_b = b2.text;
-      if (brand_a < brand_b) {
-        return -1;
-      }
-      if (brand_a > brand_b) {
-        return 1;
-      }
-      return 0;
-    });
-    this.brand_options.push(...sort_all_brand);
-    this.per_page_options = await getPerPageOptions();
-    this.type_options = await getSearchTypeOptions();
-    this.gender_options = await getSearchGenderOptions();
-    this.discount_options = await getSearchDiscountOptions();
-
-    this.loading = false;
   },
 };
 </script>
@@ -1325,7 +1279,6 @@ export default {
   font-size: 0.85rem;
   color: #384648;
   border: 1px solid #384648;
-  margin-right: 0.5rem;
 }
 
 .page input::-webkit-outer-spin-button,

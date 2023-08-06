@@ -1,14 +1,18 @@
 <template>
   <div class="container-lg body-5-section">
     <div class="text-center">RECOMMENDED FRAGRANCES</div>
-    <VueSlickCarousel v-bind="settings" v-if="sortProducts.length > 0">
+    <VueSlickCarousel
+      v-if="sortProducts.length > 0"
+      v-bind="settings">
       <div
         v-for="(product, index) in sortProducts"
         :key="index"
-        class="d-flex justify-content-center"
-      >
+        class="d-flex justify-content-center">
         <router-link :to="'/product/' + product.id">
-          <img :src="product.image" width="100%" class="img_home"
+          <img
+            :src="product.image"
+            width="100%"
+            class="img_home"
         /></router-link>
       </div>
     </VueSlickCarousel>
@@ -21,7 +25,7 @@ import { getProducts } from "@/services/ProductService";
 export default {
   name: "HomeBody5",
   components: { VueSlickCarousel },
-  data: function() {
+  data: function () {
     return {
       settings: {
         dots: true,
@@ -32,6 +36,36 @@ export default {
         centerPadding: "100px",
         focusOnSelect: true,
         autoplay: true,
+        arrows: true,
+        responsive: [
+          {
+            breakpoint: 1200,
+            settings: {
+              slidesToShow: 4,
+            },
+          },
+          {
+            breakpoint: 992,
+            settings: {
+              slidesToShow: 3,
+            },
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 3,
+              arrows: false,
+            },
+          },
+          {
+            breakpoint: 576,
+            settings: {
+              slidesToShow: 2,
+              dots: false,
+              arrows: false,
+            },
+          },
+        ],
       },
       products: [],
     };
@@ -40,6 +74,9 @@ export default {
     sortProducts() {
       return this.sliceProducts(this.sortProductsByPrice(this.products));
     },
+  },
+  async mounted() {
+    this.products = (await getProducts()).data;
   },
   methods: {
     sliceProducts(products) {
@@ -58,9 +95,6 @@ export default {
         return 0;
       });
     },
-  },
-  async mounted() {
-    this.products = (await getProducts()).data;
   },
 };
 </script>
@@ -111,5 +145,35 @@ export default {
 
 .body-5-section .slick-dots {
   bottom: -40px !important;
+}
+
+.img_home {
+  object-fit: cover;
+  width: 100%;
+  height: 15rem;
+}
+
+@media (max-width: 1200px) {
+  .img_home {
+    height: 13rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .img_home {
+    height: 12rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .img_home {
+    height: 11rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .img_home {
+    height: 9rem;
+  }
 }
 </style>
