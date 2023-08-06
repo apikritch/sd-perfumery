@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@babel/core':
-    specifier: ^7.13.0
+    specifier: ^7.22.9
     version: 7.22.9
   '@fortawesome/fontawesome-free':
     specifier: ^6.4.0
@@ -72,7 +72,7 @@ dependencies:
     specifier: ^0.1.8
     version: 0.1.8
   vue:
-    specifier: ^2
+    specifier: 2.6.14
     version: 2.6.14
   vue-chartjs:
     specifier: ^4.0.7
