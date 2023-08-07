@@ -3,6 +3,7 @@ docker-compose.yml
 client/dist
 client/node_modules
 client/Dockerfile
+client/default.conf
 
 server/.env
 server/Dockerfile
