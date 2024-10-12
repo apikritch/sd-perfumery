@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb:10.4
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: sd_perfumery
+    ports:
+      - "3306:3306"
+    volumes: ["database:/var/lib/mysql"]
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8000:80"
+  sd-perfumery-client:
+    image: sd-perfumery:client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: sd-perfumery-client
+    restart: always
+    ports: ["8081:80"]
+    working_dir: /client
+    volumes:
+      - ./client/dist:/usr/share/nginx/html
+  sd-perfumery-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: sd-perfumery-server
+    restart: always
+    image: sd-perfumery:server
+    ports:
+      - "8002:8000"
+
+volumes:
+  database:

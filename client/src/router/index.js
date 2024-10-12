@@ -49,7 +49,7 @@ Vue.use(VueRouter);
 
 export default new VueRouter({
   mode: "history",
-  base: "project/2",
+  base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
